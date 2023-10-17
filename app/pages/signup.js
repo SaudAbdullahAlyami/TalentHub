@@ -13,7 +13,6 @@ export  function SignUp() {
 
 
     function create(){
- 
         // Add a new document in collection "users"
           addDoc(collection(db, "Users",), {
           Username: Username,  
