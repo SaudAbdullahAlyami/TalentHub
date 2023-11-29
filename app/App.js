@@ -1,24 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,TextInput } from 'react-native';
-import {SignUp } from './pages/signup'
-
+import React, { useEffect } from "react";
+import { useState, useContext } from "react";
+import {StyleSheet,Text,View,StatusBar,ScrollView,FlatList,} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { UserAuth } from "./pages/Sign-in-out/userAuth";
+import {UserNotAuth} from "./pages/Sign-in-out/userNotAuth";
+import { useAuthentication } from "./useAuthentication";
 
 export default function App() {
+  const [loading, setLoading] = useState(true)
+  const [userr, setUserr] = useState(null)
+  const { user } = useAuthentication();  useEffect(()=>{
+  })
   
   return (
-    
-    <View style={styles.container}>
-      <SignUp/>
-     
-    </View>
-  );
+        <NavigationContainer>
+            {user?
+              (<UserAuth/>):(<UserNotAuth/>)
+            }
+        </NavigationContainer>
+  )   
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
