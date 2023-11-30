@@ -11,8 +11,16 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../component/config/config";
 import { StatusBar } from "react-native";
+import { db } from "../../component/config/config";
+import {
+  doc,
+  setDoc,
+} from "firebase/firestore";
+
 export const SignUp = ({ navigation }) => {
+  const [data, setData] = useState([]);
   const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState("");//Player OR Scout or ..
   const [value, setValue] = React.useState({
     email: "",
     password: "",
@@ -23,6 +31,7 @@ export const SignUp = ({ navigation }) => {
     navigation.navigate("Sign In");
   };
 
+  
   const onRegisterPress = () => {
     if (value.email === "" || value.password === "") {
       setValue({
@@ -38,9 +47,22 @@ export const SignUp = ({ navigation }) => {
           });
           return;
     }
+    
+
+
+
+
+
+
+    
     setTimeout(() => {
         createUserWithEmailAndPassword(auth, value.email, value.password)
       .then((userCredential) => {
+        setDoc(doc(db, "users",userCredential.user.uid), { 
+           uid: userCredential.user.uid,
+           email:value.email ,fullName:fullName, role: role });
+        console.log("Added Successfully");
+
         setValue({
             ...value,
             error: null,
@@ -99,6 +121,15 @@ export const SignUp = ({ navigation }) => {
           placeholder="Confirm Password"
           onChangeText={(text) => setConfirmPassword(text)}
           value={confirmPassword}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Player Or Scouter"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setRole(text)}
+          value={role}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
