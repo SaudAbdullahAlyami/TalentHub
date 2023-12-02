@@ -3,6 +3,7 @@ import { createStackNavigator, TransitionPresets, } from "@react-navigation/stac
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
+import {PlayerProfile} from "../Player/PlayerProfile"
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -24,6 +25,7 @@ if (type == "Player")
   return (
     <Tab.Navigator>
       <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="PlayerProfile" component={PlayerProfile} />
     </Tab.Navigator>
     )
     else if (type == "Coach")
