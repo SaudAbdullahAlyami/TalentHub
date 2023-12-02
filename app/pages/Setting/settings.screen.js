@@ -18,18 +18,17 @@ export const SettingsScreen = () => {
     
     setType(doc.data().role)
     console.log("Current data: ", doc.data()); 
-    console.log("Role data: ", type); 
-  }
-  );
+ 
+  });
 
 
 
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {user?.email}!</Text>
-      <Text>my uid is : {auth.currentUser.uid}!</Text>
-      <Text>my role is : {type}!</Text>
+      <Text>Welcome here is only Player screen</Text>
+      <Text>my uid is : {auth.currentUser.uid}</Text>
+      <Text>my role is : {type}</Text>
       <Button
         title="Sign Out"
         style={styles.button}

@@ -18,20 +18,29 @@ import {
 } from "firebase/firestore";
 
 export const SignUp = ({ navigation }) => {
-  const [data, setData] = useState([]);
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState("");//Player OR Scout or ..
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [value, setValue] = React.useState({
     email: "",
     password: "",
     error: "",
   });
-  const [confirmPassword, setConfirmPassword] = useState("");
+
+// for coloring radiobutton
+
+
+//assign the radiobutton
+  const handleRadioButtonPress = (value) => {
+
+    setRole(value)
+  };
+
   const onFooterLinkPress = () => {
     navigation.navigate("Sign In");
   };
 
-  
+  //check if the values empty
   const onRegisterPress = () => {
     if (value.email === "" || value.password === "") {
       setValue({
@@ -48,19 +57,17 @@ export const SignUp = ({ navigation }) => {
           return;
     }
     
-
-
-
-
-
-
     
     setTimeout(() => {
         createUserWithEmailAndPassword(auth, value.email, value.password)
       .then((userCredential) => {
+        //ADD in db
         setDoc(doc(db, "users",userCredential.user.uid), { 
            uid: userCredential.user.uid,
-           email:value.email ,fullName:fullName, role: role });
+           email:value.email ,
+           fullName:fullName,
+           role: role
+           });
         console.log("Added Successfully");
 
         setValue({
@@ -78,6 +85,8 @@ export const SignUp = ({ navigation }) => {
       }, 300);
     
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -124,15 +133,50 @@ export const SignUp = ({ navigation }) => {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Player Or Scouter"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setRole(text)}
-          value={role}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
+
+        
+<View style={styles.inputRadio}>
+
+      <TouchableOpacity onPress={() => handleRadioButtonPress('Player')}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: 'black',
+              marginRight: 10,
+              backgroundColor:
+              role === 'Player' ? 'grey' : 'transparent',
+               
+            }}
+          />
+          <Text>Player</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => handleRadioButtonPress('Coach')}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 20,
+              height: 20,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: 'black',
+              marginRight: 10,
+              backgroundColor:
+              role === 'Coach' ? 'grey' : 'transparent',
+            }}
+          />
+          <Text>Coach</Text>
+        </View>
+      </TouchableOpacity>
+
+
+    </View>
+
         {value.error&&<Text style={{color:"red",marginLeft:30,}}>{value.error}</Text>}
 
         <TouchableOpacity
@@ -178,6 +222,17 @@ const styles = StyleSheet.create({
     marginRight: 30,
     paddingLeft: 16,
   },
+  inputRadio: {
+    height: 70,
+    borderRadius: 5,
+    overflow: "hidden",
+    backgroundColor: "white",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16,
+  },
   button: {
     backgroundColor: "#788eec",
     marginLeft: 30,
@@ -188,6 +243,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
   buttonTitle: {
     color: "white",
     fontSize: 16,
