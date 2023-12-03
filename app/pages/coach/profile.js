@@ -7,10 +7,12 @@ import {
   Image,
   Pressable,
   TextInput,
-  TouchableOpacity,StatusBar
+  TouchableOpacity,
+  StatusBar,
+  ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { signOut } from "firebase/auth";
+
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../component/config/config";
@@ -19,82 +21,100 @@ export const CoachProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
 
   const [fullName, setFullName] = useState("");
+  const [age, setAge] = useState("");
   const [role, setRole] = useState(""); //Player OR Scout or ..
   const [email, setEmail] = useState("");
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [position, setPosition] = useState(null);
+  const [level, setLevel] = useState(null);
 
   // data queury from database using auth
   const unsub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setFullName(doc.data().fullName);
+    setAge(doc.data().age);
     setEmail(doc.data().email);
     setRole(doc.data().role);
+    setHeight(doc.data().height);
+    setWeight(doc.data().weight);
+    setLevel(doc.data().level);
   });
 
   return (
-    <View style={styles.container}>
-    <KeyboardAwareScrollView
-      style={{ marginTop:150,flex: 1, width: "100%" }}
-      keyboardShouldPersistTaps="always"
-    >
-      <Text style={styles.input}>
-        
-       Name: {fullName}
-        </Text>
-      <Text style={styles.input}>
-        {email}
-
-        </Text>
-     
-<View style={styles.inputRadio}>
-
-    <TouchableOpacity >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: 10,
-            borderWidth: 2,
-            borderColor: 'black',
-            marginRight: 10,
-            backgroundColor:
-              role === 'Player' ? 'grey' : 'transparent',
-             
-          }}
-        />
-        <Text>Player</Text>
-      </View>
-    </TouchableOpacity>
-
-    <TouchableOpacity >
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: 10,
-            borderWidth: 2,
-            borderColor: 'black',
-            marginRight: 10,
-            backgroundColor:
-            role === 'Coach' ? 'grey' : 'transparent',
-          }}
-        />
-        <Text>Coach</Text>
-      </View>
-    </TouchableOpacity>
- 
-  </View>
-
-    
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => onRegisterPress()}
+    <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%", marginTop: 19 }}
+        keyboardShouldPersistTaps="always"
       >
-        <Text style={styles.buttonTitle}>Create account</Text>
-      </TouchableOpacity>
-     
-    </KeyboardAwareScrollView>
-  </View>
+        <View className="flex ">
+          <View className="flex-row justify-start">
+            <TouchableOpacity
+              onPress={() => navigation.navigate("CoachEdit")}
+              className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
+            >
+              <Text>Edit</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="flex-row justify-center">
+            <Image
+              source={require("../../assets/emptyProfile.jpg")}
+              style={{ width: 220, height: 220,borderRadius:200 }}
+            />
+          </View>
+        </View>
+
+        <Text style={styles.input}>Name: {fullName}</Text>
+        <Text style={styles.input}>Age: {age}</Text>
+        <Text style={styles.input}>role: {role}</Text>
+        <Text style={styles.input}>height: {height}</Text>
+        <Text style={styles.input}>weight: {weight}</Text>
+        <Text style={styles.input}>Level: {level}</Text>
+
+        <View style={styles.inputRadio}>
+          <TouchableOpacity>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                  borderWidth: 2,
+                  borderColor: "black",
+                  marginRight: 10,
+                  backgroundColor: role === "Player" ? "grey" : "transparent",
+                }}
+              />
+              <Text>Player</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: 10,
+                  borderWidth: 2,
+                  borderColor: "black",
+                  marginRight: 10,
+                  backgroundColor: role === "Coach" ? "grey" : "transparent",
+                }}
+              />
+              <Text>Coach</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => onRegisterPress()}
+        >
+          <Text style={styles.buttonTitle}>Create account</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </View>
   );
 };
 
@@ -102,7 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop:StatusBar.currentHeight,
+    marginTop: StatusBar.currentHeight,
   },
   title: {},
   logo: {
@@ -144,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  
+
   buttonTitle: {
     color: "white",
     fontSize: 16,
@@ -165,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   loading: {
-    zIndex:9,
+    zIndex: 9,
     position: "absolute",
     top: "50%",
     left: "50%",

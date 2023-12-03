@@ -7,8 +7,6 @@ import {UserNotAuth} from "./pages/Sign-in-out/userNotAuth";
 import { useAuthentication } from "./useAuthentication";
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-  const [userr, setUserr] = useState(null)
   const { user } = useAuthentication();  useEffect(()=>{
   })
   

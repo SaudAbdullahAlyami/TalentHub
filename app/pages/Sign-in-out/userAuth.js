@@ -3,8 +3,9 @@ import { createStackNavigator, TransitionPresets, } from "@react-navigation/stac
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
-import {PlayerProfile} from "../player/PlayerProfile"
 import {formation} from "../player/formation"
+import { CoachEdit } from "../coach/edit";
+import {PlayerProfile} from "../player/PlayerProfile"
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -15,12 +16,20 @@ const Tab = createBottomTabNavigator();
 
 export const UserAuth = () => {
   const [type,setType]=useState('')
+
   const unsub= onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
-    
     setType(doc.data().role)
-    console.log("Current data: ", doc.data()); 
- 
   });
+
+  const CoachProfileStack = createStackNavigator();
+  function CoachProfilestack ({ navigation }){
+    return(
+      <CoachProfileStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfile" }}>
+        <CoachProfileStack.Screen name="CoachProfile" component={CoachProfile}/>
+        <CoachProfileStack.Screen name="CoachEdit" component={CoachEdit}/>
+      </CoachProfileStack.Navigator>
+    )
+  }
   
 if (type == "Player")
   return (
@@ -32,8 +41,8 @@ if (type == "Player")
     )
     else if (type == "Coach")
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="CoachProfile" component={CoachProfile} />
+      <Tab.Navigator screenOptions={{ headerShown: false, }}>
+        <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
       </Tab.Navigator>
       )
 }
