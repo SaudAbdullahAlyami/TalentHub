@@ -3,7 +3,7 @@ import { createStackNavigator, TransitionPresets, } from "@react-navigation/stac
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
-import {PlayerProfile} from "../player/PlayerProfile"
+import {PlayerProfile} from "../Player/PlayerProfile"
 import { db,auth } from "../../component/config/config";
 import {
   doc,

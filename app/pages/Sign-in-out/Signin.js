@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../component/config/config";
-import {View,Text,StyleSheet,TextInput,TouchableOpacity,StatusBar} from "react-native";
+import {ArrowLeftIcon} from 'react-native-heroicons/solid'
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,StatusBar,Image} from "react-native";
 export const SignIn = ({ navigation }) => {
   const [value, setValue] = React.useState({
     email: "",
@@ -36,44 +37,80 @@ export const SignIn = ({ navigation }) => {
         console.log(value.error);
       })}
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView
-        style={{ marginTop: 250, width: "100%" }}
+
+    <View className="flex-1 bg-white"  style={{backgroundColor: "#00B365"}}>
+      <View  className="flex ">
+        <View className="flex-row justify-start">
+          <TouchableOpacity onPress={()=> navigation.goBack()} 
+          className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+            <ArrowLeftIcon size="20" color="black" />
+          </TouchableOpacity>
+        </View>
+
+        
+        <View  className="flex-row justify-center">
+          <Image source={require("../../assets/signpic.png")} 
+          style={{width: 300, height: 220}} />
+        </View>
+
+      </View>
+      <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
+        className="flex-1 bg-white px-8 pt-8">
+          <View className="form space-y-2">
+            <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
-      >
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
+      ></KeyboardAwareScrollView>
+     <Text className="text-gray-700 ml-4">Email Address</Text>
+
+
+            <TextInput 
+              className="p-4 bg-gray-100 text-gray-700 rounded-2xl mb-3"
+              placeholder="E-mail"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setValue({ ...value, email: text })}
           value={value.email}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
+            />
+
+
+            <Text className="text-gray-700 ml-4">Password</Text>
+            <TextInput 
+              className="p-4 bg-gray-100 text-gray-700 rounded-2xl"
+              placeholderTextColor="#aaaaaa"
           secureTextEntry
           placeholder="Password"
           onChangeText={(text) => setValue({ ...value, password: text })}
           value={value.password}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
-        />
-        {value.error&&<Text style={{color:"red",marginLeft:30,}}>{value.error}</Text>}
-        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
-        </TouchableOpacity>
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Don't have an account?{" "}
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Sign up
-            </Text>
-          </Text>
-        </View>
-      </KeyboardAwareScrollView>
+            />
+
+
+             {value.error&&<Text style={{color:"red",marginLeft:30,}}>{value.error}</Text>}
+
+            <TouchableOpacity  onPress={() => onLoginPress()}
+              className="py-3 bg-yellow-400 top-3 rounded-xl">
+                <Text  className="text-xl  font-bold text-center text-gray-700" > Login
+                </Text>
+             </TouchableOpacity>
+            
+          </View>
+
+          <View className="flex-row justify-center mt-7">
+              <Text className="text-gray-500 font-semibold">
+                  Don't have an account?
+              </Text>
+              
+              <TouchableOpacity  onPress={()=> navigation.navigate('Sign Up')}>
+                  <Text className="font-semibold text-yellow-500"> Sign Up</Text>
+              </TouchableOpacity>
+          </View>
+          
+      </View>
     </View>
+
+
   );
 };
 const styles = StyleSheet.create({
