@@ -17,7 +17,7 @@ export const SettingsScreen = () => {
   const unsub= onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     
     setType(doc.data().role)
-    console.log("Current data: ", doc.data()); 
+
  
   });
 
