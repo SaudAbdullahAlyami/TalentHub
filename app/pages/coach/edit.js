@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -15,12 +15,69 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot ,updateDoc} from "firebase/firestore";
-import { db } from "../../component/config/config";
-import { auth } from "../../component/config/config";
+import { db,auth,firebase } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-export const CoachEdit = ({ navigation }) => {
-  const { user, handleSignOut } = useAuthentication();
+import * as ImagePicker from "expo-image-picker"
+import * as FileSystem from "expo-file-system"
 
+
+export const CoachEdit = ({ navigation }) => {
+  // here is code for photo
+  // here is code for photo
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const uploadMedia = async () => {
+    setUploading(true);
+
+    try {
+      const { uri } = await FileSystem.getInfoAsync(image);
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = () => {
+          resolve(xhr.response);
+        };
+
+        xhr.onerror = (e) => {
+          reject(new TypeError("Network request failed"));
+        };
+
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+      });
+
+      const filename = image.substring(image.lastIndexOf("/") + 1);
+      const userCollectionPath = `users/${auth.currentUser.uid}/images`; // Dynamically generate collection path based on user ID
+      const ref = firebase.storage().ref(userCollectionPath).child(filename);
+      setImage(firebase.storage().ref(userCollectionPath).child(filename).fullPath)
+      
+      await ref.put(blob);
+      setUploading(false);
+      
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+  
+
+  // THE data retrived is below ##################################################
+  const { user, handleSignOut } = useAuthentication();
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
   const [height, setHeight] = useState(null);
@@ -28,22 +85,42 @@ export const CoachEdit = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
 
- 
-  const updatePhoto = () => {
-
-
-  };
-
   const handleRadioButtonPress = (value) => {
 
     setLevel(value)
   };
 
-  const updateData = async () => {
+  useEffect(() => {
+ 
+   
+
+    // Get the document
+   
+    // Listen for changes in the Firestore document
+    const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
+      setFullName(doc.data().fullName);
+      setAge(doc.data().age);
+      setHeight(doc.data().height);
+      setWeight(doc.data().weight);
+      setLevel(doc.data().level);
+      setImage(doc.data().profileImage)
+    });
+
+    
+
+    // Clean up the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  const updateData =  () => {
+    uploadMedia()//to upload the photo
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-         fullName: fullName, age: age, height:height, weight:weight, level:level });
+         fullName: fullName, age: age, height:height, weight:weight, level:level ,profileImage:image});
+         
     console.log("Updated Successfully");
   };
+
+  
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
       <KeyboardAwareScrollView
@@ -60,16 +137,20 @@ export const CoachEdit = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row justify-center">
-          <TouchableOpacity onPress={() => updatePhoto()}
+          <View className="flex-row justify-center ">
+          <TouchableOpacity onPress={() => pickImage()}
         >
-            <Image
-              source={require("../../assets/emptyProfile.jpg")}
-              style={{ width: 220, height: 220 ,borderRadius:200}}
-            />
+           
+       
+          <Text style={{color:"white",backgroundColor:"grey"}}>Insert image</Text>
+     
+              
+            
             </TouchableOpacity>
           </View>
         </View>
+
+
         <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
         <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"

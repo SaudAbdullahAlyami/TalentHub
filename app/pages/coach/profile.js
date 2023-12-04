@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -15,11 +15,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../component/config/config";
-import { auth } from "../../component/config/config";
+import { db ,auth,firebase } from "../../component/config/config";
 export const CoachProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
-
+  const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
   const [role, setRole] = useState(""); //Player OR Scout or ..
@@ -29,16 +28,25 @@ export const CoachProfile = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
 
-  // data queury from database using auth
-  const unsub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
-    setFullName(doc.data().fullName);
-    setAge(doc.data().age);
-    setEmail(doc.data().email);
-    setRole(doc.data().role);
-    setHeight(doc.data().height);
-    setWeight(doc.data().weight);
-    setLevel(doc.data().level);
-  });
+
+
+  useEffect(() => {
+ 
+
+    // Listen for changes in the Firestore document
+    const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
+      setFullName(doc.data().fullName);
+      setAge(doc.data().age);
+      setRole(doc.data().role);
+      setHeight(doc.data().height);
+      setWeight(doc.data().weight);
+      setLevel(doc.data().level);
+      setImageURL(doc.data().profileImage)
+    });
+
+    // Clean up the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
@@ -57,8 +65,9 @@ export const CoachProfile = ({ navigation }) => {
           </View>
 
           <View className="flex-row justify-center">
+            
             <Image
-              source={require("../../assets/emptyProfile.jpg")}
+              source={({uri : imageURL})}
               style={{ width: 220, height: 220,borderRadius:200 }}
             />
           </View>
