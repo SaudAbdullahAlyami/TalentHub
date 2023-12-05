@@ -21,12 +21,13 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { CoachProfile } from "../coach/profile";
 import * as ImagePicker from "expo-image-picker"
 import * as FileSystem from "expo-file-system"
-
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export const CoachEdit = ({ navigation }) => {
   // here is code for photo
   // here is code for photo
   const [image, setImage] = useState(null);
+  const [imageuri, setImageURI] = useState(null);
   const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
@@ -38,7 +39,8 @@ export const CoachEdit = ({ navigation }) => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0]);
+      setImageURI(result.assets[0].uri);
     }
   };
 
@@ -46,7 +48,7 @@ export const CoachEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
-      const { uri } = await FileSystem.getInfoAsync(image);
+      const { uri } = await FileSystem.getInfoAsync(imageuri);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
 
@@ -63,12 +65,33 @@ export const CoachEdit = ({ navigation }) => {
         xhr.send(null);
       });
 
-      const filename = image.substring(image.lastIndexOf("/") + 1);
-      const userCollectionPath = `users/${auth.currentUser.uid}/images`; // Dynamically generate collection path based on user ID
-      const ref = firebase.storage().ref(userCollectionPath).child(filename);
-      setImage(firebase.storage().ref(userCollectionPath).child(filename).fullPath)
+      const filename = imageuri.substring(imageuri.lastIndexOf("/") + 1);
+      const userCollectionPath = `saudTrying/`; // Dynamically generate collection path based on user ID
+     
+
       
-      await ref.put(blob);
+      const storage = getStorage();
+      var storagePath = 'saudTrying/'+ filename;
+
+      const storageRef = ref(storage, storagePath);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
+
+      uploadTask.on('state_changed', (snapshot) => {
+        // progrss function ....
+      }, 
+      (error) => { 
+        // error function ....
+        console.log(error);
+      }, 
+      () => {
+        // complete function ....
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          updateDoc(doc(db, "users", auth.currentUser.uid), {
+            profileImage:downloadURL});
+          
+        });})
+      
       setUploading(false);
       
     } catch (error) {
@@ -122,7 +145,7 @@ export const CoachEdit = ({ navigation }) => {
   const updateData =  () => {
     uploadMedia()//to upload the photo
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-         fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:image});
+         fullName: fullName, age: age, height:height, weight:weight,level:level,});
          
     console.log("Updated Successfully");
      navigation.navigate('CoachProfile')
