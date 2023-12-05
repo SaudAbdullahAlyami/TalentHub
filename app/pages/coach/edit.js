@@ -12,11 +12,13 @@ import {
   ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { Avatar } from 'react-native-paper';
+import {SelectList, MultipleSelectList }from 'react-native-dropdown-select-list'
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot ,updateDoc} from "firebase/firestore";
 import { db,auth,firebase } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
+import { CoachProfile } from "../coach/profile";
 import * as ImagePicker from "expo-image-picker"
 import * as FileSystem from "expo-file-system"
 
@@ -82,13 +84,18 @@ export const CoachEdit = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
-  const [position, setPosition] = useState(null);
+  //const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
+  const [selected, setSelected] = React.useState("");
 
-  const handleRadioButtonPress = (value) => {
 
-    setLevel(value)
-  };
+
+  const data = [
+    {key:'Beginner', value:'Beginner'},
+    {key:'Intermediate', value:'Intermediate'},
+    {key:'expert', value:'expert'},
+  ]
+
 
   useEffect(() => {
  
@@ -115,52 +122,66 @@ export const CoachEdit = ({ navigation }) => {
   const updateData =  () => {
     uploadMedia()//to upload the photo
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-         fullName: fullName, age: age, height:height, weight:weight, level:level ,profileImage:image});
+         fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:image});
          
     console.log("Updated Successfully");
+     navigation.navigate('CoachProfile')
   };
 
-  
+ 
   return (
-    <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-      <KeyboardAwareScrollView
+
+
+    <View className="flex-1"  style={{backgroundColor: "#00B365"}}>
+
+
+     <View  className="flex ">
+
+      
+      <View className="flex-row justify-start">
+        <TouchableOpacity onPress={()=> navigation.goBack()} 
+        className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+          <ArrowLeftIcon size="20" color="black" />
+        </TouchableOpacity>
+       </View>
+
+
+
+      <View className="flex-row justify-center ">
+          <TouchableOpacity onPress={() => pickImage()} >
+           <Avatar.Image  size={150} source={require("../../assets/emptyProfile.jpg")} >
+           </Avatar.Image>
+              
+          <Text style={{color:"white",textAlign:"center",top:9}}>Insert image</Text>
+           </TouchableOpacity>
+      </View>
+    </View>
+
+
+    <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%", marginTop: 19 }}
         keyboardShouldPersistTaps="always"
       >
-        <View className="flex ">
-          <View className="flex-row justify-start">
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-            >
-              <ArrowLeftIcon size="20" color="black" />
-            </TouchableOpacity>
-          </View>
 
-          <View className="flex-row justify-center ">
-          <TouchableOpacity onPress={() => pickImage()}
-        >
-           
-       
-          <Text style={{color:"white",backgroundColor:"grey"}}>Insert image</Text>
+
+    <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
+      className="flex-1 bg-white top-8 px-8 pt-8">
      
-              
-            
-            </TouchableOpacity>
-          </View>
-        </View>
+
+        <View className="form space-y-2">
+
 
 
         <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
-        <TextInput
-          className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder={"Saud Abdullah Alyami"}
-          placeholderTextColor="#aaaaaa"
-          value={fullName}
-          onChangeText={(text) => setFullName(text)}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
+        <TextInput 
+        className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl "
+        placeholder="Full Name"
+         placeholderTextColor="#aaaaaa"
+         onChangeText={(text) => setFullName(text)}
+        value={fullName}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+          />
 
         <Text className="text-gray-700 top-1 ml-4">Age</Text>
         <TextInput
@@ -173,10 +194,10 @@ export const CoachEdit = ({ navigation }) => {
           autoCapitalize="none"
         />
 
-        <Text className="text-gray-700 top-1 ml-4">Height</Text>
-         <TextInput
+        <Text className="text-gray-700 top-1 ml-4">height</Text>
+        <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="180cm"
+          placeholder="18"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setHeight(text)}
           value={height}
@@ -185,9 +206,9 @@ export const CoachEdit = ({ navigation }) => {
         />
 
         <Text className="text-gray-700 top-1 ml-4">Weight</Text>
-         <TextInput
+        <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="57kg"
+          placeholder="18"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setWeight(text)}
           value={weight}
@@ -197,148 +218,42 @@ export const CoachEdit = ({ navigation }) => {
 
 
 
-<View style={styles.inputRadio}>
-      <TouchableOpacity  className="text-gray-700 top-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Beginner')}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              borderWidth: 2,
-              borderColor: 'black',
-              marginRight: 10,
-              backgroundColor:
-              level === 'Beginner' ? '#00b365' : 'transparent',
-               
-            }}
+
+        <View style={{paddingHorizontal:15,marginTop:15, top:9,}}>
+
+         <Text className="text-gray-700 bottom-1 ml-4">Select level</Text>
+
+        <SelectList  className="bottom-9"
+        setSelected={(val) =>  setLevel(val)} 
+        data={data} 
+        save="value"
           />
-          <Text>Beginner</Text>
+
         </View>
-      </TouchableOpacity>
 
-      <TouchableOpacity  className="text-gray-700 top-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Intermediate')}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              borderWidth: 2,
-              borderColor: 'black',
-              marginRight: 10,
-              backgroundColor:
-              level === 'Intermediate' ? '#00b365' : 'transparent',
-               
-            }}
-          />
-          <Text>Intermediate</Text>
+
+          <TouchableOpacity  onPress={() => updateData()} 
+          
+            className="py-3 bg-yellow-400 top-9 rounded-xl">
+              <Text  className="text-xl  font-bold  text-center text-gray-700" >Save profile</Text>
+           </TouchableOpacity>
+           <View className="bg-white my-9"></View>
+           <View className="bg-white my-9"></View>
+   
+           </View>
+
+
         </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity  className="text-gray-700  left-44 ml-4" onPress={() => handleRadioButtonPress('expert')}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View
-            style={{
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              borderWidth: 2,
-              borderColor: 'black',
-              marginRight: 10,
-              backgroundColor:
-              level === 'expert' ? '#00b365' : 'transparent',
-            }}
-          />
-          <Text>expert</Text>
-        </View>
-      </TouchableOpacity>
-
-
+       
+        </KeyboardAwareScrollView>
+        
     </View>
+ 
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => updateData()}
-        >
-          <Text style={styles.buttonTitle}>Update Data</Text>
-        </TouchableOpacity>
-      </KeyboardAwareScrollView>
-    </View>
+
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: StatusBar.currentHeight,
-  },
-  title: {},
-  logo: {
-    flex: 1,
-    height: 120,
-    width: 90,
-    alignSelf: "center",
-    margin: 30,
-  },
-  input: {
-    height: 48,
-    borderRadius: 5,
-    overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 16,
-  },
-  inputRadio: {
-    height: 70,
-    borderRadius: 5,
-    overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 16,
-  },
-  button: {
-    backgroundColor: "#788eec",
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 5,
-    height: 48,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
 
-  buttonTitle: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  footerView: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  footerText: {
-    fontSize: 16,
-    color: "#2e2e2d",
-  },
-  footerLink: {
-    color: "#788eec",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  loading: {
-    zIndex: 9,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    margin: -25,
-  },
-});
+
+

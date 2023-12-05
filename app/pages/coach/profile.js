@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db ,auth,firebase } from "../../component/config/config";
@@ -50,10 +50,7 @@ export const CoachProfile = ({ navigation }) => {
 
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%", marginTop: 19 }}
-        keyboardShouldPersistTaps="always"
-      >
+   
         <View className="flex ">
           <View className="flex-row justify-start">
             <TouchableOpacity
@@ -66,66 +63,64 @@ export const CoachProfile = ({ navigation }) => {
 
           <View className="flex-row justify-center">
             
-            <Image
+            <Avatar.Image backgroundColor="grey"
+            size={150} 
               source={({uri : imageURL})}
-              style={{ width: 220, height: 220,borderRadius:200 }}
+              
             />
           </View>
         </View>
+        <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%", marginTop: 19 }}
+        keyboardShouldPersistTaps="always"
+      >
+        <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
+        
+      className="flex-1 bg-white top-8 px-8 pt-8">
+        <View className="form space-y-2">
 
-        <Text style={styles.input}>Name: {fullName}</Text>
-        <Text style={styles.input}>Age: {age}</Text>
-        <Text style={styles.input}>role: {role}</Text>
-        <Text style={styles.input}>height: {height}</Text>
-        <Text style={styles.input}>weight: {weight}</Text>
-        <Text style={styles.input}>Level: {level}</Text>
 
-        <View style={styles.inputRadio}>
-          <TouchableOpacity>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <View
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  borderWidth: 2,
-                  borderColor: "black",
-                  marginRight: 10,
-                  backgroundColor: role === "Player" ? "grey" : "transparent",
-                }}
-              />
-              <Text>Player</Text>
-            </View>
-          </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <View
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  borderWidth: 2,
-                  borderColor: "black",
-                  marginRight: 10,
-                  backgroundColor: role === "Coach" ? "grey" : "transparent",
-                }}
-              />
-              <Text>Coach</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+<Text className="text-gray-700 top-1  ml-4">Full Name</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {fullName}</Text>
 
+
+
+<Text className="text-gray-700 top-1  ml-4">Age</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
+
+
+ 
+<Text className="text-gray-700 top-1  ml-4">Role</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>
+
+
+<Text className="text-gray-700 top-1  ml-4">Height</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {height}</Text>
+
+
+<Text className="text-gray-700 top-1  ml-4">Weight</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {weight}</Text>
+
+
+<Text className="text-gray-700 top-1  ml-4">Level</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>
+
+</View>
         <TouchableOpacity
-          style={styles.button}
+          className="py-3 bg-yellow-400 top-9 rounded-xl"
           onPress={() => onRegisterPress()}
         >
-          <Text style={styles.buttonTitle}>Create account</Text>
-        </TouchableOpacity>
+          <Text  className="text-xl  font-bold  text-center text-gray-700">Create account</Text>
+        </TouchableOpacity> 
+        <View className="bg-white my-9"></View>
+        
+        </View>
       </KeyboardAwareScrollView>
-    </View>
+    </View> 
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
