@@ -70,9 +70,7 @@ export const CoachEdit = ({ navigation }) => {
 
       const filename = imageuri.substring(imageuri.lastIndexOf("/") + 1);
       const userCollectionPath = `saudTrying/`; // Dynamically generate collection path based on user ID
-     
-
-      
+   
       const storage = getStorage();
       var storagePath = 'saudTrying/'+ filename;
 
@@ -102,15 +100,6 @@ export const CoachEdit = ({ navigation }) => {
       setUploading(false);
     }
   };
-
-
-
-
-
-
-
-
-
 
 
 
