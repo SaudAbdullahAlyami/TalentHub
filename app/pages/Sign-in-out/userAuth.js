@@ -3,9 +3,11 @@ import { createStackNavigator, TransitionPresets, } from "@react-navigation/stac
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
-import {formation} from "../player/formation"
+import {formation} from "../Player/formation"
 import { CoachEdit } from "../coach/edit";
-import {PlayerProfile} from "../player/PlayerProfile"
+import { CreateClub } from "../coach/CreateClub";
+import { CoachFormation } from "../coach/CoachFormation";
+import {PlayerProfile} from "../Player/PlayerProfile"
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -43,6 +45,8 @@ if (type == "Player")
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, }}>
         <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
+        <Tab.Screen name="CreateClub" component={CreateClub} />
+        <Tab.Screen name="CoachFormation" component={CoachFormation} />
       </Tab.Navigator>
       )
 }
