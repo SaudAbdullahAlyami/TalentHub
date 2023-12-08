@@ -28,6 +28,7 @@ export const CoachEdit = ({ navigation }) => {
   // here is code for photo
   const [image, setImage] = useState(null);
   const [imageuri, setImageURI] = useState(null);
+
   const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
@@ -44,7 +45,9 @@ export const CoachEdit = ({ navigation }) => {
     }
   };
 
-  const uploadMedia = async () => {
+
+
+  const uploadPhoto = async () => {
     setUploading(true);
 
     try {
@@ -99,6 +102,97 @@ export const CoachEdit = ({ navigation }) => {
       setUploading(false);
     }
   };
+
+
+
+
+
+
+
+
+
+
+
+
+  const [video, setVideo] = useState(null);
+  const pickVideo = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setVideo(result.assets[0].uri);
+
+    }
+  };
+
+
+  const uploadVideo = async () => {
+    setUploading(true);
+
+    try {
+      const { uri } = await FileSystem.getInfoAsync(video);
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.onload = () => {
+          resolve(xhr.response);
+        };
+
+        xhr.onerror = (e) => {
+          reject(new TypeError("Network request failed"));
+        };
+
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+      });
+
+      const filename = video.substring(video.lastIndexOf("/") + 1);
+      const userCollectionPath = `saudTrying/`; // Dynamically generate collection path based on user ID
+     
+
+      
+      const storage = getStorage();
+      var storagePath = 'saudTrying/'+ filename;
+
+      const storageRef = ref(storage, storagePath);
+      const uploadTask = uploadBytesResumable(storageRef, blob);
+
+      uploadTask.on('state_changed', (snapshot) => {
+        // progrss function ....
+      }, 
+      (error) => { 
+        // error function ....
+        console.log(error);
+      }, 
+      () => {
+        // complete function ....
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          updateDoc(doc(db, "users", auth.currentUser.uid), {
+            profileVideo:downloadURL});
+          
+        });})
+      
+      setUploading(false);
+      
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
+
+
+
+
+
+
+
   
 
   // THE data retrived is below ##################################################
@@ -143,7 +237,8 @@ export const CoachEdit = ({ navigation }) => {
   }, []);
 
   const updateData =  () => {
-    uploadMedia()//to upload the photo
+    uploadPhoto()//to upload the photo
+    uploadVideo()
     updateDoc(doc(db, "users", auth.currentUser.uid), {
          fullName: fullName, age: age, height:height, weight:weight,level:level,});
          
@@ -177,7 +272,10 @@ export const CoachEdit = ({ navigation }) => {
               
           <Text style={{color:"white",textAlign:"center",top:9}}>Insert image</Text>
            </TouchableOpacity>
+
+           
       </View>
+      
     </View>
 
 
@@ -251,7 +349,11 @@ export const CoachEdit = ({ navigation }) => {
         data={data} 
         save="value"
           />
-
+            <TouchableOpacity onPress={() => pickVideo()} >
+          
+              
+          <Text style={{color:"black",textAlign:"center",top:20}}>Insert Video</Text>
+           </TouchableOpacity>
         </View>
 
 

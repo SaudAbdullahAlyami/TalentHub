@@ -10,12 +10,15 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db ,auth,firebase } from "../../component/config/config";
+import Video from 'react-native-video'
+
 export const CoachProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
   const [imageURL, setImageURL] = useState(null);
@@ -27,7 +30,7 @@ export const CoachProfile = ({ navigation }) => {
   const [weight, setWeight] = useState(null);
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
-
+  const [video, setVideo] = useState(null);
 
 
   useEffect(() => {
@@ -42,6 +45,7 @@ export const CoachProfile = ({ navigation }) => {
       setWeight(doc.data().weight);
       setLevel(doc.data().level);
       setImageURL(doc.data().profileImage)
+      setVideo(doc.data().profileVideo)
     });
 
     // Clean up the subscription when the component unmounts
@@ -105,6 +109,7 @@ export const CoachProfile = ({ navigation }) => {
 
 <Text className="text-gray-700 top-1  ml-4">Level</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>
+
 
 </View>
         <TouchableOpacity
