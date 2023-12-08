@@ -17,7 +17,7 @@ import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db ,auth,firebase } from "../../component/config/config";
-import Video from 'react-native-video'
+import { Video, ResizeMode } from 'expo-av';
 
 export const CoachProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
@@ -31,8 +31,8 @@ export const CoachProfile = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
   const [video, setVideo] = useState(null);
-
-
+  const [status, setStatus] = React.useState({});
+  const [videoRef, setVideoRef] = useState(null);
   useEffect(() => {
  
 
@@ -51,6 +51,10 @@ export const CoachProfile = ({ navigation }) => {
     // Clean up the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
+
+
+
+
 
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
@@ -110,7 +114,15 @@ export const CoachProfile = ({ navigation }) => {
 <Text className="text-gray-700 top-1  ml-4">Level</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>
 
-
+<Text className="text-gray-700 top-1  ml-4">Video</Text>
+<Video
+                ref={videoRef}
+                source={{ uri:video}}
+                style={{ width: 300, height: 180 ,borderRadius:25}}
+                useNativeControls
+                resizeMode={ResizeMode.CONTAIN}
+                isLooping
+                />
 </View>
         <TouchableOpacity
           className="py-3 bg-yellow-400 top-9 rounded-xl"

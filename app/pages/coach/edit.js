@@ -25,7 +25,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 export const CoachEdit = ({ navigation }) => {
   // here is code for photo
-  // here is code for photo
+
   const [image, setImage] = useState(null);
   const [imageuri, setImageURI] = useState(null);
 
@@ -33,7 +33,7 @@ export const CoachEdit = ({ navigation }) => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -69,10 +69,12 @@ export const CoachEdit = ({ navigation }) => {
       });
 
       const filename = imageuri.substring(imageuri.lastIndexOf("/") + 1);
-      const userCollectionPath = `saudTrying/`; // Dynamically generate collection path based on user ID
-   
+     
+     
+
+      
       const storage = getStorage();
-      var storagePath = 'saudTrying/'+ filename;
+      var storagePath = 'coach/image/'+ filename;
 
       const storageRef = ref(storage, storagePath);
       const uploadTask = uploadBytesResumable(storageRef, blob);
@@ -105,8 +107,11 @@ export const CoachEdit = ({ navigation }) => {
 
   const [video, setVideo] = useState(null);
   const pickVideo = async () => {
+    ImagePicker.getMediaLibraryPermissionsAsync();
+
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -120,9 +125,11 @@ export const CoachEdit = ({ navigation }) => {
 
 
   const uploadVideo = async () => {
+    
     setUploading(true);
 
     try {
+      
       const { uri } = await FileSystem.getInfoAsync(video);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -141,14 +148,13 @@ export const CoachEdit = ({ navigation }) => {
       });
 
       const filename = video.substring(video.lastIndexOf("/") + 1);
-      const userCollectionPath = `saudTrying/`; // Dynamically generate collection path based on user ID
      
 
       
       const storage = getStorage();
-      var storagePath = 'saudTrying/'+ filename;
+      var storagePath2 = 'coach/video/'+ filename;
 
-      const storageRef = ref(storage, storagePath);
+      const storageRef = ref(storage, storagePath2);
       const uploadTask = uploadBytesResumable(storageRef, blob);
 
       uploadTask.on('state_changed', (snapshot) => {
@@ -174,9 +180,6 @@ export const CoachEdit = ({ navigation }) => {
       setUploading(false);
     }
   };
-
-
-
 
 
 
@@ -256,8 +259,11 @@ export const CoachEdit = ({ navigation }) => {
 
       <View className="flex-row justify-center ">
           <TouchableOpacity onPress={() => pickImage()} >
-           <Avatar.Image  size={150} source={require("../../assets/emptyProfile.jpg")} >
-           </Avatar.Image>
+          <Avatar.Image backgroundColor="grey"
+            size={150} 
+              source={({uri : imageuri})}
+              
+            />
               
           <Text style={{color:"white",textAlign:"center",top:9}}>Insert image</Text>
            </TouchableOpacity>
@@ -307,7 +313,7 @@ export const CoachEdit = ({ navigation }) => {
         <Text className="text-gray-700 top-1 ml-4">height</Text>
         <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="18"
+          placeholder="180"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setHeight(text)}
           value={height}
@@ -318,7 +324,7 @@ export const CoachEdit = ({ navigation }) => {
         <Text className="text-gray-700 top-1 ml-4">Weight</Text>
         <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="18"
+          placeholder="80"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setWeight(text)}
           value={weight}
