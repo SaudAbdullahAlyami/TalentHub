@@ -111,11 +111,12 @@ export const SignUp = ({ navigation }) => {
       <View
         style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
         className="flex-1 bg-white top-8 px-8 pt-8">
-        <View className="form space-y-2">
-          <KeyboardAwareScrollView
+ <KeyboardAwareScrollView
             keyboardShouldPersistTaps="always"
-          ></KeyboardAwareScrollView>
+          >
 
+        <View className="form space-y-2">
+         
           <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
           <TextInput
             className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl "
@@ -166,8 +167,8 @@ export const SignUp = ({ navigation }) => {
           />
           {/* ffffffffffffffffffffffffffffffffffffffffffffffff */}
           {role === "Coach" && (
-             <><Text className="text-gray-700 top-1 ml-4">Club Name</Text><TextInput
-              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
+             <><Text className="text-gray-700 top-4 ml-4">Club Name</Text><TextInput
+              className="p-4 bg-gray-100 top-6 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Club Name"
@@ -179,8 +180,8 @@ export const SignUp = ({ navigation }) => {
 
           
           {role === "Coach" && (
-            <><Text className="text-gray-700 top-1 ml-4">Description</Text><TextInput
-              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
+            <><Text className="text-gray-700 top-8 ml-4">Description</Text><TextInput
+              className="p-4 bg-gray-100 top-9 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Description"
@@ -193,8 +194,10 @@ export const SignUp = ({ navigation }) => {
 
           
           {role === "Coach" && (
-            <><Text className="text-gray-700 top-1 ml-4">City</Text><TextInput
-              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
+            <>
+            <View className=" top-2">
+            <Text className="text-gray-700 top-9 ml-4">City</Text><TextInput
+              className="p-4 bg-gray-100 top-9 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="City"
@@ -202,7 +205,7 @@ export const SignUp = ({ navigation }) => {
               value={city}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-            /></>
+            /></View></>
           )}
 
 
@@ -265,7 +268,7 @@ export const SignUp = ({ navigation }) => {
             <Text className="font-semibold text-yellow-500"> Log in</Text>
           </TouchableOpacity>
         </View>
-
+        </KeyboardAwareScrollView>
       </View>
     </View>
 
