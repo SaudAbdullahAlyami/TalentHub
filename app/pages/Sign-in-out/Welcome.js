@@ -18,16 +18,16 @@ export const Welcome = ({ navigation }) => {
 
         <View className="space-y-4 bottom-8">
             <TouchableOpacity
-                onPress={()=> navigation.navigate('Sign Up')}
+                onPress={()=> navigation.navigate('Sign In')}
                 className="py-3 bg-yellow-400 mx-7 rounded-xl">
-                    <Text className="text-xl font-bold text-center text-gray-700">Sign Up</Text>
+                    <Text className="text-xl font-bold text-center text-gray-700">Login</Text>
             </TouchableOpacity>
 
 
             <View className="flex-row justify-center">
                 <Text className="text-white font-semibold">Already have an account?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Sign In')}>
-                    <Text className="font-semibold text-yellow-400"> Log In</Text>
+                <TouchableOpacity onPress={()=> navigation.navigate('Sign Up')}>
+                    <Text className="font-semibold text-yellow-400"> Sign up</Text>
                 </TouchableOpacity>
             </View>
 
