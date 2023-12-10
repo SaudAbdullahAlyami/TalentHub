@@ -39,17 +39,19 @@ export const UserAuth = () => {
  const PlayerProfilestack = createStackNavigator();
  function PlayerProfileStack ({ navigation }){
    return(
-     <PlayerProfilestack.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerProfile" }}>
-       <PlayerProfilestack.Screen name="PlayerProfile" component={PlayerProfile}/>
+     <PlayerProfilestack.Navigator screenOptions={{ headerShown: false, initialRouteName: "Playerprofile" }}>
+       <PlayerProfilestack.Screen name="Playerprofile" component={PlayerProfile}/>
        <PlayerProfilestack.Screen name="PlayerEdit" component={PlayerEdit}/>
      </PlayerProfilestack.Navigator>
    )
  }
+
+
 if (type == "Player")
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfileStack" }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerProfile" }}>
       <Tab.Screen name="Settings" component={SettingsScreen} />
-      <Tab.Screen name="PlayerProfilestack" component={PlayerProfileStack} />
+      <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
       <Tab.Screen name="Formation" component={Formation} />
     </Tab.Navigator>
     )
