@@ -249,14 +249,14 @@ export const CoachEdit = ({ navigation }) => {
       
       <View className="flex-row justify-start">
         <TouchableOpacity onPress={()=> navigation.goBack()} 
-        className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+        className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
           <ArrowLeftIcon size="20" color="black" />
         </TouchableOpacity>
        </View>
 
 
 
-      <View className="flex-row justify-center ">
+      <View className="flex-row top-9 justify-center ">
           <TouchableOpacity onPress={() => pickImage()} >
           <Avatar.Image backgroundColor="grey"
             size={150} 
@@ -273,15 +273,15 @@ export const CoachEdit = ({ navigation }) => {
     </View>
 
 
-    <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%", marginTop: 19 }}
+  
+
+    <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
+      className="flex-1 bg-white top-14 px-8 pt-8">
+       <KeyboardAwareScrollView
+        
         keyboardShouldPersistTaps="always"
       >
 
-
-    <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
-      className="flex-1 bg-white top-8 px-8 pt-8">
-     
 
         <View className="form space-y-2">
 
@@ -334,18 +334,22 @@ export const CoachEdit = ({ navigation }) => {
 
 
 
-        <View style={{paddingHorizontal:15,marginTop:15, top:9,}}>
+         <View className="text-gray-700 top-2">
 
-         <Text className="text-gray-700 bottom-1 ml-4">Select level</Text>
-
-        <SelectList  className="bottom-9"
+         <Text className="text-gray-700  ml-4">Select level</Text>
+  <View className=" my-1"></View>
+        <SelectList 
         setSelected={(val) =>  setLevel(val)} 
         data={data} 
         save="value"
           />
-            <TouchableOpacity onPress={() => pickVideo()} >
+
           
-              
+            <TouchableOpacity className="top-3 my-3 items-center	" onPress={() => pickVideo()} >
+          
+            <Image source={require("../../assets/upvideo.png")}
+                style={{width: 140, height: 140}} />
+
           <Text style={{color:"black",textAlign:"center",top:20}}>Insert Video</Text>
            </TouchableOpacity>
         </View>
@@ -358,13 +362,13 @@ export const CoachEdit = ({ navigation }) => {
            </TouchableOpacity>
            <View className="bg-white my-9"></View>
            <View className="bg-white my-9"></View>
-   
+  
            </View>
-
+           </KeyboardAwareScrollView>
 
         </View>
        
-        </KeyboardAwareScrollView>
+        
         
     </View>
  

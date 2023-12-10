@@ -322,8 +322,10 @@ export const PlayerEdit = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-                <View className="text-gray-700  top-2">
+                <View className="text-gray-700  top-3">
               <Text className="text-gray-700  ml-4">Select Position</Text>
+
+              <View className=" my-1"></View>
               <SelectList
                 setSelected={(val) => setPosition(val)}
                 data={positionData}
@@ -331,11 +333,11 @@ export const PlayerEdit = ({ navigation }) => {
               />
               </View>
 
-            <View  className="text-gray-700  top-3">
+            <View  className="text-gray-700  top-6">
               <Text className="text-gray-700 bottom-1 ml-4">Select level</Text>
-
-              <SelectList
-                className="bottom-9"
+              <View className=" my-1"></View>
+              <SelectList 
+                
                 setSelected={(val) => setLevel(val)}
                 data={levelData}
                 save="value"
@@ -350,17 +352,17 @@ export const PlayerEdit = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
+               
+            <TouchableOpacity 
               onPress={() => updateData()}
-              className="py-3 bg-yellow-400 top-9 rounded-xl"
+              className="py-3 bg-yellow-400 top-12 rounded-xl"
             >
               <Text className="text-xl  font-bold  text-center text-gray-700">
                 Save profile
               </Text>
             </TouchableOpacity>
             <View className="bg-white my-12"></View>
-            <View className="bg-white my-12"></View>
+            <View className="bg-white my-14"></View>
           </View></KeyboardAwareScrollView>
         </View>
         
