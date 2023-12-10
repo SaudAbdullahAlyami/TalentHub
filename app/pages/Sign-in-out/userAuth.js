@@ -7,6 +7,7 @@ import {Formation} from "../player/formation"
 import { CoachEdit } from "../coach/edit";
 import { CreateClub } from "../coach/CreateClub";
 import { CoachFormation } from "../coach/CoachFormation";
+import { CoachFormationAdd } from "../coach/CoachFormationAdd";
 import {PlayerProfile} from "../player/PlayerProfile"
 import { PlayerEdit } from "../player/PlayerEdit";
 import { db,auth } from "../../component/config/config";
@@ -23,7 +24,7 @@ export const UserAuth = () => {
   const unsub= onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setType(doc.data().role)
   });
-//profile coach
+//profile stack coach
   const CoachProfileStack = createStackNavigator();
   function CoachProfilestack ({ navigation }){
     return(
@@ -33,6 +34,18 @@ export const UserAuth = () => {
       </CoachProfileStack.Navigator>
     )
   }
+
+//formation stack coach
+const CoachFormationStack = createStackNavigator();
+  function CoachFormationstack ({ navigation }){
+    return(
+      <CoachFormationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachFormation" }}>
+        <CoachFormationStack.Screen name="CoachFormation" component={CoachFormation}/>
+        <CoachFormationStack.Screen name="CoachFormationAdd" component={CoachFormationAdd}/>
+      </CoachFormationStack.Navigator>
+    )
+  }
+
 
 
  // profile player
@@ -60,7 +73,7 @@ if (type == "Player")
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfileStack" }}>
         <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
         <Tab.Screen name="CreateClub" component={CreateClub} />
-        <Tab.Screen name="CoachFormation" component={CoachFormation} />
+        <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
       </Tab.Navigator>
       )
 }
