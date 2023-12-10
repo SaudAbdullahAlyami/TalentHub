@@ -322,18 +322,16 @@ export const PlayerEdit = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-                <View style={{ paddingHorizontal: 15, marginTop: 15, top: 9 }}>
-              <Text className="text-gray-700 bottom-1 ml-4">Select Postion</Text>
-
+                <View className="text-gray-700  top-2">
+              <Text className="text-gray-700  ml-4">Select Position</Text>
               <SelectList
-                className="bottom-9"
                 setSelected={(val) => setPosition(val)}
                 data={positionData}
                 save="value"
               />
               </View>
 
-            <View style={{ paddingHorizontal: 15, marginTop: 15, top: 9 }}>
+            <View  className="text-gray-700  top-3">
               <Text className="text-gray-700 bottom-1 ml-4">Select level</Text>
 
               <SelectList
@@ -346,7 +344,7 @@ export const PlayerEdit = ({ navigation }) => {
 
               <TouchableOpacity className="top-3 my-3 items-center	" onPress={() => pickVideo()}>
               <Image source={require("../../assets/upvideo.png")}
-                style={{width: 150, height: 150}} />
+                style={{width: 140, height: 140}} />
                 <Text style={{ color: "black", textAlign: "center", top: 20 }}>
                   Insert Video
                 </Text>
