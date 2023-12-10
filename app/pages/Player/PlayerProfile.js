@@ -58,18 +58,18 @@ export const PlayerProfile = ({ navigation }) => {
 
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-   
+  
         <View className="flex ">
           <View className="flex-row justify-start">
             <TouchableOpacity
               onPress={() => navigation.navigate("PlayerEdit")}
-              className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
+              className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
             >
               <Text>Edit</Text>
             </TouchableOpacity>
           </View>
-
-          <View className="flex-row justify-center">
+         
+          <View className="flex-row top-9 justify-center">
             
             <Avatar.Image backgroundColor="grey"
             size={150} 
@@ -78,13 +78,14 @@ export const PlayerProfile = ({ navigation }) => {
             />
           </View>
         </View>
-        <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%", marginTop: 19 }}
-        keyboardShouldPersistTaps="always"
-      >
+        
         <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
         
-      className="flex-1 bg-white top-8 px-8 pt-8">
+      className="flex-1 bg-white top-14 px-8 pt-8">
+
+<KeyboardAwareScrollView
+        keyboardShouldPersistTaps="always"
+      >
         <View className="form space-y-2">
 
 
@@ -117,8 +118,8 @@ export const PlayerProfile = ({ navigation }) => {
 <Text className="text-gray-700 top-1  ml-4">Level</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>
 
-<Text className="text-gray-700 top-1  ml-4">Video</Text>
-<Video
+<Text className="text-gray-700 top-1   ml-4">Video</Text>
+<Video className="left-6 top-3"
                 ref={videoRef}
                 source={{ uri:video}}
                 style={{ width: 300, height: 180 ,borderRadius:25}}
@@ -133,10 +134,11 @@ export const PlayerProfile = ({ navigation }) => {
         >
           <Text  className="text-xl  font-bold  text-center text-gray-700">Create account</Text>
         </TouchableOpacity> 
-        <View className="bg-white my-9"></View>
-        
+        <View className="bg-white my-9"></View><View className="bg-white my-4"></View>
+        </KeyboardAwareScrollView>
+
         </View>
-      </KeyboardAwareScrollView>
+      
     </View> 
   );
 };

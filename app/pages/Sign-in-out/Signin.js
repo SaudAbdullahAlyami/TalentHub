@@ -42,7 +42,7 @@ export const SignIn = ({ navigation }) => {
       <View  className="flex ">
         <View className="flex-row justify-start">
           <TouchableOpacity onPress={()=> navigation.goBack()} 
-          className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+          className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
             <ArrowLeftIcon size="20" color="black" />
           </TouchableOpacity>
         </View>
@@ -55,7 +55,9 @@ export const SignIn = ({ navigation }) => {
 
       </View>
       <View style={{borderTopLeftRadius: 50, borderTopRightRadius: 50}} 
-        className="flex-1 bg-white px-8 pt-8">
+        className="flex-1 bg-white top-4 px-8 pt-8">
+
+          
           <View className="form space-y-2">
             <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"

@@ -245,13 +245,15 @@ export const PlayerEdit = ({ navigation }) => {
         <View className="flex-row justify-start">
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
+            className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
           >
             <ArrowLeftIcon size="20" color="black" />
           </TouchableOpacity>
         </View>
+                 
+        <View className="flex-row top-9 justify-center ">
 
-        <View className="flex-row justify-center ">
+        
           <TouchableOpacity onPress={() => pickImage()}>
             <Avatar.Image
               backgroundColor="grey"
@@ -266,14 +268,15 @@ export const PlayerEdit = ({ navigation }) => {
         </View>
       </View>
 
-      <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%", marginTop: 19 }}
-        keyboardShouldPersistTaps="always"
-      >
+      
         <View
           style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-          className="flex-1 bg-white top-8 px-8 pt-8"
+          className="flex-1 bg-white top-14 px-8 pt-8"
         >
+<KeyboardAwareScrollView 
+    keyboardShouldPersistTaps="always"
+  >
+
           <View className="form space-y-2">
             <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
             <TextInput
@@ -339,7 +342,11 @@ export const PlayerEdit = ({ navigation }) => {
                 data={levelData}
                 save="value"
               />
-              <TouchableOpacity onPress={() => pickVideo()}>
+
+
+              <TouchableOpacity className="top-3 my-3 items-center	" onPress={() => pickVideo()}>
+              <Image source={require("../../assets/upvideo.png")}
+                style={{width: 150, height: 150}} />
                 <Text style={{ color: "black", textAlign: "center", top: 20 }}>
                   Insert Video
                 </Text>
@@ -354,11 +361,11 @@ export const PlayerEdit = ({ navigation }) => {
                 Save profile
               </Text>
             </TouchableOpacity>
-            <View className="bg-white my-9"></View>
-            <View className="bg-white my-9"></View>
-          </View>
+            <View className="bg-white my-12"></View>
+            <View className="bg-white my-12"></View>
+          </View></KeyboardAwareScrollView>
         </View>
-      </KeyboardAwareScrollView>
+        
     </View>
   );
 };

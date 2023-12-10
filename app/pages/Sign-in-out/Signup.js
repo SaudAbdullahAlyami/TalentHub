@@ -102,7 +102,7 @@ export const SignUp = ({ navigation }) => {
       <View className="flex ">
         <View className="flex-row justify-start">
           <TouchableOpacity onPress={() => navigation.goBack()}
-            className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+            className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
             <ArrowLeftIcon size="20" color="black" />
           </TouchableOpacity>
         </View>
@@ -110,8 +110,8 @@ export const SignUp = ({ navigation }) => {
       </View>
       <View
         style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white top-8 px-8 pt-8">
- <KeyboardAwareScrollView
+        className="flex-1 bg-white top-16 px-8 pt-8">
+           <KeyboardAwareScrollView
             keyboardShouldPersistTaps="always"
           >
 
@@ -167,8 +167,8 @@ export const SignUp = ({ navigation }) => {
           />
           {/* ffffffffffffffffffffffffffffffffffffffffffffffff */}
           {role === "Coach" && (
-             <><Text className="text-gray-700 top-4 ml-4">Club Name</Text><TextInput
-              className="p-4 bg-gray-100 top-6 text-gray-700 rounded-2xl"
+             <><Text className="text-gray-700 top-3 ml-4">Club Name</Text><TextInput
+              className="p-4 bg-gray-100 top-5 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Club Name"
@@ -180,8 +180,8 @@ export const SignUp = ({ navigation }) => {
 
           
           {role === "Coach" && (
-            <><Text className="text-gray-700 top-8 ml-4">Description</Text><TextInput
-              className="p-4 bg-gray-100 top-9 text-gray-700 rounded-2xl"
+            <><Text className="text-gray-700 top-7 ml-4">Description</Text><TextInput
+              className="p-4 bg-gray-100 top-9  text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Description"
@@ -197,7 +197,7 @@ export const SignUp = ({ navigation }) => {
             <>
             <View className=" top-2">
             <Text className="text-gray-700 top-9 ml-4">City</Text><TextInput
-              className="p-4 bg-gray-100 top-9 text-gray-700 rounded-2xl"
+              className="p-4 bg-gray-100 top-11 mb-10 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="City"
@@ -254,20 +254,20 @@ export const SignUp = ({ navigation }) => {
 
 
           <TouchableOpacity onPress={() => onRegisterPress()}
-            className="py-3 bg-yellow-400 bottom-7 rounded-xl">
+            className="py-3 bg-yellow-400 bottom-4 rounded-xl">
             <Text className="text-xl  font-bold  text-center text-gray-700" > Create account
             </Text>
           </TouchableOpacity>
 
         </View>
-        <View className="flex-row justify-center bottom-7 mt-3">
+        <View className="flex-row justify-center bottom-4 mt-3">
           <Text className="text-gray-500 font-semibold">
             Already have an account?
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
             <Text className="font-semibold text-yellow-500"> Log in</Text>
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity> 
+        </View><View className="bg-white my-9"></View>
         </KeyboardAwareScrollView>
       </View>
     </View>
@@ -303,12 +303,12 @@ const styles = StyleSheet.create({
     height: 70,
     borderRadius: 5,
     overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
+    
+  
+   
     marginLeft: 30,
     marginRight: 30,
-    paddingLeft: 16,
+ 
   },
   button: {
     backgroundColor: "#788eec",
