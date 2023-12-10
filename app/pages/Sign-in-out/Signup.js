@@ -153,9 +153,9 @@ export const SignUp = ({ navigation }) => {
 
 
 
-          <Text className="text-gray-700 top-2 ml-4">Confirm Password</Text>
+          <Text className="text-gray-700 top-1 ml-4">Confirm Password</Text>
           <TextInput
-            className="p-4 bg-gray-100 top-2 text-gray-700 rounded-2xl"
+            className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
             placeholderTextColor="#aaaaaa"
             secureTextEntry
             placeholder="Confirm Password"
@@ -166,37 +166,35 @@ export const SignUp = ({ navigation }) => {
           />
           {/* ffffffffffffffffffffffffffffffffffffffffffffffff */}
           {role === "Coach" && (
-            
-            <TextInput
-              className="p-4 bg-gray-100 top-2 text-gray-700 rounded-2xl"
+             <><Text className="text-gray-700 top-1 ml-4">Club Name</Text><TextInput
+              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Club Name"
               onChangeText={(text) => setclubName(text)}
               value={clubName}
               underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
+              autoCapitalize="none" /></>
           )}
 
-          <Text className="text-gray-700 top-1 ml-4">Description</Text>
+          
           {role === "Coach" && (
-            <TextInput
-              className="p-4 bg-gray-100 top-2 text-gray-700 rounded-2xl"
+            <><Text className="text-gray-700 top-1 ml-4">Description</Text><TextInput
+              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="Description"
               onChangeText={(text) => setDescription(text)}
               value={description}
               underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
+              autoCapitalize="none" /></>
+            
           )}
 
-          <Text className="text-gray-700 top-1 ml-4">City </Text>
+          
           {role === "Coach" && (
-            <TextInput
-              className="p-4 bg-gray-100 top-2 text-gray-700 rounded-2xl"
+            <><Text className="text-gray-700 top-1 ml-4">City</Text><TextInput
+              className="p-4 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
               secureTextEntry
               placeholder="City"
@@ -204,7 +202,7 @@ export const SignUp = ({ navigation }) => {
               value={city}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-            />
+            /></>
           )}
 
 

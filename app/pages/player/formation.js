@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text,TouchableOpacity,Image,StyleSheet } from "react-native"
 import { StatusBar } from "react-native";
 
-export const formation = ({ navigation }) => {
+export const Formation = ({ navigation }) => {
   return (
     
     <View className="flex-1" style={{backgroundColor: "#00B365"}}>

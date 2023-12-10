@@ -18,7 +18,6 @@ import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot ,updateDoc} from "firebase/firestore";
 import { db,auth,firebase } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { CoachProfile } from "../coach/profile";
 import * as ImagePicker from "expo-image-picker"
 import * as FileSystem from "expo-file-system"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
