@@ -5,16 +5,18 @@ import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
 import {Formation} from "../player/formation"
 import { CoachEdit } from "../coach/edit";
-import { CreateClub } from "../coach/CreateClub";
 import { CoachFormation } from "../coach/CoachFormation";
 import { CoachFormationAdd } from "../coach/CoachFormationAdd";
 import {PlayerProfile} from "../player/PlayerProfile"
 import { PlayerEdit } from "../player/PlayerEdit";
+import { CoachNotification } from "../coach/CoachNotification";
+import { PlayerNotification } from "../player/PlayerNotification";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
   onSnapshot,
 } from "firebase/firestore";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -59,21 +61,22 @@ const CoachFormationStack = createStackNavigator();
    )
  }
 
-
+///MMMMMMMMMMMMMAAAAAAAAAAAAAIIIIIIIIIIIIINNNNNNNNNNN
 if (type == "Player")
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerProfile" }}>
       <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
       <Tab.Screen name="Formation" component={Formation} />
+      <Tab.Screen name="PlayerNotification" component={PlayerNotification} />
     </Tab.Navigator>
     )
     else if (type == "Coach")
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfileStack" }}>
         <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
-        <Tab.Screen name="CreateClub" component={CreateClub} />
         <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
+        <Tab.Screen name="CoachNotification" component={CoachNotification} />
       </Tab.Navigator>
       )
 }

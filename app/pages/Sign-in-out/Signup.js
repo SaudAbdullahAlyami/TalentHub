@@ -170,7 +170,7 @@ export const SignUp = ({ navigation }) => {
              <><Text className="text-gray-700 top-3 ml-4">Club Name</Text><TextInput
               className="p-4 bg-gray-100 top-5 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
-              secureTextEntry
+              
               placeholder="Club Name"
               onChangeText={(text) => setclubName(text)}
               value={clubName}
@@ -183,7 +183,7 @@ export const SignUp = ({ navigation }) => {
             <><Text className="text-gray-700 top-7 ml-4">Description</Text><TextInput
               className="p-4 bg-gray-100 top-9  text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
-              secureTextEntry
+              
               placeholder="Description"
               onChangeText={(text) => setDescription(text)}
               value={description}
@@ -199,7 +199,7 @@ export const SignUp = ({ navigation }) => {
             <Text className="text-gray-700 top-9 ml-4">City</Text><TextInput
               className="p-4 bg-gray-100 top-11 mb-10 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
-              secureTextEntry
+              
               placeholder="City"
               onChangeText={(text) => setCity(text)}
               value={city}
