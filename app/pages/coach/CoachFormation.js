@@ -9,12 +9,23 @@ export const CoachFormation = ({ navigation }) => {
     <View className="flex-1 flex justify-around my-5">
 
 
+
+
         <View className="flex-row justify-center top-3" >
             <Image source={require("../../assets/field.jpg")}
                 style={{width: 350, height: 500}} />
         </View>
  
-
+        <View className="flex ">
+          <View className="flex-row justify-end top-9">
+            <TouchableOpacity
+              onPress={() => navigation.navigate("CoachFormationAdd")}
+              className="bg-yellow-400  p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
+            >
+              <Text>Add Player</Text>
+            </TouchableOpacity>
+          </View>
+          </View>
 
                 <TouchableOpacity  style={styles.posstiongk}
                     className="items-center	bottom-9 ">
@@ -103,6 +114,9 @@ export const CoachFormation = ({ navigation }) => {
                 style={{width: 40, height: 40}} />
                  <Text className="font-bold text-black">ST</Text>
                 </TouchableOpacity>
+
+                
+
 
                 </View>
 

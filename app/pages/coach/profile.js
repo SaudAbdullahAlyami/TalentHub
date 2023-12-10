@@ -53,24 +53,7 @@ export const CoachProfile = ({ navigation }) => {
   }, []);
 
 
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const loadData = async () => {
-    getDocs(collection(db, "users")).then((docSnap) => {
-      let items = [];
-      docSnap.forEach((doc) => {
-        // const data = doc.data();
-        // if (data.age < 1000) {
-        //   filteredStudents.push({ id: doc.id, ...data });
-
-        items.push({ ...doc.data(), id: doc.id });
-      });
-      setData(items);
-    });
-  };
+  
 
 
   
@@ -104,16 +87,7 @@ export const CoachProfile = ({ navigation }) => {
         
       className="flex-1 bg-white top-8 px-8 pt-8">
         <View className="form space-y-2">
-        <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>User ID: {item.fullName}</Text>
-            <Text>User Name: {item.age}</Text>
-          </View>
-        )}
         
-      />
 
 
 <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
