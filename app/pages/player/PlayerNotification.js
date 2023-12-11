@@ -82,3 +82,55 @@ export const PlayerNotification = ({ navigation }) => {
     </View>
   );
 };
+/*
+
+
+<View style={styles.playerCard}>
+        
+        <Image source={{uri: item.profileImage }} style={styles.playerImage} />
+        <Text style={styles.playerName}>{item.name}</Text>
+        <Text>sender is:{item.senderUid}</Text>
+       
+      </View>
+
+
+<View style={styles.container}>
+        <FlatList data={data}
+         renderItem={render}
+
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  playerCard: {
+    width: 120,
+    height: 180,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 8,
+    overflow: 'hidden',
+    elevation: 3, // For Android shadow
+    shadowColor: '#000', // For iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  playerImage: {
+    width: '100%',
+    height: '70%',
+    resizeMode: 'cover',
+  },
+  playerName: {
+    padding: 8,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+*/
