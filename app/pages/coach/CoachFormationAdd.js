@@ -27,8 +27,7 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 
 export const CoachFormationAdd = ({ navigation }) => {
-  const { user, handleSignOut } = useAuthentication();
-  
+
   const [data, setData] = useState([]);
   useEffect(() => {
     loadData();
@@ -49,6 +48,16 @@ export const CoachFormationAdd = ({ navigation }) => {
   };
 
 
+  const [imageURL, setImageURL] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
+    setFullName(doc.data().fullName);
+    setImageURL(doc.data().profileImage)
+  });
+
+
+
+
 const invitePlayer=async(playerUid)=>{
     try {
         if(playerUid==null){
@@ -58,9 +67,10 @@ const invitePlayer=async(playerUid)=>{
         const invitationRef = collection(db, "invitations",);
     const newInvitationDoc = await addDoc(invitationRef, {
       senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
+      senderImage:imageURL,
       receiverUid: playerUid,
-      status: "pending",
-      massage:""
+      status: "Pending",
+      massage:"The Coach "+fullName+" Wants you to join his Club"
       // Add any additional details you want to include in the invitation
     });
   
@@ -87,7 +97,7 @@ const invitePlayer=async(playerUid)=>{
         
         <Text>{item.fullName}
         </Text>
-        <Text> </Text>
+        
         <TouchableOpacity
           onPress={()=>invitePlayer(item.id)}
           className="bg-yellow-400  p-3 rounded-tr-2x1 rounded-bl-2xl ml-2"
