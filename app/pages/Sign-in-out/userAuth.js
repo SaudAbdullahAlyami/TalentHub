@@ -11,6 +11,7 @@ import {PlayerProfile} from "../player/PlayerProfile"
 import { PlayerEdit } from "../player/PlayerEdit";
 import { CoachNotification } from "../coach/CoachNotification";
 import { PlayerNotification } from "../player/PlayerNotification";
+import { PlayerFormationJoin } from "../player/PlayerFormationJoin";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -22,9 +23,10 @@ const Tab = createBottomTabNavigator();
 
 export const UserAuth = () => {
   const [type,setType]=useState('')
-
+  const [clubName,setClubName]=useState('')
   const unsub= onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setType(doc.data().role)
+    setClubName(doc.data().clubName)
   });
 //profile stack coach
   const CoachProfileStack = createStackNavigator();
@@ -61,22 +63,37 @@ const CoachFormationStack = createStackNavigator();
    )
  }
 
+
+
+
+
+
+
 ///MMMMMMMMMMMMMAAAAAAAAAAAAAIIIIIIIIIIIIINNNNNNNNNNN
-if (type == "Player")
+if (type === "Player") {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerProfile" }}>
       <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
-      <Tab.Screen name="Formation" component={Formation} />
+
+{/* if player doesn't have a team 
+    and if he has a team        */}
+      {clubName === '' ? (
+        <Tab.Screen name="PlayerFormationJoin" component={PlayerFormationJoin} />
+      ) : (
+        <Tab.Screen name="Formation" component={Formation} />
+      )}
+      
       <Tab.Screen name="PlayerNotification" component={PlayerNotification} />
     </Tab.Navigator>
-    )
-    else if (type == "Coach")
-    return (
-      <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfileStack" }}>
-        <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
-        <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
-        <Tab.Screen name="CoachNotification" component={CoachNotification} />
-      </Tab.Navigator>
-      )
+  );
+} else if (type === "Coach") {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachProfileStack" }}>
+      <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
+      <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
+      <Tab.Screen name="CoachNotification" component={CoachNotification} />
+    </Tab.Navigator>
+  );
+}
 }

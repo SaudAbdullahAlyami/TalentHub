@@ -14,12 +14,12 @@ import {
 import { Avatar } from "react-native-paper";
 import {
   doc,
-  getDocs,
+  getDocs,getDoc,
   collection,
   query,
   updateDoc,
   deleteDoc,onSnapshot,
-  where,arrayUnion
+  where,arrayUnion, setDoc
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
@@ -52,15 +52,7 @@ export const PlayerNotification = ({ navigation }) => {
   };
 
 
-  const [members, setMembers] = useState([]); 
-  const [imageURL, setImageURL] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState(null);
-  const [weight, setWeight] = useState(null);
-  const [position, setPosition] = useState(null);
-  const [level, setLevel] = useState(null);
-  
+
 
 
 
@@ -80,23 +72,45 @@ export const PlayerNotification = ({ navigation }) => {
         // Update the coach's document to add the player to the members array
         const playerRef = doc(db, "users", playerUid);
         const coachRef = doc(db, "users", coachUid);
+        
 
-        const unsubscribe = onSnapshot(playerRef, (doc) => {
-          setFullName(doc.data().fullName);
-          setAge(doc.data().age);
-          setHeight(doc.data().height);
-          setWeight(doc.data().weight);
-          setLevel(doc.data().level);
-          setImageURL(doc.data().profileImage)
-          setPosition(doc.data().position)
-          setMembers(doc.data().members);
-      });
+//retrieve Player Data
+        const playerDoc = await getDoc(playerRef);
+        const imageURL=playerDoc.data().profileImage
+          const fullName=playerDoc.data().fullName
+          const age=playerDoc.data().age
+          const height=playerDoc.data().height;
+          const weight=playerDoc.data().weight
+          const level=playerDoc.data().level
+          const position=playerDoc.data().position
+         
+        
+        
+          
 
-        await updateDoc(coachRef, {
+      
+      const coachDoc = await getDoc(coachRef);
+      const clubName=coachDoc.data().clubName
+      const description=coachDoc.data().description
+      const city=coachDoc.data().city
+      if(clubName==""){
+        console.log("clubname empty")
+      }
+
+    
+
+        await updateDoc(doc(db, "clubs",clubName), {
           members: arrayUnion({ 
             fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:imageURL,position:position
            }),
+           clubName:clubName,description:description,city:city
         });
+        console.log("Member added")
+        //here I let the player join in the team so i can use it with queries 
+        await updateDoc(playerRef, {
+          clubName:clubName
+        });
+        
 
 
       } else {
@@ -104,10 +118,11 @@ export const PlayerNotification = ({ navigation }) => {
         await updateDoc(invitationRef, { status: text });
 
         // Delete the invitation
-        await deleteInvite(inviteId);
+        
       }
 
       // Refresh the data after handling the invitation
+      await deleteInvite(inviteId);
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);
@@ -148,55 +163,3 @@ export const PlayerNotification = ({ navigation }) => {
     </View>
   );
 };
-/*
-
-
-<View style={styles.playerCard}>
-        
-        <Image source={{uri: item.profileImage }} style={styles.playerImage} />
-        <Text style={styles.playerName}>{item.name}</Text>
-        <Text>sender is:{item.senderUid}</Text>
-       
-      </View>
-
-
-<View style={styles.container}>
-        <FlatList data={data}
-         renderItem={render}
-
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  playerCard: {
-    width: 120,
-    height: 180,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    margin: 8,
-    overflow: 'hidden',
-    elevation: 3, // For Android shadow
-    shadowColor: '#000', // For iOS shadow
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-  playerImage: {
-    width: '100%',
-    height: '70%',
-    resizeMode: 'cover',
-  },
-  playerName: {
-    padding: 8,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-});
-
-
-
-*/

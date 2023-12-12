@@ -236,7 +236,7 @@ export const PlayerEdit = ({ navigation }) => {
     });
 
     console.log("Updated Successfully");
-    navigation.navigate("PlayerProfile");
+    navigation.navigate("Playerprofile");
   };
 
   return (
