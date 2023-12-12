@@ -122,7 +122,7 @@ export const CoachNotification = ({ navigation }) => {
       }
 
       // Refresh the data after handling the invitation
-      //await deleteInvite(inviteId);
+      await deleteInvite(inviteId);
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);
