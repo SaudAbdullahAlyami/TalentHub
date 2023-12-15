@@ -39,6 +39,7 @@ export const CoachFormationAdd = ({ navigation }) => {
       docSnap.forEach((doc) => {
         const dataa = doc.data();
         if (dataa.role == "Player") {
+          if(dataa.clubName=="")
           items.push({ ...doc.data(), id: doc.id });
         }
 

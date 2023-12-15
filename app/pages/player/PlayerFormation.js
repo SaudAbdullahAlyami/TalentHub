@@ -19,33 +19,40 @@ import {
   query,
   updateDoc,getDoc,
   deleteDoc,onSnapshot,
-  where,arrayUnion,arrayRemove
+  where,arrayUnion
+  ,deleteField,arrayRemove
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
-export const CoachFormation = ({ navigation }) => {
+
+export const PlayerFormation = ({ navigation }) => {
  const [members,setMembers]=useState([])
  const [clubName,setclubName]=useState("")
 
+
+
+ 
   useEffect(() => {
-  fetchData();
+    fetchData();
+  
   // Clean up the subscription when the component unmounts
   return () => {
     /* Cleanup logic if needed */
   };
 }, []);
 
-
-const fetchData = async () => {
+const fetchData = async (navigation) => {
   try {
     const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
     const userClubName = userDoc.data().clubName;
     
+
     if (userClubName) {
       const clubDoc = await getDoc(doc(db, "clubs", userClubName));
       setMembers(clubDoc.data().members);
     } else {
       console.error("User has no clubName.");
+
     }
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -53,49 +60,40 @@ const fetchData = async () => {
 };
 
 
-const deletePlayer = async (playerUid) => {
+
+const leaveTeam = async () => {
   try {
     const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
     const userClubName = userDoc.data().clubName;
 
     if (userClubName) {
-      const memberIdToRemove = playerUid;
+      const memberIdToRemove = auth.currentUser.uid; // Assuming you want to remove the current user
       const clubRef = doc(db, "clubs", userClubName);
 
       // Get the current members array
       const clubDoc = await getDoc(clubRef);
-      const currentMembers = clubDoc.data().members || []; // Ensure it's an array or default to an empty array
+      const currentMembers = clubDoc.data().members;
 
-      // Find the index of the playerUid in the array
-      const indexToRemove = currentMembers.findIndex(member => member.uid === memberIdToRemove);
+      // Remove the specified member from the array
+      const updatedMembers = currentMembers.filter(member => member.uid !== memberIdToRemove);
 
-      if (indexToRemove !== -1) {
-        // Use arrayRemove to remove the specified member from the array
-        await updateDoc(clubRef, {
-          members: arrayRemove(currentMembers[indexToRemove])
-        });
-
-        console.log("Player was deleted");
-
-        // Update the user document to remove the clubName
-        await updateDoc(doc(db, "users", playerUid), {
-          clubName: ""
-        });
-
-        fetchData(); // Assuming fetchData is a function that fetches updated data
-      } else {
-        console.error("Player not found in the members array.");
-      }
+      // Update the club document with the new members array
+      await updateDoc(clubRef, {
+        members: updatedMembers
+      });
+      console.log("Player was deleted")
+      fetchData();
+       //Update the user document to remove the clubName
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        clubName: ""
+     });
     } else {
       console.error("User has no clubName.");
     }
   } catch (error) {
-    console.error("Error deleting player:", error);
+    console.error("Error leaving team:", error);
   }
 };
-
-
-
 
   
 
@@ -104,9 +102,6 @@ const deletePlayer = async (playerUid) => {
       <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
         <Avatar.Image size={100} source={{ uri: item.profileImage }} />
         <Text>{item.fullName}</Text>
-        <TouchableOpacity onPress={()=>deletePlayer(item.uid)} >
-          <Text>Delete</Text>
-        </TouchableOpacity>
       </View>
     );
   };
@@ -123,10 +118,10 @@ const deletePlayer = async (playerUid) => {
         <View className="flex ">
           <View className="flex-row justify-end top-9">
             <TouchableOpacity
-              onPress={() => navigation.navigate("CoachFormationAdd")}
+              onPress={() => leaveTeam(navigation)}
               className="bg-yellow-400  p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
             >
-              <Text>Add Player</Text>
+              <Text>Leave Team</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { createStackNavigator, TransitionPresets, } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "../Setting/settings.screen";
 import { CoachProfile } from "../coach/profile";
-import {Formation} from "../player/formation"
+import {PlayerFormation} from "../player/PlayerFormation"
 import { CoachEdit } from "../coach/edit";
 import { CoachFormation } from "../coach/CoachFormation";
 import { CoachFormationAdd } from "../coach/CoachFormationAdd";
@@ -22,12 +22,17 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const UserAuth = () => {
+
   const [type,setType]=useState('')
-  const [clubName,setClubName]=useState('')
-  const unsub= onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
+  var [clubName,setClubName]=useState('')
+  const sub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setType(doc.data().role)
     setClubName(doc.data().clubName)
   });
+
+  
+
+
 //profile stack coach
   const CoachProfileStack = createStackNavigator();
   function CoachProfilestack ({ navigation }){
@@ -81,7 +86,7 @@ if (type === "Player") {
       {clubName === '' ? (
         <Tab.Screen name="PlayerFormationJoin" component={PlayerFormationJoin} />
       ) : (
-        <Tab.Screen name="Formation" component={Formation} />
+        <Tab.Screen name="PlayerFormation" component={PlayerFormation} />
       )}
       
       <Tab.Screen name="PlayerNotification" component={PlayerNotification} />

@@ -111,12 +111,7 @@ const invitePlayer=async(CoachUid)=>{
   return (
     <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-row justify-start">
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          className="bg-yellow-400 top-5 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
-        >
-          <ArrowLeftIcon size="20" color="black" />
-        </TouchableOpacity>
+       
       </View>
 
       <View

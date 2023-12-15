@@ -58,7 +58,7 @@ export const CoachNotification = ({ navigation }) => {
 
   const deleteInvite = async (inviteId) => {
     await deleteDoc(doc(db, "invitations", inviteId));
-    console.log("Deleted Successfully");
+    console.log("Deleted notification Successfully");
   };
 
   const handleInvite = async (text, inviteId, playerUid,coachUid) => {
@@ -83,7 +83,7 @@ export const CoachNotification = ({ navigation }) => {
           const weight=playerDoc.data().weight
           const level=playerDoc.data().level
           const position=playerDoc.data().position
-         
+         const uid=playerDoc.data().uid
         
         
           
@@ -101,7 +101,7 @@ export const CoachNotification = ({ navigation }) => {
 
         await updateDoc(doc(db, "clubs",clubName), {
           members: arrayUnion({ 
-            fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:imageURL,position:position
+            fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:imageURL,position:position,uid:uid
            }),
            clubName:clubName,description:description,city:city
         });
@@ -122,7 +122,7 @@ export const CoachNotification = ({ navigation }) => {
       }
 
       // Refresh the data after handling the invitation
-      await deleteInvite(inviteId);
+      //await deleteInvite(inviteId);
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);
