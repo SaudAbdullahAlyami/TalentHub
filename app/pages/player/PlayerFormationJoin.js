@@ -21,10 +21,12 @@ import {
   collection,
   setDoc,
   getDocs,
+  getDoc,
   addDoc,
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
+
 
 export const PlayerFormationJoin = ({ navigation }) => {
 
@@ -48,12 +50,9 @@ export const PlayerFormationJoin = ({ navigation }) => {
   };
 
 
-  const [imageURL, setImageURL] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
-    setFullName(doc.data().fullName);
-    setImageURL(doc.data().profileImage)
-  });
+ 
+
+ 
 
 
 
@@ -63,14 +62,20 @@ const invitePlayer=async(CoachUid)=>{
         if(CoachUid==null){
             console.log("CoachUid == null")
         }
+        const playerDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        const fullName=playerDoc.data().fullName;
+        const imageURL=playerDoc.data().profileImage;
+        const position=playerDoc.data().position;
+        
         // Create an invitation in Firestore
         const invitationRef = collection(db, "invitations",);
     const newInvitationDoc = await addDoc(invitationRef, {
       senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
+      senderName:fullName,
       senderImage:imageURL,
+      senderPosition:position,
       receiverUid: CoachUid,
       status: "Pending",
-      massage:"The Player "+fullName+" Wants to join in your Club"
       // Add any additional details you want to include in the invitation
     });
   
@@ -78,7 +83,7 @@ const invitePlayer=async(CoachUid)=>{
         // You can use FCM or another notification method here
   
         // Optional: Update UI or provide feedback to the coach
-        console.log("Invitation sent successfully!");
+        console.log("Joining sent successfully!");
       } catch (error) {
         console.error("Error sending invitation:", error);
       }

@@ -23,6 +23,7 @@ import {
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
+import { CoachFormation } from "./CoachFormation";
 
 export const CoachNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -123,6 +124,7 @@ export const CoachNotification = ({ navigation }) => {
 
       // Refresh the data after handling the invitation
       //await deleteInvite(inviteId);
+      
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);
@@ -133,7 +135,8 @@ export const CoachNotification = ({ navigation }) => {
     return (
       <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
         <Avatar.Image size={100} source={{ uri: item.senderImage }} />
-        <Text>{item.massage}</Text>
+        <Text>{item.senderName}</Text>
+        <Text>{item.senderPosition}</Text>
         <Button
           title="Accept"
           color={"green"}

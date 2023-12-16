@@ -21,7 +21,7 @@ import {
   collection,
   setDoc,
   getDocs,
-  addDoc,
+  addDoc,getDoc
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
@@ -49,13 +49,7 @@ export const CoachFormationAdd = ({ navigation }) => {
   };
 
 
-  const [imageURL, setImageURL] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
-    setFullName(doc.data().fullName);
-    setImageURL(doc.data().profileImage)
-  });
-
+  
 
 
 
@@ -64,14 +58,18 @@ const invitePlayer=async(playerUid)=>{
         if(playerUid==null){
             console.log("Player uid == null")
         }
+        const coachDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        const fullName=coachDoc.data().fullName;
+        const imageURL=coachDoc.data().profileImage;
         // Create an invitation in Firestore
         const invitationRef = collection(db, "invitations",);
     const newInvitationDoc = await addDoc(invitationRef, {
-      senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
+      senderUid: auth.currentUser.uid, 
+      senderName:fullName,
       senderImage:imageURL,
       receiverUid: playerUid,
       status: "Pending",
-      massage:"The Coach "+fullName+" Wants you to join his Club"
+      
       // Add any additional details you want to include in the invitation
     });
   

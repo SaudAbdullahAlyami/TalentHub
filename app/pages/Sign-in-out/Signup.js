@@ -76,7 +76,7 @@ export const SignUp = ({ navigation }) => {
             city: city,
             role: role
           });
-          console.log("Added Successfully");
+          console.log("The Player Was Added Successfully");
 
           setValue({
             ...value,

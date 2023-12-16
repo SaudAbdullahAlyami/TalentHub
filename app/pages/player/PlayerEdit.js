@@ -55,6 +55,7 @@ export const PlayerEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
+      if(imageuri){
       const { uri } = await FileSystem.getInfoAsync(imageuri);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -98,7 +99,7 @@ export const PlayerEdit = ({ navigation }) => {
           });
         }
       );
-
+    }
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -126,6 +127,7 @@ export const PlayerEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
+      if (video){
       const { uri } = await FileSystem.getInfoAsync(video);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -152,9 +154,7 @@ export const PlayerEdit = ({ navigation }) => {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-          // progrss function ....
-        },
+        (snapshot) => {},
         (error) => {
           // error function ....
           console.log(error);
@@ -169,9 +169,10 @@ export const PlayerEdit = ({ navigation }) => {
           });
         }
       );
+      }
       setUploading(false);
     } catch (error) {
-      console.error(error);
+      console.log("upload "+error);
       setUploading(false);
     }
   };

@@ -50,6 +50,7 @@ export const CoachEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
+      if (imageuri){
       const { uri } = await FileSystem.getInfoAsync(imageuri);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -93,7 +94,7 @@ export const CoachEdit = ({ navigation }) => {
             profileImage:downloadURL});
           
         });})
-      
+    }
       setUploading(false);
       
     } catch (error) {
@@ -128,7 +129,7 @@ export const CoachEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
-      
+      if (video){
       const { uri } = await FileSystem.getInfoAsync(video);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -171,7 +172,7 @@ export const CoachEdit = ({ navigation }) => {
             profileVideo:downloadURL});
           
         });})
-      
+      }
       setUploading(false);
       
     } catch (error) {
@@ -213,13 +214,18 @@ export const CoachEdit = ({ navigation }) => {
    
     // Listen for changes in the Firestore document
     const unsubscribe = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
-      setFullName(doc.data().fullName);
-      setAge(doc.data().age);
-      setHeight(doc.data().height);
-      setWeight(doc.data().weight);
-      setLevel(doc.data().level);
-      setImage(doc.data().profileImage)
-    });
+      
+      setFullName(doc.data().fullName || "");
+      setAge(doc.data().age || "");
+      setHeight(doc.data().height || "");
+      setWeight(doc.data().weight || "");
+      setLevel(doc.data().level || "");
+      setImage(doc.data().profileImage || "");
+
+    
+  });
+
+ 
 
     
 

@@ -48,7 +48,7 @@ const fetchData = async () => {
       console.error("User has no clubName.");
     }
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.log("Error fetching data:", error);
   }
 };
 
