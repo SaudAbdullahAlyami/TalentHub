@@ -11,6 +11,7 @@ import {
   StatusBar,
   FlatList,
   ScrollView,
+  Alert,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from "react-native-paper";
@@ -62,7 +63,9 @@ const invitePlayer=async(CoachUid)=>{
         if(CoachUid==null){
             console.log("CoachUid == null")
         }
+        
         const playerDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if(playerDoc.data().fullName!=""||playerDoc.data().profileImage!=""||playerDoc.data().position!=""){
         const fullName=playerDoc.data().fullName;
         const imageURL=playerDoc.data().profileImage;
         const position=playerDoc.data().position;
@@ -78,14 +81,18 @@ const invitePlayer=async(CoachUid)=>{
       status: "Pending",
       // Add any additional details you want to include in the invitation
     });
-  
+  }else{
+    Alert.alert("Empty Fields", "Please fill in all required fields.");
+
+  }
         // Notify the player about the invitation
         // You can use FCM or another notification method here
   
         // Optional: Update UI or provide feedback to the coach
         console.log("Joining sent successfully!");
       } catch (error) {
-        console.error("Error sending invitation:", error);
+        Alert.alert(" Update your profile", "Please fill all required fields.");
+        console.log(error)
       }
 }
 

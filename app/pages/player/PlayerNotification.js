@@ -143,6 +143,9 @@ export const PlayerNotification = ({ navigation }) => {
           });
           console.log("New club created successfully");
         }
+        await updateDoc(playerRef, {
+          clubName: clubName,
+        });
       } else {
         // Update the invitation status to "Rejected"
         //await updateDoc(invitationRef, { status: text });

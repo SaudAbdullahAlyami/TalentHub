@@ -8,7 +8,7 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
-  StatusBar,
+  StatusBar,Alert,
   ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -224,21 +224,31 @@ export const PlayerEdit = ({ navigation }) => {
     return () => unsubscribe();
   }, []);
 
-  const updateData = () => {
-    uploadPhoto(); //to upload the photo
-    uploadVideo();
-    updateDoc(doc(db, "users", auth.currentUser.uid), {
-      fullName: fullName,
-      age: age,
-      height: height,
-      weight: weight,
-      level: level,
-      position: position,
-    });
-
-    console.log("Updated Successfully");
-    navigation.navigate("Playerprofile");
+  const updateData = async () => {
+    try {
+      // Assume uploadPhoto and uploadVideo are asynchronous functions
+      await uploadPhoto(); // to upload the photo
+      await uploadVideo();
+  
+      // Update user document in Firestore
+      await updateDoc(doc(db, "users", auth.currentUser.uid), {
+        fullName: fullName,
+        age: age,
+        height: height,
+        weight: weight,
+        level: level,
+        position: position,
+      });
+  
+      console.log("Updated Successfully");
+      navigation.navigate("Playerprofile");
+    } catch (error) {
+      console.log("Error updating data:", error);
+      Alert.alert("Fill data","Please fill all the data")
+      // Handle the error, you might want to show an alert or take other actions
+    }
   };
+  
 
   return (
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
@@ -248,7 +258,9 @@ export const PlayerEdit = ({ navigation }) => {
             onPress={() => navigation.goBack()}
             className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
           >
-            <ArrowLeftIcon size="20" color="black" />
+            <ArrowLeftIcon size="20" color="black"
+            s
+            />
           </TouchableOpacity>
         </View>
                  
@@ -288,6 +300,8 @@ export const PlayerEdit = ({ navigation }) => {
               value={fullName}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              
+              
             />
 
             <Text className="text-gray-700 top-1 ml-4">Age</Text>

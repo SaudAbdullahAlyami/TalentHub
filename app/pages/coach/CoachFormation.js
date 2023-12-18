@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  FlatList,
+  FlatList, RefreshControl,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -96,8 +96,12 @@ const deletePlayer = async (playerUid) => {
 
 
 
-
-  
+const [isRefreshing, setIsRefreshing] = useState(false);
+const onRefresh = useCallback(async () => {
+  setIsRefreshing(true);
+  await fetchData();
+  setIsRefreshing(false);
+}, []);
 
   const render = ({ item }) => {
     return (
@@ -226,7 +230,11 @@ const deletePlayer = async (playerUid) => {
       
 
       <View style={styles.container}>
-        <FlatList data={members} renderItem={render} horizontal />
+        <FlatList data={members} renderItem={render} horizontal 
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+        />
       </View>
     </View>
   );

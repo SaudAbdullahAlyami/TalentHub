@@ -25,6 +25,8 @@ export const SignUp = ({ navigation }) => {
   const [clubName, setclubName] = useState("");
   const [description, setDescription] = useState("");
   const [city, setCity] = useState("");
+  const [profileImage, setProfileImage] = useState("https://thinksport.com.au/wp-content/uploads/2020/01/avatar-.jpg");
+
 
   const [value, setValue] = React.useState({
     email: "",
@@ -74,7 +76,8 @@ export const SignUp = ({ navigation }) => {
             clubName: clubName,
             description: description,
             city: city,
-            role: role
+            role: role,
+            profileImage:profileImage,
           });
           console.log("The Player Was Added Successfully");
 
