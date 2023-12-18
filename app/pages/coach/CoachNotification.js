@@ -134,7 +134,18 @@ export const CoachNotification = ({ navigation }) => {
   const render = ({ item }) => {
     return (
       <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("CoachFormationstack", {
+              screen: "CoachVisitProfile",
+              params: { itemId: item.senderUid },
+            })
+          }
+        >
         <Avatar.Image size={100} source={{ uri: item.senderImage }} />
+        </TouchableOpacity>
+
+
         <Text>{item.senderName}</Text>
         <Text>{item.senderPosition}</Text>
         <Button

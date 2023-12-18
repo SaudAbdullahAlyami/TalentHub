@@ -258,9 +258,7 @@ export const PlayerEdit = ({ navigation }) => {
             onPress={() => navigation.goBack()}
             className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
           >
-            <ArrowLeftIcon size="20" color="black"
-            s
-            />
+            <ArrowLeftIcon size="20" color="black"/>
           </TouchableOpacity>
         </View>
                  

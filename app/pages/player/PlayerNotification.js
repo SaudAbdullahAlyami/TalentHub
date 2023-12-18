@@ -170,7 +170,9 @@ export const PlayerNotification = ({ navigation }) => {
           marginBottom: 16,
         }}
       >
+        <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.senderUid}})}>
         <Avatar.Image size={100} source={{ uri: item.senderImage }} />
+        </TouchableOpacity>
         <Text>Coach :{item.senderName}</Text>
 
         <Button

@@ -101,11 +101,14 @@ const invitePlayer=async(CoachUid)=>{
     
     return (
       <View className="p-4 bg-gray-100 top-1 text-gray-700 flex-row rounded-2xl ">
+        {/* NEW navigate through stack (: */}
+        <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.id}})}>
         <Avatar.Image
           backgroundColor="grey"
           size={150}
           source={{ uri: item.profileImage }}
         />
+        </TouchableOpacity>
         
         <Text>{item.fullName}
         </Text>

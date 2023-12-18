@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  FlatList, RefreshControl,
+  FlatList,
+  RefreshControl,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -17,98 +18,116 @@ import {
   getDocs,
   collection,
   query,
-  updateDoc,getDoc,
-  deleteDoc,onSnapshot,
-  where,arrayUnion,arrayRemove
+  updateDoc,
+  getDoc,
+  deleteDoc,
+  onSnapshot,
+  where,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 export const CoachFormation = ({ navigation }) => {
- const [members,setMembers]=useState([])
- const [clubName,setclubName]=useState("")
+  const [members, setMembers] = useState([]);
+  const [clubName, setclubName] = useState("");
 
   useEffect(() => {
-  fetchData();
-  // Clean up the subscription when the component unmounts
-  return () => {
-    /* Cleanup logic if needed */
-  };
-}, []);
+    fetchData();
+    // Clean up the subscription when the component unmounts
+    return () => {
+      /* Cleanup logic if needed */
+    };
+  }, []);
 
+  const fetchData = async () => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const userClubName = userDoc.data().clubName;
 
-const fetchData = async () => {
-  try {
-    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-    const userClubName = userDoc.data().clubName;
-    
-    if (userClubName) {
-      const clubDoc = await getDoc(doc(db, "clubs", userClubName));
-      setMembers(clubDoc.data().members);
-    } else {
-      console.error("User has no clubName.");
-    }
-  } catch (error) {
-    console.log("Error fetching data:", error);
-  }
-};
-
-
-const deletePlayer = async (playerUid) => {
-  try {
-    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-    const userClubName = userDoc.data().clubName;
-
-    if (userClubName) {
-      const memberIdToRemove = playerUid;
-      const clubRef = doc(db, "clubs", userClubName);
-
-      // Get the current members array
-      const clubDoc = await getDoc(clubRef);
-      const currentMembers = clubDoc.data().members || []; // Ensure it's an array or default to an empty array
-
-      // Find the index of the playerUid in the array
-      const indexToRemove = currentMembers.findIndex(member => member.uid === memberIdToRemove);
-
-      if (indexToRemove !== -1) {
-        // Use arrayRemove to remove the specified member from the array
-        await updateDoc(clubRef, {
-          members: arrayRemove(currentMembers[indexToRemove])
-        });
-
-        console.log("Player was deleted");
-
-        // Update the user document to remove the clubName
-        await updateDoc(doc(db, "users", playerUid), {
-          clubName: ""
-        });
-
-        fetchData(); // Assuming fetchData is a function that fetches updated data
+      if (userClubName) {
+        const clubDoc = await getDoc(doc(db, "clubs", userClubName));
+        setMembers(clubDoc.data().members);
       } else {
-        console.error("Player not found in the members array.");
+        console.error("User has no clubName.");
       }
-    } else {
-      console.error("User has no clubName.");
+    } catch (error) {
+      console.log("Error fetching data:", error);
     }
-  } catch (error) {
-    console.error("Error deleting player:", error);
-  }
-};
+  };
 
+  const deletePlayer = async (playerUid) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const userClubName = userDoc.data().clubName;
 
+      if (userClubName) {
+        const memberIdToRemove = playerUid;
+        const clubRef = doc(db, "clubs", userClubName);
 
-const [isRefreshing, setIsRefreshing] = useState(false);
-const onRefresh = useCallback(async () => {
-  setIsRefreshing(true);
-  await fetchData();
-  setIsRefreshing(false);
-}, []);
+        // Get the current members array
+        const clubDoc = await getDoc(clubRef);
+        const currentMembers = clubDoc.data().members || []; // Ensure it's an array or default to an empty array
+
+        // Find the index of the playerUid in the array
+        const indexToRemove = currentMembers.findIndex(
+          (member) => member.uid === memberIdToRemove
+        );
+
+        if (indexToRemove !== -1) {
+          // Use arrayRemove to remove the specified member from the array
+          await updateDoc(clubRef, {
+            members: arrayRemove(currentMembers[indexToRemove]),
+          });
+
+          console.log("Player was deleted");
+
+          // Update the user document to remove the clubName
+          await updateDoc(doc(db, "users", playerUid), {
+            clubName: "",
+          });
+
+          fetchData(); // Assuming fetchData is a function that fetches updated data
+        } else {
+          console.error("Player not found in the members array.");
+        }
+      } else {
+        console.error("User has no clubName.");
+      }
+    } catch (error) {
+      console.error("Error deleting player:", error);
+    }
+  };
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const onRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await fetchData();
+    setIsRefreshing(false);
+  }, []);
 
   const render = ({ item }) => {
     return (
-      <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
-        <Avatar.Image size={100} source={{ uri: item.profileImage }} />
+      <View
+        style={{
+          padding: 16,
+          backgroundColor: "#f0f0f0",
+          borderRadius: 16,
+          marginBottom: 16,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("CoachFormationstack", {
+              screen: "CoachVisitProfile",
+              params: { itemId: item.uid },
+            })
+          }
+        >
+          <Avatar.Image size={100} source={{ uri: item.profileImage }} />
+        </TouchableOpacity>
         <Text>{item.fullName}</Text>
-        <TouchableOpacity onPress={()=>deletePlayer(item.uid)} >
+        <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
           <Text>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -227,13 +246,14 @@ const onRefresh = useCallback(async () => {
         </TouchableOpacity>
       </View>
 
-      
-
       <View style={styles.container}>
-        <FlatList data={members} renderItem={render} horizontal 
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
+        <FlatList
+          data={members}
+          renderItem={render}
+          horizontal
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
         />
       </View>
     </View>
