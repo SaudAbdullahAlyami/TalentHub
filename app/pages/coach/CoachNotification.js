@@ -133,7 +133,13 @@ export const CoachNotification = ({ navigation }) => {
 
   const render = ({ item }) => {
     return (
-      <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
+     
+
+      
+      <View style={styles.hi}>
+
+
+        <View  style={styles.pico} >
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("CoachFormationstack", {
@@ -142,38 +148,89 @@ export const CoachNotification = ({ navigation }) => {
             })
           }
         >
-        <Avatar.Image size={100} source={{ uri: item.senderImage }} />
+        <Avatar.Image size={75} source={{ uri: item.senderImage }} />
         </TouchableOpacity>
+        </View>
+        
+        <Text style={styles.text1} className="font-bold  ">{item.senderName}</Text>
+        <Text  style={styles.text2} className="font-bold  ">{item.senderPosition}</Text>
+
+          <TouchableOpacity  style={styles.button1}
+               onPress={() => handleInvite("Accepted", item.id, item.senderUid, item.receiverUid)}
+                className="py-3 bg-green-500 self-end	 right-2  w-28 rounded-xl">
+                    <Text className=" text-center text-white">Accept</Text>
+            </TouchableOpacity>
+           
+
+            <TouchableOpacity
+              onPress={() => handleInvite("Rejected", item.id, item.senderUid)}
+                className="py-3 bg-red-500 w-28 self-end right-2 bottom-20  	rounded-xl">
+                    <Text className="text-  text-center text-white">Reject</Text>
+            </TouchableOpacity>
 
 
-        <Text>{item.senderName}</Text>
-        <Text>{item.senderPosition}</Text>
-        <Button
-          title="Accept"
-          color={"green"}
-          onPress={() => handleInvite("Accepted", item.id, item.senderUid, item.receiverUid)}
-        />
-        <Button
-          title="Reject"
-          color={"red"}
-          onPress={() => handleInvite("Rejected", item.id, item.senderUid)}
-        />
+
+       
       </View>
     );
   };
 
   return (
-    <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-      <View className="flex-row justify-start"></View>
 
-      <View
-        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white top-8 px-8 pt-8"
-      >
+
+
+    <View className="flex-1 " style={{ backgroundColor: "#00B365" }}>
+      
+
+      <View  className="flex-row justify-center top-10">
+          <Image source={require("../../assets/coachnoti.png")} 
+          style={{width:150, height: 150}} />
+        </View>
+
+        <View style={{backgroundColor:"white",paddingBottom:10}} 
+        className="flex-1 bg-white top-16">
+
+     
+       
+       
+      
         <FlatList data={data} renderItem={render} />
 
-        <View className="bg-white my-9"></View>
-      </View>
+       
+      
+    </View>
+    <View className="bg-white my-6"></View>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  pico: {
+ top:32,
+  paddingLeft:18,
+ 
+   
+  },
+  text1:{
+    fontSize:18,
+    left:100,
+    bottom:35,
+    
+   
+  },
+  text2:{
+    fontSize:14,
+    left:100,
+    bottom:30,
+  },
+  button1:{
+
+    bottom:85,
+
+  },
+  hi:{
+    borderBottomColor: 'ddd',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+   height:140,
+    marginLeft: 10,
+  }
+  });

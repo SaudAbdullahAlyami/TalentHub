@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  FlatList,
+  FlatList,ImageBackground
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -100,8 +100,11 @@ const leaveTeam = async () => {
   const render = ({ item }) => {
     return (
       <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
+        
+    
         <Avatar.Image size={100} source={{ uri: item.profileImage }} />
         <Text>{item.fullName}</Text>
+        
       </View>
     );
   };
@@ -117,6 +120,8 @@ const leaveTeam = async () => {
 
         <View className="flex ">
           <View className="flex-row justify-end top-9">
+
+            
             <TouchableOpacity
               onPress={() => leaveTeam(navigation)}
               className="bg-yellow-400  p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
