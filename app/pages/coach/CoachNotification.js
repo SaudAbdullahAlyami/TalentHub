@@ -153,7 +153,7 @@ export const CoachNotification = ({ navigation }) => {
         </View>
         
         <Text style={styles.text1} className="font-bold  ">{item.senderName}</Text>
-        <Text  style={styles.text2} className="font-bold  ">{item.senderPosition}</Text>
+        <Text  style={styles.text2} >Player position: <Text style={{ fontWeight: 'bold' }}>{item.senderPosition}</Text></Text>
 
           <TouchableOpacity  style={styles.button1}
                onPress={() => handleInvite("Accepted", item.id, item.senderUid, item.receiverUid)}
@@ -212,15 +212,15 @@ const styles = StyleSheet.create({
   },
   text1:{
     fontSize:18,
-    left:100,
-    bottom:35,
+    left:103,
+    bottom:30,
     
    
   },
   text2:{
     fontSize:14,
-    left:100,
-    bottom:30,
+    left:103,
+    bottom:25,
   },
   button1:{
 

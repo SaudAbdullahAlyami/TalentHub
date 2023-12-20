@@ -117,7 +117,7 @@ export const CoachFormation = ({ navigation }) => {
 
       >
             <ImageBackground   source={require("../../assets/ss.png")} 
-          style={{width: 100, height: 150}}> 
+          style={{width: 110, height: 160}}> 
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("CoachFormationstack", {
@@ -128,10 +128,16 @@ export const CoachFormation = ({ navigation }) => {
         >
           <Avatar.Image className="self-center top-2" size={70} source={{ uri: item.profileImage }} />
         </TouchableOpacity>
-        <Text>{item.fullName}</Text>
-        <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
-          <Text>Delete</Text>
-        </TouchableOpacity></ImageBackground>
+
+
+        <Text className="font-bold top-5 self-center">{item.fullName}</Text>
+        <Text className="font-bold top-7 self-center">{item.position}</Text>
+
+
+        {/* <TouchableOpacity onPress={() => deletePlayer(item.uid)}> */}
+          {/* <Text  className="font-bold top-5 text-gre self-center">Delete</Text> */}
+        {/* </TouchableOpacity> */}
+        </ImageBackground>
       </View>
     );
   };
@@ -236,9 +242,9 @@ export const CoachFormation = ({ navigation }) => {
 
       </View>
       <View>
-      <TouchableOpacity
+              <TouchableOpacity
               onPress={() => navigation.navigate("CoachFormationAdd")}
-              className="bg-yellow-400 bottom-4 w-28 self-end p-2 rounded-t-2xl rounded-b-2xl ml-2"
+              className="bg-yellow-400 bottom-2 w-28 self-end p-2 rounded-t-2xl rounded-b-2xl ml-2"
             >
 
               <Text className="self-center  font-bold">Add player</Text>
