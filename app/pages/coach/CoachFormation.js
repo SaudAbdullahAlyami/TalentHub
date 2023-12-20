@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
 
   },
   posstionLb: {
-    bottom:135,
+    bottom:'29%',
     left:60,
     width:40,
     height:40,
