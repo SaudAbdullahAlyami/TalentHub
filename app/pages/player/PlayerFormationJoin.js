@@ -34,6 +34,7 @@ export const PlayerFormationJoin = ({ navigation }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     loadData();
+ 
   }, [loadData]);
 
   const loadData = async () => {
@@ -47,6 +48,7 @@ export const PlayerFormationJoin = ({ navigation }) => {
 
       });
       setData(items);
+      setFilteredData(items);
     });
   };
 
@@ -95,48 +97,133 @@ const invitePlayer=async(CoachUid)=>{
         console.log(error)
       }
 }
+const [filteredData, setFilteredData] = useState(data);
+const [searchText, setSearchText] = useState('');
 
+const handleSearch = (text) => {
+  setSearchText(text);
+  const filtered = data.filter((item) =>
+    item.fullName.toLowerCase().includes(text.toLowerCase())
+  );
+  setFilteredData(filtered);
+};
 
   const render = ({ item }) => {
     
     return (
-      <View className="p-4 bg-gray-100 top-1 text-gray-700 flex-row rounded-2xl ">
+      <View style={styles.hi}>
+
+
+      
         {/* NEW navigate through stack (: */}
+
+        <View  style={styles.pico}>
         <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.id}})}>
         <Avatar.Image
           backgroundColor="grey"
-          size={150}
+          size={75}
           source={{ uri: item.profileImage }}
         />
         </TouchableOpacity>
-        
-        <Text>{item.fullName}
+        </View>
+
+
+
+        <Text style={styles.text1} className="font-bold  ">{item.clubName}
         </Text>
-        
-        <TouchableOpacity
+        <Text  style={styles.text2} >Team coach: <Text style={{ fontWeight: 'bold' }}>{item.fullName}</Text></Text>
+
+        <Text style={styles.text3} className="mb-3">{item.description}
+        </Text>
+           
+
+           <View style={styles.button1}>
+        <TouchableOpacity   
           onPress={()=>invitePlayer(item.id)}
-          className="bg-yellow-400  p-3 rounded-tr-2x1 rounded-bl-2xl ml-2"
+          className="bg-yellow-400  py-3 	 w-28 rounded-xl"
         >
-          <Text>Ask to join</Text>
+          <Text  className=" text-center ">Ask to join</Text>
         </TouchableOpacity>
+        </View>
+
       </View>
     );
   };
 
   return (
-    <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-      <View className="flex-row justify-start">
-       
-      </View>
+    <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
+     
+      <View  className="flex-row justify-center top-10">
+          <Image source={require("../../assets/teams.png")} 
+          style={{width:300, height: 150}} />
+          
+        </View>
+        
+        
+        <TextInput style={styles.searchBar}
+        className="p-3 bg-gray-100 text-gray-700  w-60 self-center rounded-2xl mb-3"
+        placeholder="Search for a team ..."
+         underlineColorAndroid="transparent"
+        autoCapitalize="none"
+        value={searchText}
+        onChangeText={handleSearch}
+      />
 
-      <View
-        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white top-8 px-8 pt-8"
-      >
-        <FlatList data={data} renderItem={render} />
+<View style={{backgroundColor:"white",paddingBottom:10}} 
+        className="flex-1 bg-white top-16">
+
+
+        <FlatList data={filteredData} renderItem={render}  keyExtractor={(item) => item.fullName}/>
 
         <View className="bg-white my-9"></View>
       </View>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  pico: {
+ top:32,
+  paddingLeft:18,
+ 
+   
+  },
+  text1:{
+    fontSize:18,
+    left:103,
+    bottom:30,
+    
+   
+  },
+  text2:{
+    fontSize:14,
+    left:103,
+    bottom:25,
+  },
+  text3:{
+    fontSize:14,
+   marginBottom:15,
+   marginTop:5,
+  },
+  button1:{
+
+    position: 'absolute',
+    top: 30, // Adjust the top position as needed
+    right: 10, // Adjust the right position as needed
+  
+    padding: 10,
+    borderRadius: 5,
+   
+  },
+  hi:{
+    borderBottomColor: 'ddd',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  
+    marginLeft: 10,
+   
+  },
+  searchBar: {
+    top:60,
+    width:300,
+  },
+
+  });

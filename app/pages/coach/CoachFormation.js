@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   
   },
   posstionCm1: {
-    bottom:180,
+    bottom:'40%',
     alignSelf:'center',
     width:40,
     height:40,

@@ -195,7 +195,7 @@ export const PlayerEdit = ({ navigation }) => {
 
   const positionData = [
     { key: "GK", value: "GK" },
-    { key: "CD", value: "CD" },
+    { key: "CB", value: "CB" },
     { key: "RB", value: "RB" },
     { key: "LB", value: "LB" },
     { key: "CM", value: "CM" },

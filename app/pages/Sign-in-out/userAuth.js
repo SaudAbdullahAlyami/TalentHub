@@ -14,6 +14,7 @@ import { PlayerNotification } from "../player/PlayerNotification";
 import { PlayerFormationJoin } from "../player/PlayerFormationJoin";
 import { PlayerVisitProfile } from "../player/PlayerVisitProfile";
 import { CoachVisitProfile } from "../coach/CoachVisitProfile";
+import { PlayerRecommendationPage } from "../coach/PlayerRecommendationPage";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -106,6 +107,7 @@ else if (type === "Coach") {
       <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
       <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
       <Tab.Screen name="CoachNotification" component={CoachNotification} />
+      <Tab.Screen name="PlayerRecommendationPage" component={PlayerRecommendationPage} />
     </Tab.Navigator>
   );
 }
