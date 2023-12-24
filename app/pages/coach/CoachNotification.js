@@ -157,7 +157,7 @@ export const CoachNotification = ({ navigation }) => {
 
           <TouchableOpacity  style={styles.button1}
                onPress={() => handleInvite("Accepted", item.id, item.senderUid, item.receiverUid)}
-                className="py-3 bg-green-500 self-end	 right-2  w-28 rounded-xl">
+                className="py-3  self-end	 right-2  w-28 rounded-xl">
                     <Text className=" text-center text-white">Accept</Text>
             </TouchableOpacity>
            
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     bottom:25,
   },
   button1:{
-
+    backgroundColor:'#00b365',
     bottom:85,
 
   },

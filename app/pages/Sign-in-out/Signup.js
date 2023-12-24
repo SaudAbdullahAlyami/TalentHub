@@ -169,7 +169,7 @@ export const SignUp = ({ navigation }) => {
             autoCapitalize="none"
           />
           {/* ffffffffffffffffffffffffffffffffffffffffffffffff */}
-          {role === "Coach" && (
+          {(role == "Coach"||role == "Scout") && (
              <><Text className="text-gray-700 top-3 ml-4">Club Name</Text><TextInput
               className="p-4 bg-gray-100 top-5 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
@@ -247,6 +247,48 @@ export const SignUp = ({ navigation }) => {
                   }}
                 />
                 <Text>Coach</Text>
+
+                
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="text-gray-700  left-40 ml-4" onPress={() => handleRadioButtonPress('Scout')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: 'black',
+                    marginRight: 10,
+                    backgroundColor:
+                      role === 'Scout' ? '#00b365' : 'transparent',
+                  }}
+                />
+                <Text>Scout</Text>
+
+                
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity className="text-gray-700 bottom-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Tournament Organizer')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: 'black',
+                    marginRight: 10,
+                    backgroundColor:
+                      role === 'Tournament Organizer' ? '#00b365' : 'transparent',
+                  }}
+                />
+                <Text>tournament organizer</Text>
+
+                
               </View>
             </TouchableOpacity>
 

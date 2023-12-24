@@ -15,6 +15,13 @@ import { PlayerFormationJoin } from "../player/PlayerFormationJoin";
 import { PlayerVisitProfile } from "../player/PlayerVisitProfile";
 import { CoachVisitProfile } from "../coach/CoachVisitProfile";
 import { PlayerRecommendationPage } from "../coach/PlayerRecommendationPage";
+import { ScoutProfile } from "../scout/ScoutProfile";
+import { ScoutEdit } from "../scout/ScoutEdit";
+import { TournamentEdit } from "../tournament/TournamentEdit";
+import { TournamentProfile } from "../tournament/TournamentProfile";
+import { CreateTournament } from "../tournament/CreateTournament";
+import { ExistingTournament } from "../tournament/ExistingTounament";
+import { TournamentNotification } from "../tournament/TournamentNotification";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -78,7 +85,30 @@ const CoachFormationStack = createStackNavigator();
 
 
 
+// profile Scout
+const ScoutProfilestack = createStackNavigator();
+function ScoutProfileStack ({ navigation }){
+  return(
+    <ScoutProfilestack.Navigator screenOptions={{ headerShown: false, initialRouteName: "ScoutProfile" }}>
+      <ScoutProfilestack.Screen name="ScoutProfile" component={ScoutProfile}/>
+      <ScoutProfilestack.Screen name="ScoutEdit" component={ScoutEdit}/>
+    </ScoutProfilestack.Navigator>
+  )
+}
 
+
+
+
+// profile Tournament
+const TournamentProfilestack = createStackNavigator();
+function TournamentProfileStack ({ navigation }){
+  return(
+    <TournamentProfilestack.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentProfile" }}>
+      <TournamentProfilestack.Screen name="TournamentProfile" component={TournamentProfile}/>
+      <TournamentProfilestack.Screen name="TournamentEdit" component={TournamentEdit}/>
+    </TournamentProfilestack.Navigator>
+  )
+}
 
 
 ///MMMMMMMMMMMMMAAAAAAAAAAAAAIIIIIIIIIIIIINNNNNNNNNNN
@@ -108,6 +138,28 @@ else if (type === "Coach") {
       <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
       <Tab.Screen name="CoachNotification" component={CoachNotification} />
       <Tab.Screen name="PlayerRecommendationPage" component={PlayerRecommendationPage} />
+    </Tab.Navigator>
+  );
+}
+
+else if (type === "Scout") {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "ScoutProfileStack" }}>
+      <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
+      <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
+      <Tab.Screen name="Rating" component={ScoutProfileStack} />
+    </Tab.Navigator>
+  );
+}
+
+
+else if (type === "Tournament Organizer") {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentProfileStack" }}>
+      <Tab.Screen name="TournamentProfileStack" component={TournamentProfileStack} />
+      <Tab.Screen name="CreateTournament" component={CreateTournament} />
+      <Tab.Screen name="ExistingTournament" component={ExistingTournament} />
+      <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
     </Tab.Navigator>
   );
 }

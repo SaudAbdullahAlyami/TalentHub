@@ -26,6 +26,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
+
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 export const CoachFormation = ({ navigation }) => {
@@ -116,7 +117,7 @@ export const CoachFormation = ({ navigation }) => {
       <View className="mr-3"
 
       >
-            <ImageBackground   source={require("../../assets/ss.png")} 
+            <ImageBackground   source={require("../../assets/bk1.png")} 
           style={{width: 110, height: 160}}> 
         <TouchableOpacity
           onPress={() =>
@@ -130,13 +131,15 @@ export const CoachFormation = ({ navigation }) => {
         </TouchableOpacity>
 
 
-        <Text className="font-bold top-5 self-center">{item.fullName}</Text>
-        <Text className="font-bold top-7 self-center">{item.position}</Text>
+        <View style={styles.container}>
+      <Text style={styles.fullName}>{item.fullName}</Text>
+      <Text style={styles.position}>{item.position}</Text>
+    </View>
 
 
-        {/* <TouchableOpacity onPress={() => deletePlayer(item.uid)}> */}
-          {/* <Text  className="font-bold top-5 text-gre self-center">Delete</Text> */}
-        {/* </TouchableOpacity> */}
+         <TouchableOpacity onPress={() => deletePlayer(item.uid)}> 
+           <Text  className="font-bold top-5 text-gre self-center">Delete</Text> 
+        </TouchableOpacity> 
         </ImageBackground>
       </View>
     );
@@ -269,10 +272,22 @@ export const CoachFormation = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 
-  container:{
- 
-
-  },
+  
+    container: {
+      alignItems: 'center', // Center items horizontally
+      marginTop: '5%',      // 5% of the screen height margin from the top
+    },
+    fullName: {
+      fontSize: 16,          // Example font size
+      fontWeight: 'bold',
+      marginBottom: '2%',    // 2% of the screen height margin at the bottom
+    },
+    position: {
+      fontSize: 14,          // Example font size
+      fontWeight: 'bold',
+      marginTop: '2%',       // 2% of the screen height margin at the top
+    },
+  
   posstionLb: {
     bottom:'29%',
     left:60,
