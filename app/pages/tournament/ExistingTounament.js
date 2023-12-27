@@ -29,27 +29,30 @@ export const ExistingTournament = ({ navigation }) => {
     }, []);
     
     const fetchData = async (navigation) => {
-        try {
-            const tournamentOrgnaizer = await getDoc(doc(db, "users", auth.currentUser.uid));
-            const tournamentName=tournamentOrgnaizer.data().tournamentName;
-
-            const tournamentDoc = await getDoc(doc(db, "tournament", tournamentName));
+      const tournamentOrganizer = doc(db, "users", auth.currentUser.uid);
+      const tournamentOrganizerUnsubscribe = onSnapshot(tournamentOrganizer, async (orgDoc) => {
+        if (orgDoc.exists()) {
+          const tournamentName = orgDoc.data().tournamentName;
       
-            if (tournamentDoc.exists()) {
-              const tournamentData = tournamentDoc.data();
+          const tournamentDoc = doc(db, "tournament", tournamentName);
+          const tournamentUnsubscribe = onSnapshot(tournamentDoc, (docSnapshot) => {
+            if (docSnapshot.exists()) {
+              const tournamentData = docSnapshot.data();
               if (tournamentData.teams) {
                 setTeams(tournamentData.teams);
-                console.log("Teams fetched")
+                console.log("Teams updated in real-time");
               }
             } else {
               console.log("Tournament document does not exist");
             }
-
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        };
-
+          });
+        } else {
+          console.log("Tournament organizer document does not exist");
+        }
+      });
+      
+    
+    }
 
 
 
@@ -58,17 +61,21 @@ export const ExistingTournament = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Teams List</Text>
       <FlatList
-        data={teams}
-        keyExtractor={(item) => item.name}
-        renderItem={({ item }) => (
-          <View style={styles.teamContainer}>
-            <Text style={styles.teamName}>{item.name}</Text>
-            <Text style={styles.playersCount}>
-              Players Count: {item.players.length}
-            </Text>
-          </View>
-        )}
-      />
+  data={teams}
+  keyExtractor={(item) => item.name}
+  renderItem={({ item }) => (
+    <View style={styles.teamContainer}>
+      <Text style={styles.teamName}>{item.name}</Text>
+      {item.players.length > 0 && (
+        <Text style={styles.playersCount}>
+          First Player Age: {item.players[0].age}
+          First Player Age: {item.players[1].age}
+        </Text>
+      )}
+    </View>
+  )}
+/>
+
     </View>
   );
 };

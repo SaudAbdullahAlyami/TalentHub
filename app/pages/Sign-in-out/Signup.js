@@ -78,6 +78,7 @@ export const SignUp = ({ navigation }) => {
             city: city,
             role: role,
             profileImage:profileImage,
+            tournamet:""
           });
           console.log("The Player Was Added Successfully");
 

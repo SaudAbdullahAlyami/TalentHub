@@ -142,10 +142,7 @@ export const CoachNotification = ({ navigation }) => {
         <View  style={styles.pico} >
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("CoachFormationstack", {
-              screen: "CoachVisitProfile",
-              params: { itemId: item.senderUid },
-            })
+            navigation.navigate("CoachFormationstack", {  params: { itemId: item.senderUid }, })
           }
         >
         <Avatar.Image size={75} source={{ uri: item.senderImage }} />
