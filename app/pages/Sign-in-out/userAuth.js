@@ -23,6 +23,7 @@ import { CreateTournament } from "../tournament/CreateTournament";
 import { ExistingTournament } from "../tournament/ExistingTounament";
 import { TournamentNotification } from "../tournament/TournamentNotification";
 import { CoachJoiningTournament } from "../coach/CoachJoiningTournament";
+import { TournamentOrgRating } from "../tournament/TournamentOrgRating";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -167,6 +168,7 @@ else if (type === "Tournament Organizer") {
       <Tab.Screen name="ExistingTournament" component={ExistingTournament} />
       )}
       <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
+      <Tab.Screen name="TournamentOrgRating" component={TournamentOrgRating} />
     </Tab.Navigator>
   );
 }

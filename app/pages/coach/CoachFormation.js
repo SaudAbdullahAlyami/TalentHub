@@ -114,11 +114,11 @@ export const CoachFormation = ({ navigation }) => {
 
   const render = ({ item }) => {
     return (
-      <View className="mr-3"
+      <View className=""
 
       >
-            <ImageBackground   source={require("../../assets/bk1.png")} 
-          style={{width: 110, height: 160}}> 
+            <ImageBackground   source={require("../../assets/shir.png")} 
+          style={{width: 140, height: 120}}> 
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("CoachFormationstack", {
@@ -127,132 +127,140 @@ export const CoachFormation = ({ navigation }) => {
             })
           }
         >
-          <Avatar.Image className="self-center top-2" size={70} source={{ uri: item.profileImage }} />
-        </TouchableOpacity>
+          
+        
 
 
         <View style={styles.container}>
       <Text style={styles.fullName}>{item.fullName}</Text>
       <Text style={styles.position}>{item.position}</Text>
+      
     </View>
 
+    </TouchableOpacity>
 
-         <TouchableOpacity onPress={() => deletePlayer(item.uid)}> 
+
+
+
+
+         {/* <TouchableOpacity onPress={() => deletePlayer(item.uid)}> 
            <Text  className="font-bold top-5 text-gre self-center">Delete</Text> 
-        </TouchableOpacity> 
+        </TouchableOpacity>  */}
         </ImageBackground>
+
+
+
+        
       </View>
     );
   };
+
+
+
+
   return (
     <View className="flex-1" style={{backgroundColor: "#00B365"}}>
-    <View className="flex-1 flex justify-around my-5">
+    <View className="flex-1 ">
 
 
-        <View className="flex-row justify-center top-7" >
-            <Image source={require("../../assets/field.jpg")}
-                style={{width: 315, height: 450}} />
+        <View className=" self-center top-6" >
+            <Image source={require("../../assets/FF2.png")}
+                style={{width: 340, height: 480}} />
         </View>
- 
-
-        <TouchableOpacity  style={styles.posstiongk}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold text-black">GK</Text>
-                </TouchableOpacity>
-                
-
-
-                <TouchableOpacity style={styles.posstionLb}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">LB</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionRb}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">RB</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={styles.posstionCb1}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CB</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionCb2}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CB</Text>
-                </TouchableOpacity>
-                   
-
-                <TouchableOpacity style={styles.posstionCm1}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CM</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionCm2}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold text-black">CM</Text>
-                </TouchableOpacity>
-               
-
-
-                <TouchableOpacity style={styles.posstionCm3}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CM</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionLw}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">LW</Text>
-                </TouchableOpacity>
- 
-
-                <TouchableOpacity style={styles.posstionRw}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">RW</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionSt}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold text-black">ST</Text>
-                </TouchableOpacity>
-
       </View>
+
+    
+
+
+
       <View>
-              <TouchableOpacity
+      <TouchableOpacity  style={styles.posstionSt}> 
+<Text className=" self-center  font-bold" style={{top:"105%"}}>player11</Text>
+</TouchableOpacity>
+
+
+      <TouchableOpacity  style={styles.posstionRw}> 
+<Text className=" self-center  font-bold" style={{top:"95%"}}>player10</Text>
+</TouchableOpacity>
+
+
+
+
+      <TouchableOpacity  style={styles.posstionLw}> 
+<Text className=" self-center  font-bold" style={{top:"95%"}}>player9</Text>
+</TouchableOpacity>
+
+
+
+
+      <TouchableOpacity  style={styles.posstionCm3}> 
+<Text className=" self-center  font-bold" style={{top:"95%"}}>player8</Text>
+</TouchableOpacity>
+
+      <TouchableOpacity  style={styles.posstionCm2}> 
+<Text className=" self-center  font-bold" style={{top:"95%"}}>player7</Text>
+</TouchableOpacity>
+
+
+
+      <TouchableOpacity  style={styles.posstionCm1}> 
+<Text className=" self-center  font-bold" style={{top:"85%"}}>player6</Text>
+</TouchableOpacity>
+
+
+      <TouchableOpacity  style={styles.posstionRb}> 
+<Text className=" self-center  font-bold" style={{top:"90%"}}>player5</Text>
+</TouchableOpacity>
+
+
+      <TouchableOpacity  style={styles.posstionLb}> 
+<Text className=" self-center  font-bold" style={{top:"90%"}}>player4</Text>
+</TouchableOpacity>
+
+
+
+<TouchableOpacity  style={styles.posstionCb2}> 
+<Text className=" self-center  font-bold" style={{top:"80%"}}>player3</Text>
+</TouchableOpacity>
+
+<TouchableOpacity  style={styles.posstionCb1}> 
+<Text className=" self-center  font-bold" style={{top:"79%"}}>player2</Text>
+</TouchableOpacity>
+
+<TouchableOpacity  style={styles.posstiongk}> 
+<Text className=" self-center  font-bold" style={{top:"80%"}}>player1</Text>
+</TouchableOpacity>
+</View>
+
+
+
+
+
+
+
+
+
+              <TouchableOpacity style={{bottom:"20%"}}
               onPress={() => navigation.navigate("CoachFormationAdd")}
-              className="bg-yellow-400 bottom-2 w-28 self-end p-2 rounded-t-2xl rounded-b-2xl ml-2"
+              className="bg-yellow-400 w-28 self-end p-2 rounded-t-2xl rounded-b-2xl ml-2"
             >
 
               <Text className="self-center  font-bold">Add player</Text>
             </TouchableOpacity>
-            </View>
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
 
       <View style={styles.container}>
         <FlatList
@@ -274,95 +282,113 @@ const styles = StyleSheet.create({
 
   
     container: {
-      alignItems: 'center', // Center items horizontally
-      marginTop: '5%',      // 5% of the screen height margin from the top
+           
+      bottom:"18%"    // 5% of the screen height margin from the top
     },
     fullName: {
-      fontSize: 16,          // Example font size
+      fontSize: 15,          // Example font size
       fontWeight: 'bold',
-      marginBottom: '2%',    // 2% of the screen height margin at the bottom
+      top:"44%",
+      marginBottom: '2%', 
+      alignSelf:"center"   // 2% of the screen height margin at the bottom
     },
     position: {
-      fontSize: 14,          // Example font size
+      fontSize: 35,  
+              // Example font size
       fontWeight: 'bold',
-      marginTop: '2%',       // 2% of the screen height margin at the top
+      marginTop: '2%',  
+      top:"40%",
+      alignSelf:"center"     // 2% of the screen height margin at the top
     },
   
   posstionLb: {
-    bottom:'29%',
-    left:60,
-    width:40,
-    height:40,
+    width:70,
+    left:"13%",
+    bottom:'20%',
+    height:60,
+    
     
   },
   posstiongk: {
-    
-    width:40,
-    height:40,
-    
+    width:70,
+    right:"1%",
+    bottom:'25%',
+    height:60,
+     
     alignSelf:'center'
   },
   posstionRb: {
-    bottom:140,
-    left:314,
-    width:40,
-    height:40,
+    width:70,
+    left:"69%",
+    bottom:'11%',
+    height:60,
+   
    
   },
   posstionCb1: {
-    bottom:90,
-    left:245,
-    width:40,
-    height:40,
-    
+    width:70,
+    right:"14%",
+    height:60,
+   
+    bottom:"28%",
+    alignSelf:'center'
   },
   posstionCb2: {
-    bottom:94,
-    left:130,
-    width:40,
-    height:40,
+    width:70,
+    left:"13%",
+    height:60,
+    
+    bottom:"19%",
+    alignSelf:'center'
   
   },
   posstionCm1: {
-    bottom:'40%',
-    alignSelf:'center',
-    width:40,
-    height:40,
-   
+    width:70,
+    right:"1%",
+    bottom:'10%',
+    height:60,
+    
+      alignSelf:'center'
   },
   posstionCm2: {
-    bottom:255,
-    width:40,
-    left:110,
-    height:40,
+    width:70,
+    left:"20%",
+    bottom:'8%',
+    height:60,
+    
    
     
   },
   posstionCm3: {
-    bottom:259,
-    left:263,
-    width:40,
-    height:40,
+    width:70,
+    left:"62%",
+    top:'1%',
+    height:60,
+   
     
   },
   posstionLw: {
-    bottom:345,
-    left:65,
-    width:40,
-    height:40,
+    width:70,
+    left:"14%",
+    bottom:'7%',
+    height:60,
+   
     
   },
   posstionRw: {
-    bottom:348,
-    left:310,
-    width:40,
-    height:40,
+    width:70,
+    left:"66%",
+    top:'2%',
+    height:60,
+    
  
   },
   posstionSt: {
-    bottom:375,
-    width:40,
-    height:40,
+    width:70,
+    right:"1%",
+    top:'4%',
+    height:60,
+    
    
     alignSelf:'center',
   },
