@@ -17,6 +17,8 @@ import { CoachVisitProfile } from "../coach/CoachVisitProfile";
 import { PlayerRecommendationPage } from "../coach/PlayerRecommendationPage";
 import { ScoutProfile } from "../scout/ScoutProfile";
 import { ScoutEdit } from "../scout/ScoutEdit";
+import { AddingPlayersManualy } from "../coach/AddingPlayersManualy";
+import { AddplayerToformation } from "../coach/AddplayerToformation";
 import { TournamentEdit } from "../tournament/TournamentEdit";
 import { TournamentProfile } from "../tournament/TournamentProfile";
 import { CreateTournament } from "../tournament/CreateTournament";
@@ -63,6 +65,8 @@ const CoachFormationStack = createStackNavigator();
       <CoachFormationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachFormation" }}>
         <CoachFormationStack.Screen name="CoachFormation" component={CoachFormation}/>
         <CoachFormationStack.Screen name="CoachFormationAdd" component={CoachFormationAdd}/>
+        <CoachFormationStack.Screen name="AddplayerToformation" component={AddplayerToformation}/>
+        <CoachFormationStack.Screen name="AddingPlayersManualy" component={AddingPlayersManualy}/>
         <PlayerProfilestack.Screen name="CoachVisitProfile" component={CoachVisitProfile}/>
       </CoachFormationStack.Navigator>
     )

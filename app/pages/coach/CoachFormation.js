@@ -155,93 +155,18 @@ export const CoachFormation = ({ navigation }) => {
         </View>
  
 
-        <TouchableOpacity  style={styles.posstiongk}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold text-black">GK</Text>
-                </TouchableOpacity>
-                
+        
 
-
-                <TouchableOpacity style={styles.posstionLb}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">LB</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionRb}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">RB</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={styles.posstionCb1}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CB</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionCb2}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CB</Text>
-                </TouchableOpacity>
-                   
-
-                <TouchableOpacity style={styles.posstionCm1}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CM</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionCm2}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold text-black">CM</Text>
-                </TouchableOpacity>
-               
-
-
-                <TouchableOpacity style={styles.posstionCm3}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">CM</Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity style={styles.posstionLw}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">LW</Text>
-                </TouchableOpacity>
- 
-
-                <TouchableOpacity style={styles.posstionRw}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
-                style={{width: 40, height: 40}} />
-                 <Text className="font-bold  text-black">RW</Text>
-                </TouchableOpacity>
-
-
+                {/* Here ------------------------------------------------------------- */}
                 <TouchableOpacity style={styles.posstionSt}
-                    className="items-center">
-                  <Image source={require("../../assets/player.png")}
+                    className="items-center"
+                    onPress={() => navigation.navigate("AddplayerToformation",{index: 1})}>
+                  <Image source={require("../../assets/player.png",)}
                 style={{width: 40, height: 40}} />
                  <Text className="font-bold text-black">ST</Text>
                 </TouchableOpacity>
+                {/* Here ------------------------------------------------------------- */}
+
 
       </View>
       <View>

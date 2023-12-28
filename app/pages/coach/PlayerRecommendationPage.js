@@ -9,15 +9,19 @@ export const PlayerRecommendationPage  = ({ navigation }) => {
 
   const handleGetRecommendations = async () => {
     try {
+      if (!position) {
+        console.error('Position is required');
+        return;
+      }
+      
       const data = {
-        "name": "Player3",
+        "fullName": "Player3",
         "position": position, // Use dynamic user input
         "height": 185,
         "weight": 80,
-        "rating": 9
-        
+        "age": 9
       };
-      
+  
       console.log(position);
       const response = await axios.post('http://10.0.2.2:5000/get_recommendations', data, {
         timeout: 5000,
@@ -32,6 +36,7 @@ export const PlayerRecommendationPage  = ({ navigation }) => {
       console.error('Error fetching recommendations:', error);
     }
   };
+  
 
   return (
     <View style={{ padding: 20 }}>
@@ -48,7 +53,7 @@ export const PlayerRecommendationPage  = ({ navigation }) => {
         <View>
           <Text style={{ fontSize: 18, marginTop: 20 }}>Recommendations:</Text>
           {recommendations.map((player, index) => (
-            <Text key={index}>{player.name} - Position: {player.position}, Rating: {player.rating}</Text>
+            <Text key={index}>{player.fullName} - Position: {player.position}, Age: {player.age},Hight : {player.height}, weight: {player.weight}</Text>
           ))}
         </View>
       )}
