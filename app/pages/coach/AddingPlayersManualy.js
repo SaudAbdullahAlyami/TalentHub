@@ -115,7 +115,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
             console.log("Player document does not exist!");
             return;
         }
-    
+        
         const clubName = playerDoc.data().clubName;
         const clubRef = doc(db, "clubs", clubName);
         const clubDoc = await getDoc(clubRef);

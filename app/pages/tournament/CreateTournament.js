@@ -22,6 +22,7 @@ export const CreateTournament = ({ navigation }) => {
   const [city, setCity] = useState(null);
 
   const [tournamentName, setTournamentName] = useState("");
+  const [description, setDescription] = useState("");
   const [prize, setPrize] = useState(null);
   const [teams, setTeams] = useState(
     Array.from({ length: 16 }, (_, index) => ({
@@ -38,6 +39,8 @@ export const CreateTournament = ({ navigation }) => {
         teams:teams,
         prize: prize,
         city: city,
+        description:description,
+        arrayIndex:0
       });
 
 
@@ -92,6 +95,17 @@ export const CreateTournament = ({ navigation }) => {
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setCity(text)}
               value={city}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
+
+            <Text className="text-gray-700 top-1 ml-4">description</Text>
+            <TextInput
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              placeholder="vnsdivns vidsojvno"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setDescription(text)}
+              value={description}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />

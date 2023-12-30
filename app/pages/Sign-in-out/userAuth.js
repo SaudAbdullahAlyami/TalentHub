@@ -24,6 +24,8 @@ import { TournamentProfile } from "../tournament/TournamentProfile";
 import { CreateTournament } from "../tournament/CreateTournament";
 import { ExistingTournament } from "../tournament/ExistingTounament";
 import { TournamentNotification } from "../tournament/TournamentNotification";
+import { CoachJoiningTournament } from "../coach/CoachJoiningTournament";
+import { TournamentOrgRating } from "../tournament/TournamentOrgRating";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -39,9 +41,11 @@ export const UserAuth = () => {
 
   const [type,setType]=useState('')
   var [clubName,setClubName]=useState('')
+  var [tournament,setTournament]=useState('')
   const sub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setType(doc.data().role)
     setClubName(doc.data().clubName)
+    setTournament(doc.data().tournamentName)
   });
 
   
@@ -142,6 +146,7 @@ else if (type === "Coach") {
       <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
       <Tab.Screen name="CoachNotification" component={CoachNotification} />
       <Tab.Screen name="PlayerRecommendationPage" component={PlayerRecommendationPage} />
+      <Tab.Screen name="CoachJoiningTournament" component={CoachJoiningTournament} />
     </Tab.Navigator>
   );
 }
@@ -161,9 +166,13 @@ else if (type === "Tournament Organizer") {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentProfileStack" }}>
       <Tab.Screen name="TournamentProfileStack" component={TournamentProfileStack} />
+      {tournament === '' ? (
       <Tab.Screen name="CreateTournament" component={CreateTournament} />
+      ) : (
       <Tab.Screen name="ExistingTournament" component={ExistingTournament} />
+      )}
       <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
+      <Tab.Screen name="TournamentOrgRating" component={TournamentOrgRating} />
     </Tab.Navigator>
   );
 }

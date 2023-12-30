@@ -45,17 +45,14 @@ export const TournamentNotification = ({ navigation }) => {
       const querySnapshot = await getDocs(q);
       const invitations = [];
       querySnapshot.forEach((doc) => {
-        
-          invitations.push({ ...doc.data(), id: doc.id });
-        
-
+        invitations.push({ ...doc.data(), id: doc.id });
       });
 
       setData(invitations);
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
-    loadData()
+    loadData();
   };
 
   const deleteInvite = async (inviteId) => {
@@ -63,7 +60,12 @@ export const TournamentNotification = ({ navigation }) => {
     console.log("Deleted Successfully");
   };
 
-  const handleInvite = async (text, inviteId, coachUid, TournamentOrgnaizerUid) => {
+  const handleInvite = async (
+    text,
+    inviteId,
+    coachUid,
+    TournamentOrgnaizerUid
+  ) => {
     try {
       const invitationRef = doc(db, "invitations", inviteId);
 
@@ -72,39 +74,60 @@ export const TournamentNotification = ({ navigation }) => {
         await updateDoc(invitationRef, { status: text });
 
         // Update the coach's document to add the player to the members array
-        const TournamentOrgnaizer = getDoc(doc(db, "users", TournamentOrgnaizerUid));
-        const tourName=(await TournamentOrgnaizer).data().TournamentName;
+        const TournamentOrgnaizer = getDoc(
+          doc(db, "users", TournamentOrgnaizerUid)
+        );
+        const tourName = (await TournamentOrgnaizer).data().tournamentName;
 
         const coachRef = doc(db, "users", coachUid);
-        const coach=await getDoc(coachRef);
-        const clubName=coach.data().clubName;
+        const coach = await getDoc(coachRef);
+        const clubName = coach.data().clubName;
 
-        await updateDoc(coachRef,{
-            tournamet:tourName
-        })
+        await updateDoc(coachRef, {
+          tournamet: tourName,
+        });
+        console.log("tournament added to coach");
 
         const clubRef = doc(db, "clubs", clubName);
         const clubDoc = await getDoc(clubRef);
-        const players=clubDoc.data().members
-        
-            await updateDoc(clubRef,{
-                tournamet:tourName
-            })
-          console.log("Member added");
-          
-          await updateDoc(clubRef, {
-            tournamet:tourName
-          });
 
-          await updateDoc(doc(db, "tournament", tourName), {
-           name: clubName,
-           players:players
-        
-          });
-      
-          
-          console.log("New club joined in tournament");
-        
+        await updateDoc(clubRef, {
+          tournamet: tourName,
+        });
+        console.log("tournament added to team");
+
+        const players = clubDoc.data().members;
+        const tournamentDoc = await getDoc(doc(db, "tournament", tourName));
+
+        if (tournamentDoc.exists()) {
+          const teamExists = tournamentDoc
+            .data()
+            .teams.some((team) => team.name === clubName);
+
+          if (!teamExists) {
+            // Get the current teams array
+            const currentTeams = tournamentDoc.data().teams;
+            const arrayIndex = tournamentDoc.data().arrayIndex;
+
+            // Modify the team at the specified index
+            currentTeams[arrayIndex] = {
+              name: clubName,
+              players: players,
+            };
+
+            // Update the entire teams array in the document
+            await updateDoc(doc(db, "tournament", tourName), {
+              teams: currentTeams,
+              arrayIndex: arrayIndex + 1,
+            });
+            console.log("New club joined in tournament");
+          }else{
+            console.log("The team already exist");
+          }
+        } else {
+          console.log("Tournament document does not exist");
+        }
+
         
       } else {
         // Update the invitation status to "Rejected"
@@ -130,8 +153,15 @@ export const TournamentNotification = ({ navigation }) => {
           marginBottom: 16,
         }}
       >
-        <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.senderUid}})}>
-        <Avatar.Image size={100} source={{ uri: item.senderImage }} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("PlayerProfile", {
+              screen: "PlayerVisitProfile",
+              params: { itemId: item.senderUid },
+            })
+          }
+        >
+          <Avatar.Image size={100} source={{ uri: item.senderImage }} />
         </TouchableOpacity>
         <Text>Coach :{item.senderName}</Text>
 
@@ -145,7 +175,9 @@ export const TournamentNotification = ({ navigation }) => {
         <Button
           title="Reject"
           color={"red"}
-          onPress={() => handleInvite("Rejected", item.id, item.senderUid,item.receiverUid)}
+          onPress={() =>
+            handleInvite("Rejected", item.id, item.senderUid, item.receiverUid)
+          }
         />
       </View>
     );

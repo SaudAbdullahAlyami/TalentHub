@@ -29,7 +29,7 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 
 
-export const PlayerFormationJoin = ({ navigation }) => {
+export const CoachJoiningTournament = ({ navigation }) => {
 
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -42,7 +42,7 @@ export const PlayerFormationJoin = ({ navigation }) => {
       let items = [];
       docSnap.forEach((doc) => {
         const dataa = doc.data();
-        if (dataa.role == "Coach") {
+        if (dataa.role == "Tournament Organizer") {
           items.push({ ...doc.data(), id: doc.id });
         }
 
@@ -60,17 +60,17 @@ export const PlayerFormationJoin = ({ navigation }) => {
 
 
 
-const invitePlayer=async(CoachUid)=>{
+const invitePlayer=async(TourId)=>{
     try {
-        if(CoachUid==null){
-            console.log("CoachUid == null")
+        if(TourId==null){
+            console.log("TourId == null")
         }
         
-        const playerDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-        if(playerDoc.data().fullName!=""||playerDoc.data().profileImage!=""||playerDoc.data().position!=""){
-        const fullName=playerDoc.data().fullName;
-        const imageURL=playerDoc.data().profileImage;
-        const position=playerDoc.data().position;
+        const coachDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if(coachDoc.data().fullName!=""||coachDoc.data().profileImage!=""||coachDoc.data().position!=""){
+        const fullName=coachDoc.data().fullName;
+        const imageURL=coachDoc.data().profileImage;
+        
         
         // Create an invitation in Firestore
         const invitationRef = collection(db, "invitations",);
@@ -78,8 +78,7 @@ const invitePlayer=async(CoachUid)=>{
       senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
       senderName:fullName,
       senderImage:imageURL,
-      senderPosition:position,
-      receiverUid: CoachUid,
+      receiverUid: TourId,
       status: "Pending",
       // Add any additional details you want to include in the invitation
     });
@@ -89,21 +88,22 @@ const invitePlayer=async(CoachUid)=>{
   }
         // Notify the player about the invitation
         // You can use FCM or another notification method here
-  
-        // Optional: Update UI or provide feedback to the coach
         console.log("Joining sent successfully!");
       } catch (error) {
         Alert.alert(" Update your profile", "Please fill all required fields.");
         console.log(error)
       }
 }
+
+
+
 const [filteredData, setFilteredData] = useState(data);
 const [searchText, setSearchText] = useState('');
 
 const handleSearch = (text) => {
   setSearchText(text);
   const filtered = data.filter((item) =>
-    item.clubName.toLowerCase().includes(text.toLowerCase())
+    item.tournamentName.toLowerCase().includes(text.toLowerCase())
   );
   setFilteredData(filtered);
 };
@@ -129,9 +129,9 @@ const handleSearch = (text) => {
 
 
 
-        <Text style={styles.text1} className="font-bold  ">{item.clubName}
+        <Text style={styles.text1} className="font-bold  ">{item.tournamentName}
         </Text>
-        <Text  style={styles.text2} >Team coach: <Text style={{ fontWeight: 'bold' }}>{item.fullName}</Text></Text>
+        <Text  style={styles.text2} >Tournament Organizer <Text style={{ fontWeight: 'bold' }}>{item.fullName}</Text></Text>
 
         <Text style={styles.text3} className="mb-3">{item.description}
         </Text>
@@ -173,7 +173,7 @@ const handleSearch = (text) => {
         className="flex-1 bg-white top-16">
 
 
-        <FlatList data={filteredData} renderItem={render}  keyExtractor={(item) => item.clubName}/>
+        <FlatList data={filteredData} renderItem={render}  keyExtractor={(item) => item.tournamentName}/>
 
         <View className="bg-white my-9"></View>
       </View>
