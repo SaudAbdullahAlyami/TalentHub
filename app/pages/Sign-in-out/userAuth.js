@@ -114,6 +114,16 @@ function TournamentProfileStack ({ navigation }){
   )
 }
 
+const ExistingTournamentstack = createStackNavigator();
+function ExistingTournamentStack ({ navigation }){
+  return(
+    <ExistingTournamentstack.Navigator screenOptions={{ headerShown: false, initialRouteName: "ExistingTournament" }}>
+      <ExistingTournamentstack.Screen name="ExistingTournament" component={ExistingTournament}/>
+      <ExistingTournamentstack.Screen name="TournamentOrgRating" component={TournamentOrgRating} />
+    </ExistingTournamentstack.Navigator>
+  )
+}
+
 
 ///MMMMMMMMMMMMMAAAAAAAAAAAAAIIIIIIIIIIIIINNNNNNNNNNN
 if (type === "Player") {
@@ -165,10 +175,10 @@ else if (type === "Tournament Organizer") {
       {tournament === '' ? (
       <Tab.Screen name="CreateTournament" component={CreateTournament} />
       ) : (
-      <Tab.Screen name="ExistingTournament" component={ExistingTournament} />
+      <Tab.Screen name="ExistingTournamentStack" component={ExistingTournamentStack} />
       )}
       <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
-      <Tab.Screen name="TournamentOrgRating" component={TournamentOrgRating} />
+      
     </Tab.Navigator>
   );
 }
