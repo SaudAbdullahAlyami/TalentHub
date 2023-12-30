@@ -1,119 +1,230 @@
+import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
+  Button,
   FlatList,
 } from "react-native";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db, auth } from "../../component/config/config";
+import { db, auth, firebase } from "../../component/config/config";
 
-export const TournamentOrgRating = ({ navigation }) => {
-  const [teams, setTeams] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-
-    // Clean up the subscription when the component unmounts
-    return () => {
-      // Add any cleanup code here
-    };
-  }, []);
-
-  const fetchData = async () => {
-    const tournamentOrganizer = doc(db, "users", auth.currentUser.uid);
-    const tournamentOrganizerUnsubscribe = onSnapshot(
-      tournamentOrganizer,
-      async (orgDoc) => {
-        if (orgDoc.exists()) {
-          const tournamentName = orgDoc.data().tournamentName;
-
-          const tournamentDoc = doc(db, "tournament", tournamentName);
-          const tournamentUnsubscribe = onSnapshot(
-            tournamentDoc,
-            (docSnapshot) => {
-              if (docSnapshot.exists()) {
-                const tournamentData = docSnapshot.data();
-                if (tournamentData.teams) {
-                  setTeams(tournamentData.teams);
-                  console.log("Teams updated in real-time");
-                }
-              } else {
-                console.log("Tournament document does not exist");
-              }
-            }
-          );
-        } else {
-          console.log("Tournament organizer document does not exist");
-        }
+export const TournamentOrgRating = ({ route, navigation }) => {
+  const { team1, team2, matchIndex } = route.params;
+  var whoWin = "";
+  const [team1Goals, setTeam1Goals] = useState(0);
+  const [team2Goals, setTeam2Goals] = useState(0);
+  const [player1Ratings, setPlayer1Ratings] = useState(team1.players);
+  const [player2Ratings, setPlayer2Ratings] = useState(team2.players);
+  const [goal, setGoal] = useState(0);
+  const [rating, setRating] = useState(0);
+  const handleSave = async () => {
+    try {
+      if (team1Goals > team2Goals) {
+        whoWin = team1.name;
+      } else if (team1Goals < team2Goals) {
+        whoWin = team2.name;
       }
+
+      const tournamentOrganizerRef = doc(db, "users", auth.currentUser.uid);
+
+      const unsubscribeOrganizer = onSnapshot(
+        tournamentOrganizerRef,
+        async (orgDoc) => {
+          if (orgDoc.exists()) {
+            const tournamentName = orgDoc.data().tournamentName;
+
+            const tournamentRef = doc(db, "tournament", tournamentName);
+
+            // Fetch the current state of the tournament
+            const tournamentDoc = await getDoc(tournamentRef);
+            const tournamentData = tournamentDoc.data();
+
+            // Assuming matchIndex is the index of the match you want to update
+            const updatedMatchs = [...tournamentData.matchs];
+
+            // Update the whoWin property for the specified matchIndex
+            updatedMatchs[matchIndex].whoWin = whoWin;
+
+            // Update the tournament document with the modified matchs array
+            await updateDoc(tournamentRef, { matchs: updatedMatchs });
+          }
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
+    console.log("The Winner is:", whoWin);
+
+    // Navigate back to the previous screen
+    navigation.goBack();
+  };
+
+  const savePlayerRating = async (playerUid, rate) => {
+    try {
+      const playerDoc = await getDoc(doc(db, "users", playerUid));
+      const playerRate = playerDoc.data().rate;
+      if (playerRate == 0) {
+        await updateDoc(doc(db, "users", playerUid), {
+          rate: rate,
+        });
+        console.log("new Player was rated");
+      } else {
+        const averageRate = (playerRate + rate) / 2;
+
+        await updateDoc(doc(db, "users", playerUid), {
+          rate: averageRate,
+        });
+        console.log("Player was rated");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const savePlayerGoal = async (playerUid, goal) => {
+    try {
+      const userRef = doc(db, "users", playerUid);
+      const playerDoc = await getDoc(userRef);
+      
+      if (playerDoc.exists()) {
+        const playerGoal = parseFloat(playerDoc.data().goal); // Convert to number
+  
+        if (playerGoal === 0) {
+          await updateDoc(userRef, {
+            goal: goal,
+          });
+          console.log("New player goal added");
+        } else {
+          const newGoal = playerGoal + goal;
+  
+          await updateDoc(userRef, {
+            goal: newGoal,
+          });
+          console.log("Player goal updated");
+        }
+      } else {
+        console.log("Player document does not exist");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+ 
+  const renderPlayer1Item = ({ item }) => {
+    return (
+      <View style={styles.playerContainer}>
+        <Text>{item.fullName}</Text>
+        <View style={styles.inputContainer}>
+          <Text> goals</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={goal}
+            onChangeText={(text) => {
+              setGoal(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerGoal(item.uid, goal)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text>Rating:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={rating}
+            onChangeText={(text) => {
+              setRating(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerRating(item.uid, rating)}
+          />
+        </View>
+      </View>
     );
   };
 
-  const handleRatingChange = (teamIndex, playerIndex, newRating) => {
-    const updatedTeams = [...teams];
-    updatedTeams[teamIndex].players[playerIndex].rating = newRating;
-    setTeams(updatedTeams);
-  };
 
-  const saveRatingsToDatabase = async () => {
-  try {
-    // Iterate through teams and players to save ratings
-    for (const team of teams) {
-      for (const player of team.players) {
-        // Assuming each player has a unique identifier (e.g., player.id) in your database
-        const playerDocRef = doc(db, "players", player.id);
-
-        // Update the player's rating in the database
-        await setDoc(playerDocRef, { rating: player.rating }, { merge: true });
-        console.log(`Rating for Player ${player.id} saved to the database: ${player.rating}`);
-      }
-    }
-
-    console.log("All ratings saved to the database");
-  } catch (error) {
-    console.error("Error saving ratings to the database", error);
-  }
-};
-
-  const render = ({ item: team, index: teamIndex }) => {
+  const renderPlayer2Item = ({ item }) => {
     return (
-      <View style={styles.teamContainer}>
-        <Text style={styles.teamName}>{team.name}</Text>
-        {team.players.length > 0 && (
-          <View>
-            <Text style={styles.playersCount}>Players:</Text>
-            {team.players.map((player, playerIndex) => (
-              <View key={playerIndex}>
-                <Text style={styles.playerAge}>
-                  Player {playerIndex + 1} Age: {player.age}
-                </Text>
-                <TextInput
-                  style={styles.ratingInput}
-                  placeholder="Enter rating"
-                  keyboardType="numeric"
-                  onChangeText={(newRating) =>
-                    handleRatingChange(teamIndex, playerIndex, newRating)
-                  }
-                />
-              </View>
-            ))}
-          </View>
-        )}
+      <View style={styles.playerContainer}>
+        <Text>{item.fullName}</Text>
+        <View style={styles.inputContainer}>
+          <Text> goals</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={goal}
+            onChangeText={(text) => {
+              setGoal(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerGoal(item.uid, goal)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text>Rating:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={rating}
+            onChangeText={(text) => {
+              setRating(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerRating(item.uid, rating)}
+          />
+        </View>
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Teams List</Text>
-      <FlatList data={teams} keyExtractor={(item) => item.name} renderItem={render} />
-      
-            <TouchableOpacity style={styles.saveButton} onPress={saveRatingsToDatabase}>
-        <Text style={styles.saveButtonText}>Save Ratings</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>{`${team1.name} vs ${team2.name}`}</Text>
+      <View style={styles.inputContainer}>
+        <Text>Goals for {team1.name}:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          
+          onChangeText={(text) => setTeam1Goals(text)}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text>Goals for {team2.name}:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={team2Goals}
+          onChangeText={(text) => setTeam2Goals(text)}
+        />
+      </View>
+      <Text>{team1.name}</Text>
+      <FlatList
+        data={player1Ratings}
+        renderItem={({ item }) => renderPlayer1Item({ item })}
+      />
+      <Text>{team2.name}</Text>
+      <FlatList
+        data={player2Ratings}
+        renderItem={({ item }) => renderPlayer2Item({ item })}
+      />
+      <Button title="Save" onPress={handleSave} />
     </View>
   );
 };
@@ -121,48 +232,27 @@ export const TournamentOrgRating = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 20,
+    alignItems: "center",
+    padding: 16,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  teamContainer: {
-    backgroundColor: "#f0f0f0",
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 8,
-    width: "100%",
+  playerContainer: {
+    marginBottom: 16,
   },
-  teamName: {
-    fontSize: 16,
-    fontWeight: "bold",
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
   },
-  playersCount: {
-    color: "#555",
-  },
-  playerAge: {
-    marginBottom: 5,
-  },
-  ratingInput: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-  },
-  saveButton: {
-    backgroundColor: "#3498db",
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  saveButtonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+  input: {
+    marginLeft: 8,
+    borderWidth: 2,
+    padding: 13,
+    width: 90,
   },
 });
