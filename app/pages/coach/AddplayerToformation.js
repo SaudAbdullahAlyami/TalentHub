@@ -39,7 +39,7 @@ export const AddplayerToformation = ({route, navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button1}
-        onPress={() => handleInvite("Recomended Players")}
+        onPress={() => navigation.navigate("PlayerRecommendationPage",{index})}
         className="py-3  self-end	 right-2  w-28 rounded-xl">
         <Text className=" text-center text-black">Recomended Players</Text>
       </TouchableOpacity>   

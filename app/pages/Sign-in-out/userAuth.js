@@ -71,6 +71,7 @@ const CoachFormationStack = createStackNavigator();
         <CoachFormationStack.Screen name="CoachFormationAdd" component={CoachFormationAdd}/>
         <CoachFormationStack.Screen name="AddplayerToformation" component={AddplayerToformation}/>
         <CoachFormationStack.Screen name="AddingPlayersManualy" component={AddingPlayersManualy}/>
+        <CoachFormationStack.Screen name="PlayerRecommendationPage" component={PlayerRecommendationPage}/>
         <PlayerProfilestack.Screen name="CoachVisitProfile" component={CoachVisitProfile}/>
       </CoachFormationStack.Navigator>
     )
