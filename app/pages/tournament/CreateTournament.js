@@ -31,6 +31,8 @@ export const CreateTournament = ({ navigation }) => {
     }))
   );
 
+  
+
   const createData = () => {
     try {
       setDoc(doc(db, "tournament", tournamentName), {
@@ -45,7 +47,7 @@ export const CreateTournament = ({ navigation }) => {
 
 
       updateDoc(doc(db, "users", auth.currentUser.uid), {
-        tournamentName: tournamentName,
+        tournament: tournamentName,
 
       });
       console.log("created Tournament Successfully");
@@ -77,7 +79,7 @@ export const CreateTournament = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <Text className="text-gray-700 top-1 ml-4">Age</Text>
+            <Text className="text-gray-700 top-1 ml-4">Prize</Text>
             <TextInput
               className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
               placeholder="180000$"

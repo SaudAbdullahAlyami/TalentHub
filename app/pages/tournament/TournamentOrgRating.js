@@ -11,20 +11,23 @@ import {
 import { db, auth, firebase } from "../../component/config/config";
 
 export const TournamentOrgRating = ({ route, navigation }) => {
-  const { team1, team2, matchIndex } = route.params;
-  var whoWin = "";
+  const { team1, team2, matchIndex,whoWin,round } = route.params;
+  var WhoWin=""
   const [team1Goals, setTeam1Goals] = useState(0);
   const [team2Goals, setTeam2Goals] = useState(0);
   const [player1Ratings, setPlayer1Ratings] = useState(team1.players);
   const [player2Ratings, setPlayer2Ratings] = useState(team2.players);
-  const [goal, setGoal] = useState(0);
-  const [rating, setRating] = useState(0);
+  const [goal1, setGoal1] = useState("0");
+  const [rating1, setRating1] = useState("0");
+  const [goal2, setGoal2] = useState("0");
+  const [rating2, setRating2] = useState("0");
+
   const handleSave = async () => {
     try {
       if (team1Goals > team2Goals) {
-        whoWin = team1.name;
+        WhoWin = team1.name;
       } else if (team1Goals < team2Goals) {
-        whoWin = team2.name;
+        WhoWin = team2.name;
       }
 
       const tournamentOrganizerRef = doc(db, "users", auth.currentUser.uid);
@@ -33,7 +36,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
         tournamentOrganizerRef,
         async (orgDoc) => {
           if (orgDoc.exists()) {
-            const tournamentName = orgDoc.data().tournamentName;
+            const tournamentName = orgDoc.data().tournament;
 
             const tournamentRef = doc(db, "tournament", tournamentName);
 
@@ -42,13 +45,42 @@ export const TournamentOrgRating = ({ route, navigation }) => {
             const tournamentData = tournamentDoc.data();
 
             // Assuming matchIndex is the index of the match you want to update
+            if(round==1){
             const updatedMatchs = [...tournamentData.matchs];
 
-            // Update the whoWin property for the specified matchIndex
-            updatedMatchs[matchIndex].whoWin = whoWin;
+            // Update the WhoWin property for the specified matchIndex
+            updatedMatchs[matchIndex].whoWin = WhoWin;
 
             // Update the tournament document with the modified matchs array
             await updateDoc(tournamentRef, { matchs: updatedMatchs });
+          }else if (round==2){
+            const updatedMatchs = [...tournamentData.matchsRound2];
+
+            // Update the WhoWin property for the specified matchIndex
+            updatedMatchs[matchIndex].whoWin = WhoWin;
+
+            // Update the tournament document with the modified matchs array
+            await updateDoc(tournamentRef, { matchsRound2: updatedMatchs });
+          }
+
+        else if (round==3){
+          const updatedMatchs = [...tournamentData.matchsRound3];
+
+          // Update the WhoWin property for the specified matchIndex
+          updatedMatchs[matchIndex].whoWin = WhoWin;
+
+          // Update the tournament document with the modified matchs array
+          await updateDoc(tournamentRef, { matchsRound3: updatedMatchs });
+        }
+        else if (round==4){
+          const updatedMatchs = [...tournamentData.matchsRound4];
+
+          // Update the WhoWin property for the specified matchIndex
+          updatedMatchs[matchIndex].whoWin = WhoWin;
+
+          // Update the tournament document with the modified matchs array
+          await updateDoc(tournamentRef, { matchsRound4: updatedMatchs });
+        }
           }
         }
       );
@@ -56,7 +88,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
       console.error(error);
     }
 
-    console.log("The Winner is:", whoWin);
+    console.log("The Winner is:", WhoWin);
 
     // Navigate back to the previous screen
     navigation.goBack();
@@ -65,14 +97,15 @@ export const TournamentOrgRating = ({ route, navigation }) => {
   const savePlayerRating = async (playerUid, rate) => {
     try {
       const playerDoc = await getDoc(doc(db, "users", playerUid));
-      const playerRate = playerDoc.data().rate;
-      if (playerRate == 0) {
+      const prevPlayerRate = parseFloat(playerDoc.data().rate);
+      const playerRate = parseFloat(rate);
+      if (prevPlayerRate == 0 || prevPlayerRate=="0") {
         await updateDoc(doc(db, "users", playerUid), {
-          rate: rate,
+          rate: playerRate,
         });
         console.log("new Player was rated");
       } else {
-        const averageRate = (playerRate + rate) / 2;
+        const averageRate = (playerRate + prevPlayerRate) / 2;
 
         await updateDoc(doc(db, "users", playerUid), {
           rate: averageRate,
@@ -93,13 +126,13 @@ export const TournamentOrgRating = ({ route, navigation }) => {
       if (playerDoc.exists()) {
         const playerGoal = parseFloat(playerDoc.data().goal); // Convert to number
   
-        if (playerGoal === 0) {
+        if (playerGoal === 0 ||playerGoal==="0") {
           await updateDoc(userRef, {
             goal: goal,
           });
           console.log("New player goal added");
         } else {
-          const newGoal = playerGoal + goal;
+          const newGoal = playerGoal + parseFloat(goal);
   
           await updateDoc(userRef, {
             goal: newGoal,
@@ -125,14 +158,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={goal}
+            value={goal1}
             onChangeText={(text) => {
-              setGoal(text);
+              setGoal1(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerGoal(item.uid, goal)}
+            onPress={() => savePlayerGoal(item.uid, goal1)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -140,14 +173,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={rating}
+            value={rating1}
             onChangeText={(text) => {
-              setRating(text);
+              setRating1(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerRating(item.uid, rating)}
+            onPress={() => savePlayerRating(item.uid, rating1)}
           />
         </View>
       </View>
@@ -164,14 +197,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={goal}
+            value={goal2}
             onChangeText={(text) => {
-              setGoal(text);
+              setGoal2(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerGoal(item.uid, goal)}
+            onPress={() => savePlayerGoal(item.uid, goal2)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -179,14 +212,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={rating}
+            value={rating2}
             onChangeText={(text) => {
-              setRating(text);
+              setRating2(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerRating(item.uid, rating)}
+            onPress={() => savePlayerRating(item.uid, rating2)}
           />
         </View>
       </View>

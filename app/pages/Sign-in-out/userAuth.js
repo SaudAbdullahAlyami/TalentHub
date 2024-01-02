@@ -45,7 +45,7 @@ export const UserAuth = () => {
   const sub = onSnapshot(doc(db, "users", auth.currentUser.uid), (doc) => {
     setType(doc.data().role)
     setClubName(doc.data().clubName)
-    setTournament(doc.data().tournamentName)
+    setTournament(doc.data().tournament)
   });
 
   
@@ -177,7 +177,7 @@ else if (type === "Tournament Organizer") {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentProfileStack" }}>
       <Tab.Screen name="TournamentProfileStack" component={TournamentProfileStack} />
-      {tournament === '' ? (
+      {tournament == '' ? (
       <Tab.Screen name="CreateTournament" component={CreateTournament} />
       ) : (
       <Tab.Screen name="ExistingTournamentStack" component={ExistingTournamentStack} />
