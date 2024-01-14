@@ -13,8 +13,8 @@ import { db, auth, firebase } from "../../component/config/config";
 export const TournamentOrgRating = ({ route, navigation }) => {
   const { team1, team2, matchIndex,whoWin,round } = route.params;
   var WhoWin=""
-  const [team1Goals, setTeam1Goals] = useState(0);
-  const [team2Goals, setTeam2Goals] = useState(0);
+  const [team1Goals, setTeam1Goals] = useState("0");
+  const [team2Goals, setTeam2Goals] = useState("0");
   const [player1Ratings, setPlayer1Ratings] = useState(team1.players);
   const [player2Ratings, setPlayer2Ratings] = useState(team2.players);
   const [goal1, setGoal1] = useState("0");
@@ -24,7 +24,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
   const handleSave = async () => {
     try {
-      if (team1Goals > team2Goals) {
+      if (parseFloat(team1Goals) > parseFloat(team2Goals)) {
         WhoWin = team1.name;
       } else if (team1Goals < team2Goals) {
         WhoWin = team2.name;
@@ -128,7 +128,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
   
         if (playerGoal === 0 ||playerGoal==="0") {
           await updateDoc(userRef, {
-            goal: goal,
+            goal: parseFloat(goal),
           });
           console.log("New player goal added");
         } else {
@@ -197,7 +197,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={goal2}
+            
             onChangeText={(text) => {
               setGoal2(text);
             }}
@@ -212,7 +212,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={rating2}
+            
             onChangeText={(text) => {
               setRating2(text);
             }}
@@ -234,7 +234,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          
+          value={team1Goals}
           onChangeText={(text) => setTeam1Goals(text)}
         />
       </View>

@@ -26,6 +26,8 @@ import { ExistingTournament } from "../tournament/ExistingTounament";
 import { TournamentNotification } from "../tournament/TournamentNotification";
 import { CoachJoiningTournament } from "../coach/CoachJoiningTournament";
 import { TournamentOrgRating } from "../tournament/TournamentOrgRating";
+import { TournamentShowTeams } from "../tournament/TournamentShowTeams";
+import { TournamentView } from "../player/TournamentView";
 import { db,auth } from "../../component/config/config";
 import {
   doc,
@@ -144,7 +146,9 @@ if (type === "Player") {
       ) : (
         <Tab.Screen name="PlayerFormation" component={PlayerFormation} />
       )}
-      
+      {tournament !== '' && (
+  <Tab.Screen name="TournamentView" component={TournamentView} />
+)}
       <Tab.Screen name="PlayerNotification" component={PlayerNotification} />
     </Tab.Navigator>
   );
@@ -180,7 +184,10 @@ else if (type === "Tournament Organizer") {
       {tournament == '' ? (
       <Tab.Screen name="CreateTournament" component={CreateTournament} />
       ) : (
+        <>
       <Tab.Screen name="ExistingTournamentStack" component={ExistingTournamentStack} />
+      <Tab.Screen name="TournamentShowTeams" component={TournamentShowTeams} />
+      </>
       )}
       <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
       

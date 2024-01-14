@@ -77,14 +77,14 @@ export const TournamentNotification = ({ navigation }) => {
         const TournamentOrgnaizer = getDoc(
           doc(db, "users", TournamentOrgnaizerUid)
         );
-        const tourName = (await TournamentOrgnaizer).data().tournamentName;
+        const tourName = (await TournamentOrgnaizer).data().tournament;
 
         const coachRef = doc(db, "users", coachUid);
         const coach = await getDoc(coachRef);
         const clubName = coach.data().clubName;
 
         await updateDoc(coachRef, {
-          tournamet: tourName,
+          tournament: tourName,
         });
         console.log("tournament added to coach");
 
@@ -92,7 +92,7 @@ export const TournamentNotification = ({ navigation }) => {
         const clubDoc = await getDoc(clubRef);
 
         await updateDoc(clubRef, {
-          tournamet: tourName,
+          tournament: tourName,
         });
         console.log("tournament added to team");
 
