@@ -27,6 +27,9 @@ export const SignUp = ({ navigation }) => {
   const [city, setCity] = useState("");
   const [profileImage, setProfileImage] = useState("https://thinksport.com.au/wp-content/uploads/2020/01/avatar-.jpg");
 
+ 
+
+
 
   const [value, setValue] = React.useState({
     email: "",
@@ -69,6 +72,7 @@ export const SignUp = ({ navigation }) => {
       createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
           //ADD in db
+          if(role=="Coach"||role=="Tournament Organizer"||role=="Scout"){
           setDoc(doc(db, "users", userCredential.user.uid), {
             uid: userCredential.user.uid,
             email: value.email,
@@ -78,9 +82,35 @@ export const SignUp = ({ navigation }) => {
             city: city,
             role: role,
             profileImage:profileImage,
-            tournament:""
+            tournament:"",
+            phoneNumber:""
           });
-          console.log("The Player Was Added Successfully");
+          console.log("The",role," Was Added Successfully");
+
+        }else if(role=="Player"){
+          setDoc(doc(db, "users", userCredential.user.uid), {
+            uid: userCredential.user.uid,
+            email: value.email,
+            fullName: fullName,
+            clubName: clubName,
+            description: description,
+            city: city,
+            role: role,
+            profileImage:profileImage,
+            tournament:"",
+            phoneNumber:"",
+            goals:"0",
+            assist:"0",
+            rating:"0",
+            saves:"0",
+            clearances:"0",
+            tackles:"0",
+            crosses :"0",
+            passes:"0",
+            shotsOnTarget:"0",
+          });
+          console.log("The",role," Was Added Successfully");
+        }
 
           setValue({
             ...value,

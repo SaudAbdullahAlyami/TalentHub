@@ -30,32 +30,62 @@ export const ExistingTournament = ({ navigation }) => {
       const organizerDoc = await getDoc(tournamentOrganizerRef);
       if (organizerDoc.exists()) {
         const tournamentName = organizerDoc.data().tournament;
-        setTournamentId(tournamentName);
-        const tournamentRef = doc(db, "tournament", tournamentName);
-        const tournamentDoc = await getDoc(tournamentRef);
-        if (tournamentName) {
-          if (tournamentDoc.exists()) {
-            const tournamentData = tournamentDoc.data();
-            const tournamentMatchs = tournamentData.matchs;
-            if (tournamentData && tournamentMatchs.length !== 0) {
-              setTeams(tournamentData.teams);
-              console.log("Updated team from the database");
-              setMatchups(tournamentData.matchs);
-              console.log("Matchups update in real-time");
 
-              const isRound1Complete =
-                matchups && matchups.every((matchup) => matchup.whoWin !== "");
-              setRound1Complete(isRound1Complete);
-              console.log("Round1 complete? :"+isRound1Complete);
-              // If Round 1 is complete and Round 2 matchups haven't been generated, generate Round 2 matchups
-             
-            } else {
-              setTeams(tournamentData.teams);
-              console.log("Tournament document does not contain matchs");
+        if (tournamentName) {
+          setTournamentId(tournamentName);
+          const tournamentRef = doc(db, "tournament", tournamentName);
+          const unsubscribeSnapshot = onSnapshot(
+            tournamentRef,
+            (tournamentDoc) => {
+              if (tournamentDoc.exists()) {
+                const tournamentData = tournamentDoc.data();
+
+                if (tournamentData && tournamentData.matchs) {
+                  setTeams(tournamentData.teams);
+                  console.log("Updated team from the database");
+                  setMatchups(tournamentData.matchs);
+                  console.log("Matchups updated in real-time");
+
+                  const isRound1Complete =
+                    matchups &&
+                    matchups.every((matchup) => matchup.whoWin !== "");
+                  setRound1Complete(isRound1Complete);
+
+                  // If Round 1 is complete and Round 2 matchups haven't been generated, generate Round 2 matchups
+                  if (isRound1Complete && matchupsRound2.length === 0) {
+                    generateMatchupsRound2(tournamentData.matchsRound2);
+                  }
+
+                  const isRound2Complete =
+                    matchupsRound2 &&
+                    matchupsRound2.every((matchup) => matchup.whoWin !== "");
+                  setRound2Complete(isRound2Complete);
+
+                  // If Round 2 is complete and Round 3 matchups haven't been generated, generate Round 3 matchups
+                  if (isRound2Complete && matchupsRound3.length === 0) {
+                    generateMatchupsRound3(tournamentData.matchsRound3);
+                  }
+
+                  const isRound3Complete =
+                    matchupsRound3 &&
+                    matchupsRound3.every((matchup) => matchup.whoWin !== "");
+                  setRound3Complete(isRound3Complete);
+
+                  // If Round 3 is complete and Round 4 matchups haven't been generated, generate Round 4 matchups
+                  if (isRound3Complete && matchupsRound4.length === 0) {
+                    generateMatchupsRound4(tournamentData.matchsRound4);
+                  }
+                } else {
+                  setTeams(tournamentData.teams);
+                  console.log("Tournament document does not contain matchs");
+                }
+              } else {
+                console.log("Tournament document does not exist");
+              }
             }
-          } else {
-            console.log("Tournament document does not exist");
-          }
+          );
+
+          return () => unsubscribeSnapshot();
         } else {
           console.log(
             "Tournament name is not available in the organizer document"
@@ -72,7 +102,7 @@ export const ExistingTournament = ({ navigation }) => {
   const generateMatchups = async () => {
     try {
       //this means the 16 teams are regestired and now ready to random
-      
+      if (teams.find((team) => team.name != "Team 16")) {
         const shuffledTeams = shuffleArray([...teams]);
 
         const generatedMatchups = [];
@@ -91,15 +121,27 @@ export const ExistingTournament = ({ navigation }) => {
 
         setMatchups(generatedMatchups);
 
-        const tournamentRef = doc(db, "tournament", tournamentId);
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const emptymatchs = [];
+        const tournamentRef = doc(
+          db,
+          "tournament",
+          tournamentOrganizerDoc.data().tournament
+        );
 
         await updateDoc(tournamentRef, {
           matchs: generatedMatchups,
+          matchsRound2: emptymatchs,
+          matchsRound3: emptymatchs,
+          matchsRound4: emptymatchs,
         });
 
         console.log("Matchups updated in the tournament document");
-      
-      
+      } else {
+        console.error("the teams are not 16");
+      }
     } catch (error) {
       console.error("Error generating matchups:", error);
     }
@@ -145,13 +187,25 @@ export const ExistingTournament = ({ navigation }) => {
         setMatchupsRound2(round2Matchups);
         console.log("Round 2 matchups generated:");
 
-        const tournamentRef = doc(db, "tournament", tournamentId);
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentRef = doc(
+          db,
+          "tournament",
+          tournamentOrganizerDoc.data().tournament
+        );
 
         await updateDoc(tournamentRef, {
           matchsRound2: round2Matchups,
         });
       } else {
-        const tournamentDoc = getDoc(doc(db, "tournament", tournamentId));
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentDoc = getDoc(
+          doc(db, "tournament", tournamentOrganizerDoc.data().tournament)
+        );
         const round2Matchups = (await tournamentDoc).data().matchsRound2;
         setMatchupsRound2(round2Matchups);
         console.log("Round 2 matchups Recovered from DB:");
@@ -181,14 +235,26 @@ export const ExistingTournament = ({ navigation }) => {
 
         setMatchupsRound3(round3Matchups);
 
-        const tournamentRef = doc(db, "tournament", tournamentId);
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentRef = doc(
+          db,
+          "tournament",
+          tournamentOrganizerDoc.data().tournament
+        );
 
         await updateDoc(tournamentRef, {
           matchsRound3: round3Matchups,
         });
         console.log("Round 3 matchups generated:" + round3Matchups);
       } else {
-        const tournamentDoc = getDoc(doc(db, "tournament", tournamentId));
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentDoc = getDoc(
+          doc(db, "tournament", tournamentOrganizerDoc.data().tournament)
+        );
         const round3Matchups = (await tournamentDoc).data().matchsRound3;
         setMatchupsRound3(round3Matchups);
         console.log("Round 3 matchups Recovered from DB:");
@@ -218,14 +284,26 @@ export const ExistingTournament = ({ navigation }) => {
 
         setMatchupsRound4(round4Matchups);
 
-        const tournamentRef = doc(db, "tournament", tournamentId);
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentRef = doc(
+          db,
+          "tournament",
+          tournamentOrganizerDoc.data().tournament
+        );
 
         await updateDoc(tournamentRef, {
           matchsRound4: round4Matchups,
         });
         console.log("Round 4 matchups generated:" + round4Matchups);
       } else {
-        const tournamentDoc = getDoc(doc(db, "tournament", tournamentId));
+        const tournamentOrganizerDoc = await getDoc(
+          doc(db, "users", auth.currentUser.uid)
+        );
+        const tournamentDoc = getDoc(
+          doc(db, "tournament", tournamentOrganizerDoc.data().tournament)
+        );
         const round4Matchups = (await tournamentDoc).data().matchsRound4;
         setMatchupsRound4(round4Matchups);
         console.log("Round 4 matchups Recovered from DB:");
@@ -237,12 +315,16 @@ export const ExistingTournament = ({ navigation }) => {
 
   const DeleteTournament = async () => {
     try {
+      const OrgDoc = getDoc(doc(db, "users", auth.currentUser.uid));
+      const tournamentName = (await OrgDoc).data().tournament;
+
       //deleting the tournament in coachs
       getDocs(collection(db, "users")).then((docSnap) => {
         docSnap.forEach(async (docc) => {
           const dataa = docc.data();
           if (dataa.role == "Coach") {
-            if (dataa.tournament == tournamentId) {
+            if (dataa.tournament == tournamentName) {
+              console.log("ii");
               //deleting the tournament in coachs
               await updateDoc(doc(db, "users", docc.data().uid), {
                 tournament: "",
@@ -259,7 +341,7 @@ export const ExistingTournament = ({ navigation }) => {
         });
       });
 
-      deleteDoc(doc(db, "tournament", tournamentId));
+      deleteDoc(doc(db, "tournament", tournamentName));
 
       await updateDoc(doc(db, "users", auth.currentUser.uid), {
         tournament: "",
@@ -269,18 +351,6 @@ export const ExistingTournament = ({ navigation }) => {
       console.error(error);
     }
   };
-
-  const fetchRound2 = async () => {
-    try{
-      const tournamentRef = doc(db, "tournament", tournamentId);
-      const tournamentDoc = await getDoc(tournamentRef);
-      console.log("Joined Round 2")
-      generateMatchupsRound2(tournamentDoc.data().matchsRound2);
-
-    }catch{
-
-    }
-  }
 
   return (
     <View style={styles.container}>
@@ -298,7 +368,7 @@ export const ExistingTournament = ({ navigation }) => {
             <Text> Winner is :{matchup.whoWin}</Text>
           </View>
         ))}
-        
+
         <Text>Round 2</Text>
         {matchupsRound2.map((matchup, index) => (
           <View key={index} style={styles.matchupContainer}>
@@ -346,7 +416,7 @@ export const ExistingTournament = ({ navigation }) => {
           </>
         ))}
         <Button title="randomize round 1" onPress={() => generateMatchups()} />
-        <Button title="Start Round2" onPress={()=>fetchRound2()}/>
+
         <Button
           title="Start new Tournament"
           onPress={() => DeleteTournament()}

@@ -8,7 +8,8 @@ import {
   Pressable,
   TextInput,
   TouchableOpacity,
-  StatusBar,Alert,
+  StatusBar,
+  Alert,
   ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -55,51 +56,51 @@ export const PlayerEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
-      if(imageuri){
-      const { uri } = await FileSystem.getInfoAsync(imageuri);
-      const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
+      if (imageuri) {
+        const { uri } = await FileSystem.getInfoAsync(imageuri);
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
 
-        xhr.onload = () => {
-          resolve(xhr.response);
-        };
+          xhr.onload = () => {
+            resolve(xhr.response);
+          };
 
-        xhr.onerror = (e) => {
-          reject(new TypeError("Network request failed"));
-        };
+          xhr.onerror = (e) => {
+            reject(new TypeError("Network request failed"));
+          };
 
-        xhr.responseType = "blob";
-        xhr.open("GET", uri, true);
-        xhr.send(null);
-      });
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
+          xhr.send(null);
+        });
 
-      const filename = imageuri.substring(imageuri.lastIndexOf("/") + 1);
-      const storage = getStorage();
-      var storagePath = "player/image/" + filename;
+        const filename = imageuri.substring(imageuri.lastIndexOf("/") + 1);
+        const storage = getStorage();
+        var storagePath = "player/image/" + filename;
 
-      const storageRef = ref(storage, storagePath);
-      const uploadTask = uploadBytesResumable(storageRef, blob);
+        const storageRef = ref(storage, storagePath);
+        const uploadTask = uploadBytesResumable(storageRef, blob);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // progrss function ....
-        },
-        (error) => {
-          // error function ....
-          console.log(error);
-        },
-        () => {
-          // complete function ....
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("Photo available at", downloadURL);
-            updateDoc(doc(db, "users", auth.currentUser.uid), {
-              profileImage: downloadURL,
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // progrss function ....
+          },
+          (error) => {
+            // error function ....
+            console.log(error);
+          },
+          () => {
+            // complete function ....
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log("Photo available at", downloadURL);
+              updateDoc(doc(db, "users", auth.currentUser.uid), {
+                profileImage: downloadURL,
+              });
             });
-          });
-        }
-      );
-    }
+          }
+        );
+      }
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -127,52 +128,52 @@ export const PlayerEdit = ({ navigation }) => {
     setUploading(true);
 
     try {
-      if (video){
-      const { uri } = await FileSystem.getInfoAsync(video);
-      const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
+      if (video) {
+        const { uri } = await FileSystem.getInfoAsync(video);
+        const blob = await new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
 
-        xhr.onload = () => {
-          resolve(xhr.response);
-        };
+          xhr.onload = () => {
+            resolve(xhr.response);
+          };
 
-        xhr.onerror = (e) => {
-          reject(new TypeError("Network request failed"));
-        };
+          xhr.onerror = (e) => {
+            reject(new TypeError("Network request failed"));
+          };
 
-        xhr.responseType = "blob";
-        xhr.open("GET", uri, true);
-        xhr.send(null);
-      });
+          xhr.responseType = "blob";
+          xhr.open("GET", uri, true);
+          xhr.send(null);
+        });
 
-      const filename = video.substring(video.lastIndexOf("/") + 1);
-      const storage = getStorage();
-      var storagePath2 = "player/video/" + filename;
+        const filename = video.substring(video.lastIndexOf("/") + 1);
+        const storage = getStorage();
+        var storagePath2 = "player/video/" + filename;
 
-      const storageRef = ref(storage, storagePath2);
-      const uploadTask = uploadBytesResumable(storageRef, blob);
+        const storageRef = ref(storage, storagePath2);
+        const uploadTask = uploadBytesResumable(storageRef, blob);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {},
-        (error) => {
-          // error function ....
-          console.log(error);
-        },
-        () => {
-          // complete function ....
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("Video available at", downloadURL);
-            updateDoc(doc(db, "users", auth.currentUser.uid), {
-              profileVideo: downloadURL,
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            // error function ....
+            console.log(error);
+          },
+          () => {
+            // complete function ....
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log("Video available at", downloadURL);
+              updateDoc(doc(db, "users", auth.currentUser.uid), {
+                profileVideo: downloadURL,
+              });
             });
-          });
-        }
-      );
+          }
+        );
       }
       setUploading(false);
     } catch (error) {
-      console.log("upload "+error);
+      console.log("upload " + error);
       setUploading(false);
     }
   };
@@ -181,6 +182,7 @@ export const PlayerEdit = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
   const [position, setPosition] = useState(null);
@@ -229,26 +231,26 @@ export const PlayerEdit = ({ navigation }) => {
       // Assume uploadPhoto and uploadVideo are asynchronous functions
       await uploadPhoto(); // to upload the photo
       await uploadVideo();
-  
+
       // Update user document in Firestore
       await updateDoc(doc(db, "users", auth.currentUser.uid), {
         fullName: fullName,
         age: age,
+        phoneNumber: phoneNumber,
         height: height,
         weight: weight,
         level: level,
         position: position,
       });
-  
+
       console.log("Updated Successfully");
       navigation.navigate("Playerprofile");
     } catch (error) {
       console.log("Error updating data:", error);
-      Alert.alert("Fill data","Please fill all the data")
+      Alert.alert("Fill data", "Please fill all the data");
       // Handle the error, you might want to show an alert or take other actions
     }
   };
-  
 
   return (
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
@@ -258,13 +260,11 @@ export const PlayerEdit = ({ navigation }) => {
             onPress={() => navigation.goBack()}
             className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
           >
-            <ArrowLeftIcon size="20" color="black"/>
+            <ArrowLeftIcon size="20" color="black" />
           </TouchableOpacity>
         </View>
-                 
-        <View className="flex-row top-9 justify-center ">
 
-        
+        <View className="flex-row top-9 justify-center ">
           <TouchableOpacity onPress={() => pickImage()}>
             <Avatar.Image
               backgroundColor="grey"
@@ -279,15 +279,11 @@ export const PlayerEdit = ({ navigation }) => {
         </View>
       </View>
 
-      
-        <View
-          style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-          className="flex-1 bg-white top-14 px-8 pt-8"
-        >
-<KeyboardAwareScrollView 
-    keyboardShouldPersistTaps="always"
-  >
-
+      <View
+        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+        className="flex-1 bg-white top-14 px-8 pt-8"
+      >
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
           <View className="form space-y-2">
             <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
             <TextInput
@@ -298,8 +294,6 @@ export const PlayerEdit = ({ navigation }) => {
               value={fullName}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-              
-              
             />
 
             <Text className="text-gray-700 top-1 ml-4">Age</Text>
@@ -309,6 +303,17 @@ export const PlayerEdit = ({ navigation }) => {
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setAge(text)}
               value={age}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
+
+            <Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
+            <TextInput
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              placeholder="0553953640"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setPhoneNumber(text)}
+              value={phoneNumber}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
@@ -335,7 +340,7 @@ export const PlayerEdit = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-                <View className="text-gray-700  top-3">
+            <View className="text-gray-700  top-3">
               <Text className="text-gray-700  ml-4">Select Position</Text>
 
               <View className=" my-1"></View>
@@ -344,29 +349,32 @@ export const PlayerEdit = ({ navigation }) => {
                 data={positionData}
                 save="value"
               />
-              </View>
+            </View>
 
-            <View  className="text-gray-700  top-6">
+            <View className="text-gray-700  top-6">
               <Text className="text-gray-700 bottom-1 ml-4">Select level</Text>
               <View className=" my-1"></View>
-              <SelectList 
-                
+              <SelectList
                 setSelected={(val) => setLevel(val)}
                 data={levelData}
                 save="value"
               />
 
-
-              <TouchableOpacity className="top-3 my-3 items-center	" onPress={() => pickVideo()}>
-              <Image source={require("../../assets/upvideo.png")}
-                style={{width: 140, height: 140}} />
+              <TouchableOpacity
+                className="top-3 my-3 items-center	"
+                onPress={() => pickVideo()}
+              >
+                <Image
+                  source={require("../../assets/upvideo.png")}
+                  style={{ width: 140, height: 140 }}
+                />
                 <Text style={{ color: "black", textAlign: "center", top: 20 }}>
                   Insert Video
                 </Text>
               </TouchableOpacity>
             </View>
-               
-            <TouchableOpacity 
+
+            <TouchableOpacity
               onPress={() => updateData()}
               className="py-3 bg-yellow-400 top-12 rounded-xl"
             >
@@ -376,9 +384,9 @@ export const PlayerEdit = ({ navigation }) => {
             </TouchableOpacity>
             <View className="bg-white my-12"></View>
             <View className="bg-white my-14"></View>
-          </View></KeyboardAwareScrollView>
-        </View>
-        
+          </View>
+        </KeyboardAwareScrollView>
+      </View>
     </View>
   );
 };

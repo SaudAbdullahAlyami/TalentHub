@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  Image,
-  Pressable,
-  TextInput,
-  TouchableOpacity,
-  StatusBar,
-  FlatList,
-} from "react-native";
+import { View, Text, Button, TouchableOpacity, FlatList } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
   doc,
@@ -20,12 +9,10 @@ import {
   query,
   updateDoc,
   deleteDoc,
-  onSnapshot,
   where,
   arrayUnion,
   setDoc,
 } from "firebase/firestore";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 
 export const PlayerNotification = ({ navigation }) => {
@@ -33,7 +20,7 @@ export const PlayerNotification = ({ navigation }) => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   const loadData = async () => {
     try {
@@ -45,23 +32,20 @@ export const PlayerNotification = ({ navigation }) => {
       const querySnapshot = await getDocs(q);
 
       const playerRef = getDoc(doc(db, "users", auth.currentUser.uid));
-        const haveATeam=(await playerRef).data().clubName;
+      const haveATeam = (await playerRef).data().clubName;
 
       const invitations = [];
       querySnapshot.forEach((doc) => {
         const dataa = doc.data();
-        
-          if(haveATeam=="")
-          invitations.push({ ...doc.data(), id: doc.id });
-        
 
+        if (haveATeam == "") invitations.push({ ...doc.data(), id: doc.id });
       });
 
       setData(invitations);
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
-    loadData()
+    loadData();
   };
 
   const deleteInvite = async (inviteId) => {
@@ -85,19 +69,30 @@ export const PlayerNotification = ({ navigation }) => {
         const playerDoc = await getDoc(playerRef);
         const imageURL = playerDoc.data().profileImage;
         const fullName = playerDoc.data().fullName;
+        const uid= playerDoc.data().uid;
         const age = playerDoc.data().age;
         const height = playerDoc.data().height;
         const weight = playerDoc.data().weight;
         const level = playerDoc.data().level;
         const position = playerDoc.data().position;
-        const uid = playerDoc.data().uid;
+        const phoneNumber = playerDoc.data().phoneNumber;
+        const assist = playerDoc.data().assist;
+        const clearances = playerDoc.data().clearances;
+        const crosses = playerDoc.data().crosses;
+        const goals = playerDoc.data().goals;
+        const passes = playerDoc.data().passes;
+        const rating = playerDoc.data().rating;
+        const shotsOnTarget = playerDoc.data().shotsOnTarget;
+        const saves = playerDoc.data().saves;
+        const tackles = playerDoc.data().tackles;
+
 
         const coachDoc = await getDoc(coachRef);
         const clubName = coachDoc.data().clubName;
         const description = coachDoc.data().description;
         const city = coachDoc.data().city;
         if (clubName == "") {
-          console.log("clubname empty");
+          console.log("clubnameempty");
         }
 
         const clubRef = doc(db, "clubs", clubName);
@@ -114,10 +109,21 @@ export const PlayerNotification = ({ navigation }) => {
               profileImage: imageURL,
               position: position,
               uid: uid,
+              phoneNumber:phoneNumber,
+              assist:assist,
+              crosses:crosses,
+              clearances:clearances,
+              tackles:tackles,
+              saves:saves,
+              shotsOnTarget:shotsOnTarget,
+              rating:rating,
+              passes:passes,
+              goals:goals
             }),
             clubName: clubName,
             description: description,
             city: city,
+            tournament:""
           });
           console.log("Member added");
           //here I let the player join in the team so i can use it with queries
@@ -136,10 +142,21 @@ export const PlayerNotification = ({ navigation }) => {
               profileImage: imageURL,
               position: position,
               uid: uid,
+              phoneNumber:phoneNumber,
+              assist:assist,
+              crosses:crosses,
+              clearances:clearances,
+              tackles:tackles,
+              saves:saves,
+              shotsOnTarget:shotsOnTarget,
+              rating:rating,
+              passes:passes,
+              goals:goals
             }),
             clubName: clubName,
             description: description,
             city: city,
+            tournament:""
           });
           console.log("New club created successfully");
         }
@@ -170,8 +187,15 @@ export const PlayerNotification = ({ navigation }) => {
           marginBottom: 16,
         }}
       >
-        <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.senderUid}})}>
-        <Avatar.Image size={100} source={{ uri: item.senderImage }} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("PlayerProfile", {
+              screen: "PlayerVisitProfile",
+              params: { itemId: item.senderUid },
+            })
+          }
+        >
+          <Avatar.Image size={100} source={{ uri: item.senderImage }} />
         </TouchableOpacity>
         <Text>Coach :{item.senderName}</Text>
 

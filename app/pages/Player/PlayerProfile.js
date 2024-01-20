@@ -3,24 +3,19 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
+
   
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db ,auth,firebase } from "../../component/config/config";
+import { db ,auth, } from "../../component/config/config";
 import { Video, ResizeMode } from 'expo-av';
 
 export const PlayerProfile = ({ navigation }) => {
-  const { user, handleSignOut } = useAuthentication();
   const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
@@ -30,7 +25,7 @@ export const PlayerProfile = ({ navigation }) => {
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
   const [video, setVideo] = useState(null);
-  const [status, setStatus] = React.useState({});
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [videoRef, setVideoRef] = useState(null);
   useEffect(() => {
  
@@ -40,6 +35,7 @@ export const PlayerProfile = ({ navigation }) => {
       setFullName(doc.data().fullName);
       setAge(doc.data().age);
       setRole(doc.data().role);
+      setPhoneNumber(doc.data().phoneNumber);
       setHeight(doc.data().height);
       setWeight(doc.data().weight);
       setPosition(doc.data().position);
@@ -98,7 +94,8 @@ export const PlayerProfile = ({ navigation }) => {
 <Text className="text-gray-700 top-1  ml-4">Age</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
 
-
+<Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
  
 <Text className="text-gray-700 top-1  ml-4">Role</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>

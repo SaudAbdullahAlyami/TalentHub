@@ -23,6 +23,7 @@ export const TournamentProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
   const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [age, setAge] = useState("");
   const [role, setRole] = useState(""); //Player OR Scout or ..
   const [city, setCity] = useState(null);
@@ -36,6 +37,7 @@ export const TournamentProfile = ({ navigation }) => {
         setFullName(data.fullName);
         setAge(data.age);
         setRole(data.role);
+        setPhoneNumber(data.phoneNumber)
         setCity(data.city);
         setImageURL(data.profileImage);
       } else {
@@ -99,6 +101,10 @@ export const TournamentProfile = ({ navigation }) => {
 
 <Text className="text-gray-700 top-1  ml-4">Age</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
+
+
+<Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
 
 
  

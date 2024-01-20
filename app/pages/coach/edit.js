@@ -2,21 +2,16 @@ import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Button,
-  Image,
-  Pressable,
   TextInput,
   TouchableOpacity,
-  StatusBar,
-  ScrollView,
+
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
-import {SelectList, MultipleSelectList }from 'react-native-dropdown-select-list'
+import {SelectList,  }from 'react-native-dropdown-select-list'
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot ,updateDoc} from "firebase/firestore";
-import { db,auth,firebase } from "../../component/config/config";
+import { db,auth, } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import * as ImagePicker from "expo-image-picker"
 import * as FileSystem from "expo-file-system"
@@ -105,81 +100,7 @@ export const CoachEdit = ({ navigation }) => {
 
 
 
-  const [video, setVideo] = useState(null);
-  const pickVideo = async () => {
-    ImagePicker.getMediaLibraryPermissionsAsync();
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-    
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setVideo(result.assets[0].uri);
-
-    }
-  };
-
-
-  const uploadVideo = async () => {
-    
-    setUploading(true);
-
-    try {
-      if (video){
-      const { uri } = await FileSystem.getInfoAsync(video);
-      const blob = await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-
-        xhr.onload = () => {
-          resolve(xhr.response);
-        };
-
-        xhr.onerror = (e) => {
-          reject(new TypeError("Network request failed"));
-        };
-
-        xhr.responseType = "blob";
-        xhr.open("GET", uri, true);
-        xhr.send(null);
-      });
-
-      const filename = video.substring(video.lastIndexOf("/") + 1);
-     
-
-      
-      const storage = getStorage();
-      var storagePath2 = 'coach/video/'+ filename;
-
-      const storageRef = ref(storage, storagePath2);
-      const uploadTask = uploadBytesResumable(storageRef, blob);
-
-      uploadTask.on('state_changed', (snapshot) => {
-        // progrss function ....
-      }, 
-      (error) => { 
-        // error function ....
-        console.log(error);
-      }, 
-      () => {
-        // complete function ....
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
-          updateDoc(doc(db, "users", auth.currentUser.uid), {
-            profileVideo:downloadURL});
-          
-        });})
-      }
-      setUploading(false);
-      
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
-    }
-  };
+  
 
 
 
@@ -191,9 +112,8 @@ export const CoachEdit = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
-  const [height, setHeight] = useState(null);
-  const [weight, setWeight] = useState(null);
-  //const [position, setPosition] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  
   const [level, setLevel] = useState(null);
   const [selected, setSelected] = React.useState("");
 
@@ -217,11 +137,9 @@ export const CoachEdit = ({ navigation }) => {
       
       setFullName(doc.data().fullName || "");
       setAge(doc.data().age || "");
-      setHeight(doc.data().height || "");
-      setWeight(doc.data().weight || "");
       setLevel(doc.data().level || "");
       setImage(doc.data().profileImage || "");
-
+      setPhoneNumber(doc.data().phoneNumber || "")
     
   });
 
@@ -235,9 +153,9 @@ export const CoachEdit = ({ navigation }) => {
 
   const updateData =  () => {
     uploadPhoto()//to upload the photo
-    uploadVideo()
+  
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-         fullName: fullName, age: age, height:height, weight:weight,level:level,});
+         fullName: fullName, age: age, phoneNumber:phoneNumber,level:level,});
          
     console.log("Updated Successfully");
      navigation.navigate('CoachProfile')
@@ -315,29 +233,16 @@ export const CoachEdit = ({ navigation }) => {
           autoCapitalize="none"
         />
 
-        <Text className="text-gray-700 top-1 ml-4">height</Text>
+        <Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
         <TextInput
           className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="180"
+          placeholder="055748322"
           placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setHeight(text)}
-          value={height}
+          onChangeText={(text) => setPhoneNumber(text)}
+          value={phoneNumber}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-
-        <Text className="text-gray-700 top-1 ml-4">Weight</Text>
-        <TextInput
-          className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-          placeholder="80"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setWeight(text)}
-          value={weight}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-
-
 
 
          <View className="text-gray-700 top-2">
@@ -351,13 +256,7 @@ export const CoachEdit = ({ navigation }) => {
           />
 
           
-            <TouchableOpacity className="top-3 my-3 items-center	" onPress={() => pickVideo()} >
-          
-            <Image source={require("../../assets/upvideo.png")}
-                style={{width: 140, height: 140}} />
-
-          <Text style={{color:"black",textAlign:"center",top:20}}>Insert Video</Text>
-           </TouchableOpacity>
+           
         </View>
 
 

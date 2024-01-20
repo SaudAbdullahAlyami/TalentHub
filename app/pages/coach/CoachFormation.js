@@ -39,7 +39,7 @@ export const CoachFormation = ({ navigation }) => {
     return () => {
       /* Cleanup logic if needed */
     };
-  }, []);
+  }, [fetchData]);
   const fetchData = async () => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));

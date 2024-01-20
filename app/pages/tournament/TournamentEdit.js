@@ -105,6 +105,7 @@ export const TournamentEdit = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null);
   const [city, setCity] = useState("");
   
 
@@ -124,6 +125,7 @@ export const TournamentEdit = ({ navigation }) => {
         setFullName(data.fullName);
         setAge(data.age);
         setCity(data.city)
+        setPhoneNumber(data.phoneNumber)
         setImage(data.profileImage);
       } else {
         console.log('Document does not exist');
@@ -146,7 +148,7 @@ export const TournamentEdit = ({ navigation }) => {
     try{
     uploadPhoto()//to upload the photo
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-         fullName: fullName, age: age,city:city});
+         fullName: fullName, age: age,city:city, phoneNumber:phoneNumber});
          
     console.log("Updated Successfully");
      navigation.navigate('TournamentProfile')
@@ -226,6 +228,20 @@ export const TournamentEdit = ({ navigation }) => {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+
+
+<Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
+        <TextInput
+          className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+          placeholder="0554738531"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setPhoneNumber(text)}
+          value={phoneNumber}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+
+
 
 
         <Text className="text-gray-700 top-1 ml-4">City</Text>

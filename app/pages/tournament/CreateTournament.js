@@ -1,26 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   Button,
-  Image,
-  Pressable,
   TextInput,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
-  FlatList,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Avatar } from "react-native-paper";
-import { useAuthentication } from "../../useAuthentication";
-import { doc, getDoc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
-import { db, auth, firebase } from "../../component/config/config";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { db, auth } from "../../component/config/config";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export const CreateTournament = ({ navigation }) => {
   const [city, setCity] = useState(null);
-
   const [tournamentName, setTournamentName] = useState("");
   const [description, setDescription] = useState("");
   const [prize, setPrize] = useState(null);
@@ -30,35 +24,65 @@ export const CreateTournament = ({ navigation }) => {
       players: [],
     }))
   );
+  const [matchs, setmatchs] = useState([]);
+  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
+  const [showDateStartPicker, setShowDateStartPicker] = useState(false);
+  const [showDateEndPicker, setShowDateEndPicker] = useState(false);
 
-  
+  const openDateStartPicker = () => {
+    setShowDateStartPicker(true);
+  };
+
+  const openDateEndPicker = () => {
+    setShowDateEndPicker(true);
+  };
+
+  const handleDateStartChange = (event, date) => {
+    setShowDateStartPicker(false);
+    if (date) {
+      setSelectedStartDate(date);
+    }
+  };
+
+  const handleDateEndChange = (event, date) => {
+    setShowDateEndPicker(false);
+    if (date) {
+      setSelectedEndDate(date);
+    }
+  };
 
   const createData = () => {
     try {
       setDoc(doc(db, "tournament", tournamentName), {
-        tournamentOwnerUid:auth.currentUser.uid,
+        tournamentOwnerUid: auth.currentUser.uid,
         tournamentName: tournamentName,
-        teams:teams,
+        teams: teams,
         prize: prize,
         city: city,
-        description:description,
-        arrayIndex:0
+        description: description,
+        teamsArrayIndex: 0,
+        startDate: selectedStartDate,
+        endDate: selectedEndDate,  
+        isFinished:false,
+        //creating empty matchs 
+        matchs:matchs,
+        matchsRound2:matchs,
+        matchsRound3:matchs,
+        matchsRound4:matchs
       });
-
 
       updateDoc(doc(db, "users", auth.currentUser.uid), {
         tournament: tournamentName,
-
       });
-      console.log("created Tournament Successfully");
+
+      console.log("Created Tournament Successfully");
       navigation.navigate("TournamentProfile");
     } catch (error) {
       console.log("Error creating data:", error);
       // Handle the error, you might want to show an alert or take other actions
     }
   };
-
-  useEffect(() => {}, []); // The empty dependency array ensures this effect runs only once when the component mounts
 
   return (
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
@@ -111,6 +135,30 @@ export const CreateTournament = ({ navigation }) => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
+
+            <Text>Select Start Date:</Text>
+            <Button title="Open Date Picker" onPress={openDateStartPicker} />
+            {showDateStartPicker && (
+              <DateTimePicker
+                value={selectedStartDate}
+                mode="date"
+                display="default"
+                onChange={handleDateStartChange}
+              />
+            )}
+            <Text>Start Date is :{selectedStartDate.getFullYear()}/{1 + selectedStartDate.getMonth()}/{selectedStartDate.getDate()}</Text>
+
+            <Text>Select End Date:</Text>
+            <Button title="Open Date Picker" onPress={openDateEndPicker} />
+            {showDateEndPicker && (
+              <DateTimePicker
+                value={selectedEndDate}
+                mode="date"
+                display="default"
+                onChange={handleDateEndChange}
+              />
+            )}
+            <Text>End Date is :{selectedEndDate.getFullYear()}/{1 + selectedEndDate.getMonth()}/{selectedEndDate.getDate()}</Text>
 
             <TouchableOpacity
               onPress={() => createData()}
