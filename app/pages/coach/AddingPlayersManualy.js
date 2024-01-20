@@ -110,7 +110,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
     const addmanualy = async (playerUid, index) => {
         const playerRef = doc(db, "users", playerUid);
         const playerDoc = await getDoc(playerRef);
-    
+        
         if (!playerDoc.exists()) {
             console.log("Player document does not exist!");
             return;
@@ -206,7 +206,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => addmanualy(item.uid, index)}>
-                        <Text className="font-bold top-5 text-gre self-center">add manualy</Text>
+                        <Text className="font-bold bottom-6 text-gre self-center">add manualy</Text>
                     </TouchableOpacity>
                 </ImageBackground>
             </View>

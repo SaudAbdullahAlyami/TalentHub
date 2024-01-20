@@ -164,10 +164,6 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
         console.log("Member added to the formation array!!");
     };
     
-    
-    
-
-
 
     const [isRefreshing, setIsRefreshing] = useState(false);
     const onRefresh = useCallback(async () => {

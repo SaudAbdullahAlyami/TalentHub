@@ -53,11 +53,6 @@ export const CoachJoiningTournament = ({ navigation }) => {
   };
 
 
- 
-
- 
-
-
 
 
 const invitePlayer=async(TourId)=>{

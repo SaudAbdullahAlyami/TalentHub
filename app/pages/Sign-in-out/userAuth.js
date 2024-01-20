@@ -15,6 +15,7 @@ import { PlayerFormationJoin } from "../player/PlayerFormationJoin";
 import { PlayerVisitProfile } from "../player/PlayerVisitProfile";
 import { CoachVisitProfile } from "../coach/CoachVisitProfile";
 import { PlayerRecommendationPage } from "../coach/PlayerRecommendationPage";
+import { ScoutRecommendation } from "../scout/ScoutRecommendation";
 import { ScoutProfile } from "../scout/ScoutProfile";
 import { ScoutEdit } from "../scout/ScoutEdit";
 import { AddingPlayersManualy } from "../coach/AddingPlayersManualy";
@@ -172,10 +173,10 @@ else if (type === "Scout") {
       <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
       <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
       <Tab.Screen name="Rating" component={ScoutProfileStack} />
+      <Tab.Screen name="ScoutRecommendation" component={ScoutRecommendation} />
     </Tab.Navigator>
   );
 }
-
 
 else if (type === "Tournament Organizer") {
   return (

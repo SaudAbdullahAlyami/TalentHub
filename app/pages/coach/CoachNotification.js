@@ -98,8 +98,6 @@ export const CoachNotification = ({ navigation }) => {
         console.log("clubname empty")
       }
 
-    
-
         await updateDoc(doc(db, "clubs",clubName), {
           members: arrayUnion({ 
             fullName: fullName, age: age, height:height, weight:weight,level:level,profileImage:imageURL,position:position,uid:uid

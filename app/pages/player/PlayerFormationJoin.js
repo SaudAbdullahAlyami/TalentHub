@@ -35,6 +35,7 @@ export const PlayerFormationJoin = ({ navigation }) => {
   useEffect(() => {
     loadData();
  
+    
   }, [loadData]);
 
   const loadData = async () => {
