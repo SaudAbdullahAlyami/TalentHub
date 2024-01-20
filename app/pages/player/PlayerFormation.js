@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useCallback} from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  FlatList,ImageBackground
+  FlatList, ImageBackground,RefreshControl
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -17,97 +17,117 @@ import {
   getDocs,
   collection,
   query,
-  updateDoc,getDoc,
-  deleteDoc,onSnapshot,
-  where,arrayUnion
-  ,deleteField,arrayRemove
+  updateDoc, getDoc,
+  deleteDoc, onSnapshot,
+  where, arrayUnion
+  , deleteField, arrayRemove
 } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 
 export const PlayerFormation = ({ navigation }) => {
- const [members,setMembers]=useState([])
- const [clubName,setclubName]=useState("")
+  const [members, setMembers] = useState([])
+  const [clubName, setclubName] = useState("")
 
 
-
- 
   useEffect(() => {
     fetchData();
-  
-  // Clean up the subscription when the component unmounts
-  return () => {
-    /* Cleanup logic if needed */
+
+    // Clean up the subscription when the component unmounts
+    return () => {
+      /* Cleanup logic if needed */
+    };
+  }, []);
+
+  const fetchData = async (navigation) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const userClubName = userDoc.data().clubName;
+
+
+      if (userClubName) {
+        const clubDoc = await getDoc(doc(db, "clubs", userClubName));
+        setMembers(clubDoc.data().members);
+      } else {
+        console.error("User has no clubName.");
+
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
-}, []);
 
-const fetchData = async (navigation) => {
-  try {
-    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-    const userClubName = userDoc.data().clubName;
-    
+  const leaveTeam = async () => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const userClubName = userDoc.data().clubName;
 
-    if (userClubName) {
-      const clubDoc = await getDoc(doc(db, "clubs", userClubName));
-      setMembers(clubDoc.data().members);
-    } else {
-      console.error("User has no clubName.");
+      if (userClubName) {
+        const memberIdToRemove = auth.currentUser.uid; // Assuming you want to remove the current user
+        const clubRef = doc(db, "clubs", userClubName);
 
+        // Get the current members array
+        const clubDoc = await getDoc(clubRef);
+        const currentMembers = clubDoc.data().members;
+
+        // Remove the specified member from the array
+        const updatedMembers = currentMembers.filter(member => member.uid !== memberIdToRemove);
+
+        // Update the club document with the new members array
+        await updateDoc(clubRef, {
+          members: updatedMembers
+        });
+        console.log("Player was deleted")
+        fetchData();
+        //Update the user document to remove the clubName
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+          clubName: ""
+        });
+      } else {
+        console.error("User has no clubName.");
+      }
+    } catch (error) {
+      console.error("Error leaving team:", error);
     }
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+  };
 
 
-
-const leaveTeam = async () => {
-  try {
-    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-    const userClubName = userDoc.data().clubName;
-
-    if (userClubName) {
-      const memberIdToRemove = auth.currentUser.uid; // Assuming you want to remove the current user
-      const clubRef = doc(db, "clubs", userClubName);
-
-      // Get the current members array
-      const clubDoc = await getDoc(clubRef);
-      const currentMembers = clubDoc.data().members;
-
-      // Remove the specified member from the array
-      const updatedMembers = currentMembers.filter(member => member.uid !== memberIdToRemove);
-
-      // Update the club document with the new members array
-      await updateDoc(clubRef, {
-        members: updatedMembers
-      });
-      console.log("Player was deleted")
-      fetchData();
-       //Update the user document to remove the clubName
-      await updateDoc(doc(db, "users", auth.currentUser.uid), {
-        clubName: ""
-     });
-    } else {
-      console.error("User has no clubName.");
-    }
-  } catch (error) {
-    console.error("Error leaving team:", error);
-  }
-};
-
-  
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const onRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await fetchData();
+    setIsRefreshing(false);
+  }, []);
 
   const render = ({ item }) => {
     return (
-      <View style={{ padding: 16, backgroundColor: "#f0f0f0", borderRadius: 16, marginBottom: 16 }}>
-        
-    
-        <Avatar.Image size={100} source={{ uri: item.profileImage }} />
-        <Text>{item.fullName}</Text>
-        
+      <View className="mr-3"
+      >
+        <ImageBackground source={require("../../assets/bk1.png")}
+          style={{ width: 110, height: 160 }}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("PlayerFormationstack", {
+                screen: "PlayerVisitProfile",
+                params: { itemId: item.uid },
+              })
+            }
+          >
+            <Avatar.Image className="self-center top-2" size={70} source={{ uri: item.profileImage }} />
+          </TouchableOpacity>
+
+          <View style={styles.container}>
+            <Text style={styles.fullName}>{item.fullName}</Text>
+            <Text style={styles.position}>{item.position}</Text>
+          </View>
+          
+        </ImageBackground>
       </View>
     );
   };
+
+  
+
   return (
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-1 flex justify-around my-5">
@@ -121,7 +141,7 @@ const leaveTeam = async () => {
         <View className="flex ">
           <View className="flex-row justify-end top-9">
 
-            
+
             <TouchableOpacity
               onPress={() => leaveTeam(navigation)}
               className="bg-yellow-400  p-2 rounded-tr-2xl rounded-bl-2xl ml-4"
@@ -142,92 +162,26 @@ const leaveTeam = async () => {
           <Text className="font-bold text-black">GK</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.posstionLb} className="items-start">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold left-3 text-black">LB</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={styles.posstionRb} className="items-end">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold right-2 text-black">RB</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionCb1} className="items-center">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold  text-black">CB</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionCb2} className="items-center">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold  text-black">CB</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionCm1} className="items-start">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold left-2 text-black">CM</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionCm2} className="items-center">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold text-black">CM</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionCm3} className="items-end">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold right-2 text-black">CM</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionLw} className="items-start">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold left-2 text-black">LW</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionRw} className="items-end">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold right-2 text-black">RW</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.posstionSt} className="items-center">
-          <Image
-            source={require("../../assets/player.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className="font-bold text-black">ST</Text>
-        </TouchableOpacity>
       </View>
 
-      
+
 
       <View style={styles.container}>
-        <FlatList data={members} renderItem={render} horizontal />
+        <FlatList
+          data={members}
+          renderItem={render}
+          horizontal
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+
+          }
+        />
       </View>
+      
+      {/* <View style={styles.container}>
+        <FlatList data={members} renderItem={render} horizontal />
+      </View> */}
     </View>
   );
 };
@@ -236,6 +190,20 @@ const styles = StyleSheet.create({
   posstionLb: {
     bottom: 160,
     left: 60,
+  },
+  container: {
+    alignItems: 'center', // Center items horizontally
+    marginTop: '5%',      // 5% of the screen height margin from the top
+  },
+  fullName: {
+    fontSize: 16,          // Example font size
+    fontWeight: 'bold',
+    marginBottom: '2%',    // 2% of the screen height margin at the bottom
+  },
+  position: {
+    fontSize: 14,          // Example font size
+    fontWeight: 'bold',
+    marginTop: '2%',       // 2% of the screen height margin at the top
   },
   posstiongk: {
     bottom: 15,

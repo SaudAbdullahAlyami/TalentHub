@@ -77,7 +77,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       } else if (index === 9) {
         setPosition('RB');
       } else if (index === 10) {
-        setPosition('ST');
+        setPosition('GK');
       }
 
       if (!position) {
@@ -176,6 +176,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
     });
 
     console.log("Member added to the formation array!!");
+    
   }
 
   const invitePlayer = async (playerUid) => {

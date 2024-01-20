@@ -183,7 +183,8 @@ export const CoachNotification = ({ navigation }) => {
         <View style={styles.pico}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("CoachFormationstack", {
+              navigation.navigate("CoachNotificationstack", {
+                screen: "CoachVisitProfile",
                 params: { itemId: item.senderUid },
               })
             }
