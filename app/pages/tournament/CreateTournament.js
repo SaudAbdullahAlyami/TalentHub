@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc,getDoc } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -52,10 +52,13 @@ export const CreateTournament = ({ navigation }) => {
     }
   };
 
-  const createData = () => {
+  const createData = async() => {
     try {
+      const organizerDoc = await getDoc(doc(db,"users",auth.currentUser.uid));
+      const image =organizerDoc.data().profileImage
       setDoc(doc(db, "tournament", tournamentName), {
         tournamentOwnerUid: auth.currentUser.uid,
+        tournamentImage:image,
         tournamentName: tournamentName,
         teams: teams,
         prize: prize,

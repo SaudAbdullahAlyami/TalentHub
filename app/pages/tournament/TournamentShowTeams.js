@@ -99,6 +99,7 @@ export const TournamentShowTeams = ({ navigation }) => {
     );
   };
 
+  
   return (
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-row justify-center top-10">
@@ -116,7 +117,7 @@ export const TournamentShowTeams = ({ navigation }) => {
         <FlatList
           data={data}
           renderItem={render}
-          keyExtractor={(item) => item.clubName}
+          
         />
 
         <View className="bg-white my-9"></View>

@@ -96,7 +96,7 @@ export const TournamentNotification = ({ navigation }) => {
         });
         console.log("tournament added to team");
 
-        const players = clubDoc.data().members;
+        const players = clubDoc.data().formation;
         const tournamentDoc = await getDoc(doc(db, "tournament", tourName));
 
         if (tournamentDoc.exists()) {
@@ -107,7 +107,7 @@ export const TournamentNotification = ({ navigation }) => {
           if (!teamExists) {
             // Get the current teams array
             const currentTeams = tournamentDoc.data().teams;
-            const arrayIndex = tournamentDoc.data().arrayIndex;
+            const arrayIndex = tournamentDoc.data().teamsArrayIndex;
 
             // Modify the team at the specified index
             currentTeams[arrayIndex] = {
@@ -115,20 +115,19 @@ export const TournamentNotification = ({ navigation }) => {
               players: players,
             };
 
+          
             // Update the entire teams array in the document
             await updateDoc(doc(db, "tournament", tourName), {
               teams: currentTeams,
-              arrayIndex: arrayIndex + 1,
+              teamsArrayIndex: arrayIndex + 1,
             });
             console.log("New club joined in tournament");
-          }else{
+          } else {
             console.log("The team already exist");
           }
         } else {
           console.log("Tournament document does not exist");
         }
-
-        
       } else {
         // Update the invitation status to "Rejected"
         await updateDoc(invitationRef, { status: text });

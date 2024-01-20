@@ -126,13 +126,18 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
             // Update existing array at the specified index
             currentFormation[index] = {
                 fullName: playerDoc.data()?.fullName || "",
-                age: playerDoc.data()?.age || 0,
-                height: playerDoc.data()?.height || 0,
-                weight: playerDoc.data()?.weight || 0,
-                level: playerDoc.data()?.level || "",
-                profileImage: playerDoc.data()?.imageURL || "",
                 position: playerDoc.data()?.position || "",
                 uid: playerDoc.data()?.uid || "",
+                // t3deelll s3oooooooooooooodddddddddddddddd
+                goals:playerDoc.data().goals,
+                assist:playerDoc.data().assist,
+                rating:playerDoc.data().rating,
+                saves:playerDoc.data().saves,
+                clearances:playerDoc.data().clearances,
+                tackles:playerDoc.data().tackles,
+                crosses :playerDoc.data().crosses,
+                passes:playerDoc.data().passes,
+                shotsOnTarget:playerDoc.data().shotsOnTarget,
             };
         } else {
             // If the array is smaller than the specified index, pad with empty values
@@ -144,21 +149,24 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
             // Add the player at the specified index
             currentFormation[index] = {
                 fullName: playerDoc.data()?.fullName || "",
-                age: playerDoc.data()?.age || 0,
-                height: playerDoc.data()?.height || 0,
-                weight: playerDoc.data()?.weight || 0,
-                level: playerDoc.data()?.level || "",
-                profileImage: playerDoc.data()?.imageURL || "",
                 position: playerDoc.data()?.position || "",
                 uid: playerDoc.data()?.uid || "",
+                // t3deelll s3oooooooooooooodddddddddddddddd
+                goals:playerDoc.data().goals,
+                assist:playerDoc.data().assist,
+                rating:playerDoc.data().rating,
+                saves:playerDoc.data().saves,
+                clearances:playerDoc.data().clearances,
+                tackles:playerDoc.data().tackles,
+                crosses :playerDoc.data().crosses,
+                passes:playerDoc.data().passes,
+                shotsOnTarget:playerDoc.data().shotsOnTarget,
             };
         }
     
         await updateDoc(clubRef, {
             formation: currentFormation,
-            clubName,
-            description: clubDoc.data()?.description || "",
-            city: clubDoc.data()?.city || "",
+            
         });
     
         console.log("Member added to the formation array!!");

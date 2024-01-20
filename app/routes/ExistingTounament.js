@@ -47,30 +47,30 @@ export const ExistingTournament = ({ navigation }) => {
                   console.log("Matchups updated in real-time");
 
                   const isRound1Complete =
-                    matchups &&
+                   
                     matchups.every((matchup) => matchup.whoWin !== "");
                   setRound1Complete(isRound1Complete);
-
+                  console.log("Round 1 complete? :"+isRound1Complete)
                   // If Round 1 is complete and Round 2 matchups haven't been generated, generate Round 2 matchups
                   if (isRound1Complete && matchupsRound2.length === 0) {
                     generateMatchupsRound2(tournamentData.matchsRound2);
                   }
 
                   const isRound2Complete =
-                    matchupsRound2 &&
-                    matchupsRound2.every((matchup) => matchup.whoWin !== "");
+                    
+                    matchupsRound2.every((matchupsRound2) => matchupsRound2.whoWin !== "");
                   setRound2Complete(isRound2Complete);
-
+                  console.log("Round 2 complete? :"+isRound2Complete)
                   // If Round 2 is complete and Round 3 matchups haven't been generated, generate Round 3 matchups
                   if (isRound2Complete && matchupsRound3.length === 0) {
                     generateMatchupsRound3(tournamentData.matchsRound3);
                   }
 
                   const isRound3Complete =
-                    matchupsRound3 &&
-                    matchupsRound3.every((matchup) => matchup.whoWin !== "");
+                   
+                    matchupsRound3.every((matchupsRound3) => matchupsRound3.whoWin !== "");
                   setRound3Complete(isRound3Complete);
-
+                  console.log("Round 3 complete? :"+isRound3Complete)
                   // If Round 3 is complete and Round 4 matchups haven't been generated, generate Round 4 matchups
                   if (isRound3Complete && matchupsRound4.length === 0) {
                     generateMatchupsRound4(tournamentData.matchsRound4);

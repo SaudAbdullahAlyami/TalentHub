@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import {
   setDoc,
   doc,
@@ -25,81 +25,90 @@ export const ExistingTournament = ({ navigation }) => {
   const [round3Complete, setRound3Complete] = useState(false); //to know if round 3 finish
 
   useEffect(() => {
-    async function getData() {
-      const tournamentOrganizerRef = doc(db, "users", auth.currentUser.uid);
-      const organizerDoc = await getDoc(tournamentOrganizerRef);
-      if (organizerDoc.exists()) {
-        const tournamentName = organizerDoc.data().tournament;
-        setTournamentId(tournamentName);
-        const tournamentRef = doc(db, "tournament", tournamentName);
-        const tournamentDoc = await getDoc(tournamentRef);
-        if (tournamentName) {
-          if (tournamentDoc.exists()) {
-            const tournamentData = tournamentDoc.data();
-            const tournamentMatchs = tournamentData.matchs;
-            if (tournamentData && tournamentMatchs.length !== 0) {
-              setTeams(tournamentData.teams);
-              console.log("Updated team from the database");
-              setMatchups(tournamentData.matchs);
-              console.log("Matchups update in real-time");
-
-              const isRound1Complete =
-                matchups && matchups.every((matchup) => matchup.whoWin !== "");
-              setRound1Complete(isRound1Complete);
-              console.log("Round1 complete? :"+isRound1Complete);
-              // If Round 1 is complete and Round 2 matchups haven't been generated, generate Round 2 matchups
-             
-            } else {
-              setTeams(tournamentData.teams);
-              console.log("Tournament document does not contain matchs");
-            }
-          } else {
-            console.log("Tournament document does not exist");
-          }
-        } else {
-          console.log(
-            "Tournament name is not available in the organizer document"
-          );
-        }
-      } else {
-        console.log("Tournament organizer document does not exist");
-      }
-    }
-
     getData();
   }, []);
+
+  async function getData() {
+    const tournamentOrganizerRef = doc(db, "users", auth.currentUser.uid);
+    const organizerDoc = await getDoc(tournamentOrganizerRef);
+    if (organizerDoc.exists()) {
+      const tournamentName = organizerDoc.data().tournament;
+      setTournamentId(tournamentName);
+      const tournamentRef = doc(db, "tournament", tournamentName);
+      const tournamentDoc = await getDoc(tournamentRef);
+      if (tournamentName) {
+        if (tournamentDoc.exists()) {
+          const tournamentData = tournamentDoc.data();
+          const tournamentMatchs = tournamentData.matchs;
+          if (tournamentData && tournamentMatchs.length !== 0) {
+            setTeams(tournamentData.teams);
+            console.log("Updated team from the database");
+            setMatchups(tournamentData.matchs);
+            console.log("Matchups update in real-time");
+
+            const isRound1Complete =
+              matchups && matchups.every((matchup) => matchup.whoWin !== "");
+            setRound1Complete(isRound1Complete);
+            console.log("Round1 complete? :" + isRound1Complete);
+            // If Round 1 is omplete and Round 2 matchups haven't been generated, generate Round 2 matchups
+            if (tournamentDoc.data().matchsRound2.length != 0) {
+              fetchRound2();
+            }
+            if (tournamentDoc.data().matchsRound3.length != 0) {
+              fetchRound3();
+            }
+
+            if (tournamentDoc.data().matchsRound4.length != 0) {
+              fetchRound4();
+            }
+          } else {
+            setTeams(tournamentData.teams);
+            console.log("Tournament document does not contain matchs");
+          }
+        } else {
+          console.log("Tournament document does not exist");
+        }
+      } else {
+        console.log(
+          "Tournament name is not available in the organizer document"
+        );
+      }
+    } else {
+      console.log("Tournament organizer document does not exist");
+    }
+  }
 
   const generateMatchups = async () => {
     try {
       //this means the 16 teams are regestired and now ready to random
-      
-        const shuffledTeams = shuffleArray([...teams]);
 
-        const generatedMatchups = [];
-        var matchIndex = 0;
-        for (let i = 0; i < shuffledTeams.length; i += 2) {
-          const team1 = shuffledTeams[i];
-          const team2 = shuffledTeams[i + 1];
-          generatedMatchups.push({
-            team1,
-            team2,
-            matchIndex: matchIndex,
-            whoWin: "",
-          });
-          matchIndex++;
-        }
+      const shuffledTeams = shuffleArray([...teams]);
 
-        setMatchups(generatedMatchups);
-
-        const tournamentRef = doc(db, "tournament", tournamentId);
-
-        await updateDoc(tournamentRef, {
-          matchs: generatedMatchups,
+      const generatedMatchups = [];
+      var matchIndex = 0;
+      for (let i = 0; i < shuffledTeams.length; i += 2) {
+        const team1 = shuffledTeams[i];
+        const team2 = shuffledTeams[i + 1];
+        generatedMatchups.push({
+          team1,
+          team2,
+          matchIndex: matchIndex,
+          whoWin: "",
+          team1Goals:'0',
+          team2Goals:'0'
         });
+        matchIndex++;
+      }
 
-        console.log("Matchups updated in the tournament document");
-      
-      
+      setMatchups(generatedMatchups);
+
+      const tournamentRef = doc(db, "tournament", tournamentId);
+
+      await updateDoc(tournamentRef, {
+        matchs: generatedMatchups,
+      });
+
+      console.log("Matchups updated in the tournament document");
     } catch (error) {
       console.error("Error generating matchups:", error);
     }
@@ -271,22 +280,69 @@ export const ExistingTournament = ({ navigation }) => {
   };
 
   const fetchRound2 = async () => {
-    try{
+    try {
       const tournamentRef = doc(db, "tournament", tournamentId);
       const tournamentDoc = await getDoc(tournamentRef);
-      console.log("Joined Round 2")
-      generateMatchupsRound2(tournamentDoc.data().matchsRound2);
-
-    }catch{
-
+      if (round1Complete) {
+        console.log("Joined Round 2");
+        generateMatchupsRound2(tournamentDoc.data().matchsRound2);
+        const isRound2Complete = matchupsRound2.every(
+          (matchupsRound2) => matchupsRound2.whoWin !== ""
+        );
+        setRound2Complete(isRound2Complete);
+        console.log("Round2 complete? :" + isRound2Complete);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
+
+  const fetchRound3 = async () => {
+    try {
+      const tournamentRef = doc(db, "tournament", tournamentId);
+      const tournamentDoc = await getDoc(tournamentRef);
+      if (round2Complete) {
+        console.log("Joined Round 3");
+        generateMatchupsRound3(tournamentDoc.data().matchsRound3);
+        const isRound3Complete = matchupsRound2.every(
+          (matchupsRound3) => matchupsRound3.whoWin !== ""
+        );
+        setRound3Complete(isRound3Complete);
+        console.log("Round3 complete? :" + isRound3Complete);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchRound4 = async () => {
+    try {
+      const tournamentRef = doc(db, "tournament", tournamentId);
+      const tournamentDoc = await getDoc(tournamentRef);
+      console.log("Joined Round 4");
+      generateMatchupsRound4(tournamentDoc.data().matchsRound4);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <Text style={styles.title}>Tournament Bracket</Text>
+        <TouchableOpacity onPress={() => getData()}>
+          <Text>Refresh</Text>
+        </TouchableOpacity>
+
+        {matchups.length == 0 && (
+          <Button
+            title="randomize round 1"
+            onPress={() => generateMatchups()}
+          />
+        )}
+
         {matchups.map((matchup, index) => (
+          <View style={{marginBottom:20,}}>
           <View key={index} style={styles.matchupContainer}>
             <Text style={styles.matchupText}>
               {matchup.team1.name} vs {matchup.team2.name}
@@ -296,10 +352,22 @@ export const ExistingTournament = ({ navigation }) => {
               onPress={() => handleMatchButtonClick(matchup, 1)}
             />
             <Text> Winner is :{matchup.whoWin}</Text>
+            
+          </View>
+          <Text>  {matchup.team1.name} goal:{matchup.team1Goals}</Text>
+          <Text>  {matchup.team2.name} goal:{matchup.team2Goals}</Text>
           </View>
         ))}
-        
-        <Text>Round 2</Text>
+
+        {round1Complete && matchupsRound2.length==0 &&(
+          <Button
+            title="Start Round2"
+            onPress={() => fetchRound2()}
+            style={{ backgroundColor: "green" }}
+          />
+        )}
+
+        <Text>Round2</Text>
         {matchupsRound2.map((matchup, index) => (
           <View key={index} style={styles.matchupContainer}>
             <Text style={styles.matchupText}>
@@ -310,10 +378,17 @@ export const ExistingTournament = ({ navigation }) => {
               onPress={() => handleMatchButtonClick(matchup, 2)}
             />
 
-            <Text> Winner is: {matchup.whoWin}</Text>
+            <Text> Winner is {matchup.whoWin}</Text>
           </View>
         ))}
 
+        {round2Complete &&matchupsRound3.length==0 && (
+          <Button
+            title="Start Round3"
+            onPress={() => fetchRound3()}
+            style={{ backgroundColor: "green" }}
+          />
+        )}
         <Text>Round 3</Text>
         {matchupsRound3.map((matchup, index) => (
           <View key={index} style={styles.matchupContainer}>
@@ -328,7 +403,13 @@ export const ExistingTournament = ({ navigation }) => {
             <Text> Winner is: {matchup.whoWin}</Text>
           </View>
         ))}
-
+        {round3Complete &&matchupsRound4.length==0 && (
+          <Button
+            title="Start Round4"
+            onPress={() => fetchRound4()}
+            style={{ backgroundColor: "green" }}
+          />
+        )}
         {matchupsRound4.map((matchup, index) => (
           <>
             <Text>Final</Text>
@@ -345,8 +426,7 @@ export const ExistingTournament = ({ navigation }) => {
             </View>
           </>
         ))}
-        <Button title="randomize round 1" onPress={() => generateMatchups()} />
-        <Button title="Start Round2" onPress={()=>fetchRound2()}/>
+
         <Button
           title="Start new Tournament"
           onPress={() => DeleteTournament()}
@@ -373,7 +453,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 16,
+    
   },
   matchupText: {
     fontSize: 16,

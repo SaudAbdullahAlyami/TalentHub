@@ -26,7 +26,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
     try {
       if (parseFloat(team1Goals) > parseFloat(team2Goals)) {
         WhoWin = team1.name;
-      } else if (team1Goals < team2Goals) {
+      } else if (parseFloat(team1Goals) < parseFloat(team2Goals)) {
         WhoWin = team2.name;
       }
 
@@ -50,6 +50,8 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
             // Update the WhoWin property for the specified matchIndex
             updatedMatchs[matchIndex].whoWin = WhoWin;
+            updatedMatchs[matchIndex].team1Goals = team1Goals;
+            updatedMatchs[matchIndex].team2Goals = team2Goals;
 
             // Update the tournament document with the modified matchs array
             await updateDoc(tournamentRef, { matchs: updatedMatchs });
@@ -58,7 +60,8 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
             // Update the WhoWin property for the specified matchIndex
             updatedMatchs[matchIndex].whoWin = WhoWin;
-
+            updatedMatchs[matchIndex].team1Goals = team1Goals;
+            updatedMatchs[matchIndex].team2Goals = team2Goals;
             // Update the tournament document with the modified matchs array
             await updateDoc(tournamentRef, { matchsRound2: updatedMatchs });
           }
@@ -68,7 +71,8 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
           // Update the WhoWin property for the specified matchIndex
           updatedMatchs[matchIndex].whoWin = WhoWin;
-
+          updatedMatchs[matchIndex].team1Goals = team1Goals;
+          updatedMatchs[matchIndex].team2Goals = team2Goals;
           // Update the tournament document with the modified matchs array
           await updateDoc(tournamentRef, { matchsRound3: updatedMatchs });
         }
@@ -77,7 +81,8 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
           // Update the WhoWin property for the specified matchIndex
           updatedMatchs[matchIndex].whoWin = WhoWin;
-
+          updatedMatchs[matchIndex].team1Goals = team1Goals;
+          updatedMatchs[matchIndex].team2Goals = team2Goals;
           // Update the tournament document with the modified matchs array
           await updateDoc(tournamentRef, { matchsRound4: updatedMatchs });
         }
@@ -150,6 +155,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
  
   const renderPlayer1Item = ({ item }) => {
+    if(item !=null){
     return (
       <View style={styles.playerContainer}>
         <Text>{item.fullName}</Text>
@@ -184,11 +190,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           />
         </View>
       </View>
-    );
+    )
+          }
+          
   };
 
 
   const renderPlayer2Item = ({ item }) => {
+    if(item !=null){
     return (
       <View style={styles.playerContainer}>
         <Text>{item.fullName}</Text>
@@ -223,7 +232,7 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           />
         </View>
       </View>
-    );
+    );}
   };
 
   return (
