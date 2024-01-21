@@ -118,6 +118,7 @@ export const TournamentShowTeams = ({ navigation }) => {
           data={data}
           renderItem={render}
           
+          
         />
 
         <View className="bg-white my-9"></View>

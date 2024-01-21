@@ -22,6 +22,14 @@ export const TournamentOrgRating = ({ route, navigation }) => {
   const [goal2, setGoal2] = useState("0");
   const [rating2, setRating2] = useState("0");
 
+  const [assist, setAssist] = useState("0");
+const [clearances, setClearances] = useState("0");
+const [crosses, setCrosses] = useState("0");
+const [passes, setPasses] = useState("0");
+const [saves, setSaves] = useState("0");
+const [shotsOnTarget, setShotsOnTarget] = useState("0");
+const [tackles, setTackles] = useState("0");
+
   const handleSave = async () => {
     try {
       if (parseFloat(team1Goals) > parseFloat(team2Goals)) {
@@ -102,18 +110,18 @@ export const TournamentOrgRating = ({ route, navigation }) => {
   const savePlayerRating = async (playerUid, rate) => {
     try {
       const playerDoc = await getDoc(doc(db, "users", playerUid));
-      const prevPlayerRate = parseFloat(playerDoc.data().rate);
+      const prevPlayerRate = parseFloat(playerDoc.data().rating);
       const playerRate = parseFloat(rate);
       if (prevPlayerRate == 0 || prevPlayerRate=="0") {
         await updateDoc(doc(db, "users", playerUid), {
-          rate: playerRate,
+          rating: playerRate,
         });
         console.log("new Player was rated");
       } else {
         const averageRate = (playerRate + prevPlayerRate) / 2;
 
         await updateDoc(doc(db, "users", playerUid), {
-          rate: averageRate,
+          rating: averageRate,
         });
         console.log("Player was rated");
       }
@@ -123,34 +131,190 @@ export const TournamentOrgRating = ({ route, navigation }) => {
   };
 
 
-  const savePlayerGoal = async (playerUid, goal) => {
+ 
+
+/* index means 
+goals=0
+rating=1
+assist=2
+clearnes=3
+crosses=4
+passes=5
+saves=6
+shot on target=7
+tackels=8
+
+*/
+  const savePlayerData = async (playerUid, data,index) => {
     try {
       const userRef = doc(db, "users", playerUid);
       const playerDoc = await getDoc(userRef);
-      
-      if (playerDoc.exists()) {
-        const playerGoal = parseFloat(playerDoc.data().goal); // Convert to number
-  
-        if (playerGoal === 0 ||playerGoal==="0") {
-          await updateDoc(userRef, {
-            goal: parseFloat(goal),
-          });
-          console.log("New player goal added");
+      if(index==0){
+       
+        if (playerDoc.exists()) {
+          const playerGoal = parseFloat(playerDoc.data().goals); // Convert to number
+    
+          if (playerGoal === 0 ||playerGoal==="0") {
+            await updateDoc(userRef, {
+              goals: parseFloat(data),
+            });
+            console.log("New player goal added");
+          } else {
+            const newGoal = playerGoal + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              goals: newGoal,
+            });
+            console.log("Player goal updated");
+          }
         } else {
-          const newGoal = playerGoal + parseFloat(goal);
+          console.log("Player document does not exist");
+        }
+      }else if (index==1){
+        const prevPlayerRate = parseFloat(playerDoc.data().rating);
+        const playerRate = parseFloat(data);
+        if (prevPlayerRate == 0 || prevPlayerRate=="0") {
+          await updateDoc(doc(db, "users", playerUid), {
+            rating: playerRate,
+          });
+          console.log("new Player was rated");
+        } else {
+          const averageRate = (playerRate + prevPlayerRate) / 2;
+  
+          await updateDoc(doc(db, "users", playerUid), {
+            rating: averageRate,
+          });
+          console.log("Player was rated");
+        }
+      }else if(index==2){
+        if (playerDoc.exists()) {
+          const playerAssist = parseFloat(playerDoc.data().assist); // Convert to number
+    
+          if (playerAssist === 0 ||playerAssist==="0") {
+            await updateDoc(userRef, {
+              assist: parseFloat(assist),
+            });
+            console.log("New player assist added");
+          } else {
+            const newAssist = playerAssist + parseFloat(assist);
+    
+            await updateDoc(userRef, {
+              assist: newAssist,
+            });
+            console.log("Player assist updated");
+          }
+        }
+      }else if(index==3){
+        if (playerDoc.exists()) {
+          const playerClearances = parseFloat(playerDoc.data().clearances); // Convert to number
+    
+          if (playerClearances === 0 ||playerClearances==="0") {
+            await updateDoc(userRef, {
+              clearances: parseFloat(data),
+            });
+            console.log("New player Clearances added");
+          } else {
+            const newClearances = playerClearances + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              clearances: newClearances,
+            });
+            console.log("Player Clearances updated");
+          }
+        }
+      }else if(index==4){
+        if (playerDoc.exists()) {
+          const playerCrosses = parseFloat(playerDoc.data().crosses); // Convert to number
+    
+          if (playerCrosses === 0 ||playerCrosses==="0") {
+            await updateDoc(userRef, {
+              crosses: parseFloat(data),
+            });
+            console.log("New player crosses added");
+          } else {
+            const newCrosses = playerCrosses + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              crosses: newCrosses,
+            });
+            console.log("Player crosses updated");
+          }
+        }
+      }else if(index==5){
+        const playerPasses= parseFloat(playerDoc.data().passes); // Convert to number
+    
+          if (playerPasses === 0 ||playerPasses==="0") {
+            await updateDoc(userRef, {
+              passes: parseFloat(data),
+            });
+            console.log("New player passes added");
+          } else {
+            const newPasses = playerPasses + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              passes: newPasses,
+            });
+            console.log("Player passes updated");
+          }
+      }else if(index==6){
+        const playerSaves = parseFloat(playerDoc.data().saves); // Convert to number
+    
+          if (playerSaves === 0 ||playerSaves==="0") {
+            await updateDoc(userRef, {
+              saves: parseFloat(data),
+            });
+            console.log("New player saves added");
+          } else {
+            const newSaves = playerSaves + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              saves: newSaves,
+            });
+            console.log("Player saves updated");
+          }
+      }else if(index==7){
+        const playerShotsOnTarget = parseFloat(playerDoc.data().shotsOnTarget); // Convert to number
+    
+          if (playerShotsOnTarget === 0 ||playerShotsOnTarget==="0") {
+            await updateDoc(userRef, {
+              shotsOnTarget: parseFloat(data),
+            });
+            console.log("New player shotsOnTarget added");
+          } else {
+            const newShotsOnTarget = playerShotsOnTarget + parseFloat(data);
+    
+            await updateDoc(userRef, {
+              shotsOnTarget: newShotsOnTarget,
+            });
+            console.log("Player shotsOnTarget updated");
+          }
+      }else if(index==8){
+        const playerTackles = parseFloat(playerDoc.data().tackles); // Convert to number
+    
+        if (playerTackles === 0 ||playerTackles==="0") {
+          await updateDoc(userRef, {
+            tackles: parseFloat(data),
+          });
+          console.log("New player tackles added");
+        } else {
+          const newTackles = playerTackles + parseFloat(data);
   
           await updateDoc(userRef, {
-            goal: newGoal,
+            tackles: newTackles,
           });
-          console.log("Player goal updated");
+          console.log("Player tackles updated");
         }
-      } else {
+      }
+     else {
         console.log("Player document does not exist");
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+
+  
   
 
  
@@ -164,14 +328,13 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={goal1}
             onChangeText={(text) => {
               setGoal1(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerGoal(item.uid, goal1)}
+            onPress={() => savePlayerData(item.uid, goal1,0)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -179,16 +342,124 @@ export const TournamentOrgRating = ({ route, navigation }) => {
           <TextInput
             style={styles.input}
             keyboardType="numeric"
-            value={rating1}
             onChangeText={(text) => {
               setRating1(text);
             }}
           />
           <Button
             title="Save"
-            onPress={() => savePlayerRating(item.uid, rating1)}
+            onPress={() => savePlayerData(item.uid, rating1,1)}
           />
         </View>
+
+        <View style={styles.inputContainer}>
+          <Text> Assist:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setAssist(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, assist,2)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text> clearances:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setClearances(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, clearances,3)}
+          />
+        </View>
+
+
+        <View style={styles.inputContainer}>
+          <Text> crosses:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setCrosses(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, crosses,4)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text> passes:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setPasses(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, passes,5)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text> saves:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setSaves(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, saves,6)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text> shotsOnTarget:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setShotsOnTarget(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, shotsOnTarget,7)}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text> tackles:</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              setTackles(text);
+            }}
+          />
+          <Button
+            title="Save"
+            onPress={() => savePlayerData(item.uid, tackles,8)}
+          />
+        </View>
+
+
+
       </View>
     )
           }
@@ -198,42 +469,153 @@ export const TournamentOrgRating = ({ route, navigation }) => {
 
   const renderPlayer2Item = ({ item }) => {
     if(item !=null){
-    return (
-      <View style={styles.playerContainer}>
-        <Text>{item.fullName}</Text>
-        <View style={styles.inputContainer}>
-          <Text> goals</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            
-            onChangeText={(text) => {
-              setGoal2(text);
-            }}
-          />
-          <Button
-            title="Save"
-            onPress={() => savePlayerGoal(item.uid, goal2)}
-          />
+      return (
+        <View style={styles.playerContainer}>
+          <Text>{item.fullName}</Text>
+          <View style={styles.inputContainer}>
+            <Text> goals</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={goal1}
+              onChangeText={(text) => {
+                setGoal1(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, goal1,0)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text>Rating:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={rating1}
+              onChangeText={(text) => {
+                setRating1(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, rating1,1)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> Assist:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setAssist(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, assist,2)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> clearances:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setClearances(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, clearances,3)}
+            />
+          </View>
+  
+  
+          <View style={styles.inputContainer}>
+            <Text> crosses:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setCrosses(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, crosses,4)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> passes:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setPasses(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, passes,5)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> saves:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setSaves(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, saves,6)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> shotsOnTarget:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setShotsOnTarget(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, shotsOnTarget,7)}
+            />
+          </View>
+  
+          <View style={styles.inputContainer}>
+            <Text> tackles:</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setTackles(text);
+              }}
+            />
+            <Button
+              title="Save"
+              onPress={() => savePlayerData(item.uid, tackles,8)}
+            />
+          </View>
+  
+  
+  
         </View>
-        <View style={styles.inputContainer}>
-          <Text>Rating:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
+      )
+            }
             
-            onChangeText={(text) => {
-              setRating2(text);
-            }}
-          />
-          <Button
-            title="Save"
-            onPress={() => savePlayerRating(item.uid, rating2)}
-          />
-        </View>
-      </View>
-    );}
-  };
+    };
 
   return (
     <View style={styles.container}>
