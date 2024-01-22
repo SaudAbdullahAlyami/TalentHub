@@ -82,7 +82,7 @@ export const TournamentNotification = ({ navigation }) => {
         const coachRef = doc(db, "users", coachUid);
         const coach = await getDoc(coachRef);
         const clubName = coach.data().clubName;
-
+        const teamImage= coach.data().profileImage;
         await updateDoc(coachRef, {
           tournament: tourName,
         });
@@ -102,7 +102,7 @@ export const TournamentNotification = ({ navigation }) => {
         if (tournamentDoc.exists()) {
           const teamExists = tournamentDoc
             .data()
-            .teams.some((team) => team.name === clubName);
+            .teams.some((team) => {team.name === clubName });
 
           if (!teamExists) {
             // Get the current teams array
@@ -113,6 +113,7 @@ export const TournamentNotification = ({ navigation }) => {
             currentTeams[arrayIndex] = {
               name: clubName,
               players: players,
+              teamImage:teamImage
             };
 
           

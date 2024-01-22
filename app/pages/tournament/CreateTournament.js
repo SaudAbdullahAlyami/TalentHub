@@ -22,6 +22,7 @@ export const CreateTournament = ({ navigation }) => {
     Array.from({ length: 16 }, (_, index) => ({
       name: `Team ${index + 1}`,
       players: [],
+      teamImage:null
     }))
   );
   const [matchs, setmatchs] = useState([]);

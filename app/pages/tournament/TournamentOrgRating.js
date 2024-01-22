@@ -107,31 +107,6 @@ const [tackles, setTackles] = useState("0");
     navigation.goBack();
   };
 
-  const savePlayerRating = async (playerUid, rate) => {
-    try {
-      const playerDoc = await getDoc(doc(db, "users", playerUid));
-      const prevPlayerRate = parseFloat(playerDoc.data().rating);
-      const playerRate = parseFloat(rate);
-      if (prevPlayerRate == 0 || prevPlayerRate=="0") {
-        await updateDoc(doc(db, "users", playerUid), {
-          rating: playerRate,
-        });
-        console.log("new Player was rated");
-      } else {
-        const averageRate = (playerRate + prevPlayerRate) / 2;
-
-        await updateDoc(doc(db, "users", playerUid), {
-          rating: averageRate,
-        });
-        console.log("Player was rated");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
- 
 
 /* index means 
 goals=0
@@ -332,10 +307,7 @@ tackels=8
               setGoal1(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, goal1,0)}
-          />
+        
         </View>
         <View style={styles.inputContainer}>
           <Text>Rating:</Text>
@@ -346,10 +318,7 @@ tackels=8
               setRating1(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, rating1,1)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -361,10 +330,7 @@ tackels=8
               setAssist(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, assist,2)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -376,10 +342,7 @@ tackels=8
               setClearances(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, clearances,3)}
-          />
+          
         </View>
 
 
@@ -392,10 +355,7 @@ tackels=8
               setCrosses(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, crosses,4)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -407,10 +367,7 @@ tackels=8
               setPasses(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, passes,5)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -422,10 +379,7 @@ tackels=8
               setSaves(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, saves,6)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -437,10 +391,7 @@ tackels=8
               setShotsOnTarget(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, shotsOnTarget,7)}
-          />
+          
         </View>
 
         <View style={styles.inputContainer}>
@@ -452,12 +403,22 @@ tackels=8
               setTackles(text);
             }}
           />
-          <Button
-            title="Save"
-            onPress={() => savePlayerData(item.uid, tackles,8)}
-          />
+            
         </View>
-
+        <Button
+            title="Save Player data"
+            onPress={() => {
+              savePlayerData(item.uid, goal1,0)
+              savePlayerData(item.uid, rating1,1)
+              savePlayerData(item.uid, assist,2)
+              savePlayerData(item.uid, clearances,3)
+              savePlayerData(item.uid, crosses,4)
+              savePlayerData(item.uid, passes,5)
+              savePlayerData(item.uid, saves,6)
+              savePlayerData(item.uid, shotsOnTarget,7)
+              savePlayerData(item.uid, tackles,8)
+            }}
+          />
 
 
       </View>

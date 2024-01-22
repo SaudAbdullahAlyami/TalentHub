@@ -30,8 +30,9 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 export const CoachFormation = ({ navigation }) => {
   const [members, setMembers] = useState([]);
+  
   const [clubName, setclubName] = useState("");
-
+  const [formation, setFormation] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -40,14 +41,16 @@ export const CoachFormation = ({ navigation }) => {
       /* Cleanup logic if needed */
     };
   }, [fetchData]);
+
   const fetchData = async () => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
       const userClubName = userDoc.data().clubName;
-
+      setclubName(userClubName)
       if (userClubName) {
         const clubDoc = await getDoc(doc(db, "clubs", userClubName));
         setMembers(clubDoc.data().members);
+        setFormation(clubDoc.data().formation)
       } else {
         console.error("User has no clubName.");
       }
@@ -55,6 +58,54 @@ export const CoachFormation = ({ navigation }) => {
       console.log("Error fetching data:", error);
     }
   };
+
+  async function  updateFormation(){
+    const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+    const userClubName = userDoc.data().clubName;
+  const clubDoc = await getDoc(doc(db, "clubs", userClubName));
+  const currentFormation =clubDoc.data().formation;
+  for (let i=0;i<currentFormation.length;i++){
+    //there exist player in formation
+    if(currentFormation[i]!=null){
+      const userDoc = await getDoc(doc(db, "users", currentFormation[i].uid));
+    // check if player data diffrent from formation data
+      if((userDoc.data().assist != currentFormation[i].assist)||(userDoc.data().clearances != currentFormation[i].clearances)||(userDoc.data().crosses != currentFormation[i].crosses)
+      || (userDoc.data().goals != currentFormation[i].goals)||(userDoc.data().passes != currentFormation[i].passes)||(userDoc.data().rating != currentFormation[i].rating)||
+      (userDoc.data().saves!= currentFormation[i].saves)||(userDoc.data().assist != currentFormation[i].assist)||(userDoc.data().shotsOnTarget != currentFormation[i].shotsOnTarget)
+      ||(userDoc.data().tackles != currentFormation[i].tackles)
+      ){
+
+        currentFormation[i] = {
+          fullName: userDoc.data()?.fullName || "",
+          position: userDoc.data()?.position || "",
+          uid: userDoc.data()?.uid || "",
+          // t3deelll s3oooooooooooooodddddddddddddddd
+          goals:userDoc.data().goals,
+          assist:userDoc.data().assist,
+          rating:userDoc.data().rating,
+          saves:userDoc.data().saves,
+          clearances:userDoc.data().clearances,
+          tackles:userDoc.data().tackles,
+          crosses :userDoc.data().crosses,
+          passes:userDoc.data().passes,
+          shotsOnTarget:userDoc.data().shotsOnTarget,
+      };
+
+
+        await updateDoc(doc(db, "clubs", clubName),{
+          formation: currentFormation,
+        })
+        console.log("im inside loop and player name: "+currentFormation[i].fullName)
+      }
+      
+    }else{
+      console.log("Player with index: "+i+" is null")
+    }
+  }
+}
+
+
+
   const deletePlayer = async (playerUid) => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
@@ -92,9 +143,11 @@ export const CoachFormation = ({ navigation }) => {
     }
   };
   const [isRefreshing, setIsRefreshing] = useState(false);
+
   const onRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await fetchData();
+    await updateFormation()
     setIsRefreshing(false);
   }, []);
   const render = ({ item }) => {
@@ -158,20 +211,20 @@ export const CoachFormation = ({ navigation }) => {
   const deleteFromFormation = async (indexPos) => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-  
+
       if (userDoc.exists()) {
         const userClubName = userDoc.data().clubName;
-  
+
         const clubRef = doc(db, "clubs", userClubName);
         const clubDoc = await getDoc(clubRef);
-  
+
         if (clubDoc && Array.isArray(clubDoc.data().formation) && clubDoc.data().formation.length > indexPos && clubDoc.data().formation[indexPos] !== null) {
-  
+
           const updatedFormation = [...clubDoc.data().formation];
           updatedFormation[indexPos] = null;
-  
+
           await updateDoc(clubRef, { formation: updatedFormation });
-  
+
           console.log("Player is deleted from the formation");
           console.log(updatedFormation[indexPos]);
         } else {
@@ -186,7 +239,7 @@ export const CoachFormation = ({ navigation }) => {
       // Handle any other errors that may occur during the data retrieval process
     }
   };
-  
+
 
   return (
 
