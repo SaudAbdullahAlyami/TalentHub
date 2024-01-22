@@ -187,13 +187,13 @@ export const UserAuth = () => {
       </Tab.Navigator>
     );
   }
+ 
 
   else if (type === "Scout") {
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "ScoutProfileStack" }}>
         <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
         <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
-        <Tab.Screen name="Rating" component={ScoutProfileStack} />
         <Tab.Screen name="ScoutRecommendation" component={ScoutRecommendation} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
