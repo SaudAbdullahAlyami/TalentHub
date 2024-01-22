@@ -3,21 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
-  FlatList
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
-import { doc, onSnapshot,collection,setDoc,getDocs,getDoc } from "firebase/firestore";
-import { db ,auth,firebase } from "../../component/config/config";
-import { Video, ResizeMode } from 'expo-av';
+import { doc,getDoc } from "firebase/firestore";
+import { db ,auth } from "../../component/config/config";
 
 export const ScoutProfile = ({ navigation }) => {
   const { user, handleSignOut } = useAuthentication();
@@ -54,12 +47,6 @@ useEffect(() => {
   fetchData();
 }, []);  // The empty dependency array ensures this effect runs only once when the component mounts
 
-
-
-  
-
-
-  
 
 
 
@@ -111,11 +98,6 @@ useEffect(() => {
  
 <Text className="text-gray-700 top-1  ml-4">Role</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>
-
-
-
-<Text className="text-gray-700 top-1  ml-4">Level</Text>
-<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>
 
 
 </View>

@@ -8,24 +8,6 @@ export const ScoutRecommendation = ({ navigation }) => {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [age, setAge] = useState('');
-
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-    // const [age, setAge] = useState('');
-
-    // assist: 22,
-    // clearances: 23,
-    // crosses: 22,
-    // goals:60,
-    // passes:100,
-    // rating: 10,
-    // saves: 0,
-    // shotsOnTarget: 99,
-    // tackles: 100
     const [recommendations, setRecommendations] = useState([]);
 
     const handleGetRecommendations = async () => {
@@ -109,7 +91,6 @@ export const ScoutRecommendation = ({ navigation }) => {
                             rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
                             tackles: {player.tackles} , crosses: {player.crosses}
                         </Text>
-
 
                         </>
 
