@@ -32,6 +32,7 @@ import { db, auth, firebaase } from "../../component/config/config";
 
 export const AddingPlayersManualy = ({ route, navigation }) => {
     const [members, setMembers] = useState([]);
+    
     const [clubName, setclubName] = useState("");
 
     const { index } = route.params
