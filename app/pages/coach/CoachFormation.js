@@ -75,6 +75,7 @@ export const CoachFormation = ({ navigation }) => {
       ||(userDoc.data().tackles != currentFormation[i].tackles)
       ){
 
+
         currentFormation[i] = {
           fullName: userDoc.data()?.fullName || "",
           position: userDoc.data()?.position || "",
@@ -92,7 +93,7 @@ export const CoachFormation = ({ navigation }) => {
       };
 
 
-        await updateDoc(doc(db, "clubs", clubName),{
+        await updateDoc(doc(db, "clubs", userClubName),{
           formation: currentFormation,
         })
         console.log("im inside loop and player name: "+currentFormation[i].fullName)

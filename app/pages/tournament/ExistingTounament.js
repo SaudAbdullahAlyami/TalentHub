@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import { ScrollView } from "react-native-gesture-handler";
+import { Avatar } from 'react-native-paper';
 
 export const ExistingTournament = ({ navigation }) => {
   const [tournamentId, setTournamentId] = useState("");
@@ -344,8 +345,18 @@ export const ExistingTournament = ({ navigation }) => {
         {matchups.map((matchup, index) => (
           <View style={{marginBottom:20,}}>
           <View key={index} style={styles.matchupContainer}>
+          <Avatar.Image backgroundColor="grey"
+            size={45} 
+              source={({uri : matchup.team1.teamImage})}
+              
+            />
             <Text style={styles.matchupText}>
-              {matchup.team1.name} vs {matchup.team2.name}
+              {matchup.team1.name} vs
+              <Avatar.Image backgroundColor="grey"
+            size={45} 
+              source={({uri : matchup.team2.teamImage})}
+              
+            /> {matchup.team2.name}
             </Text>
             <Button
               title="result"
@@ -370,9 +381,14 @@ export const ExistingTournament = ({ navigation }) => {
         <Text>Round2</Text>
         {matchupsRound2.map((matchup, index) => (
           <View key={index} style={styles.matchupContainer}>
+            
             <Text style={styles.matchupText}>
               {matchup.team1.name} vs {matchup.team2.name}
             </Text>
+
+
+          
+
             <Button
               title="result"
               onPress={() => handleMatchButtonClick(matchup, 2)}
