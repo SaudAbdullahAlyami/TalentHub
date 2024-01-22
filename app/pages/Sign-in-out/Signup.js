@@ -72,7 +72,7 @@ export const SignUp = ({ navigation }) => {
       createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
           //ADD in db
-          if(role=="Coach"||role=="Tournament Organizer"||role=="Scout"){
+          if(role=="Coach"||role=="Tournament Organizer"){
           setDoc(doc(db, "users", userCredential.user.uid), {
             uid: userCredential.user.uid,
             email: value.email,
@@ -108,6 +108,18 @@ export const SignUp = ({ navigation }) => {
             crosses :"0",
             passes:"0",
             shotsOnTarget:"0",
+          });
+          console.log("The",role," Was Added Successfully");
+        }else{
+          setDoc(doc(db, "users", userCredential.user.uid), {
+            uid: userCredential.user.uid,
+            email: value.email,
+            fullName: fullName,
+            scoutForClub: clubName,
+            city: city,
+            role: role,
+            profileImage:profileImage,
+            phoneNumber:""
           });
           console.log("The",role," Was Added Successfully");
         }
@@ -200,12 +212,22 @@ export const SignUp = ({ navigation }) => {
             autoCapitalize="none"
           />
           {/* ffffffffffffffffffffffffffffffffffffffffffffffff */}
-          {(role == "Coach"||role == "Scout") && (
+          {(role == "Coach") && (
              <><Text className="text-gray-700 top-3 ml-4">Club Name</Text><TextInput
               className="p-4 bg-gray-100 top-5 text-gray-700 rounded-2xl"
               placeholderTextColor="#aaaaaa"
-              
               placeholder="Club Name"
+              onChangeText={(text) => setclubName(text)}
+              value={clubName}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none" /></>
+          )}
+
+          {(role == "Scout") && (
+             <><Text className="text-gray-700 top-3 ml-4">Team That You Scout For</Text><TextInput
+              className="p-4 bg-gray-100 top-5 text-gray-700 rounded-2xl"
+              placeholderTextColor="#aaaaaa"
+              placeholder="Al-Hilal"
               onChangeText={(text) => setclubName(text)}
               value={clubName}
               underlineColorAndroid="transparent"

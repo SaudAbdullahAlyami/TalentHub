@@ -9,7 +9,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
-import { doc,getDoc } from "firebase/firestore";
+import { doc,onSnapshot } from "firebase/firestore";
 import { db ,auth } from "../../component/config/config";
 
 export const ScoutProfile = ({ navigation }) => {
@@ -17,35 +17,34 @@ export const ScoutProfile = ({ navigation }) => {
   const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [role, setRole] = useState(""); //Player OR Scout or ..
   const [clubName, setClubName] = useState(null);
-  const [level, setLevel] = useState(null);
+
 
   
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const docSnapshot = await getDoc(doc(db, 'users', auth.currentUser.uid));
-
-      if (docSnapshot.exists()) {
-        const data = docSnapshot.data();
-        setFullName(data.fullName);
-        setAge(data.age);
-        setRole(data.role);
-        setLevel(data.level);
-        setClubName(data.clubName);
-        setImageURL(data.profileImage);
-      } else {
-        console.log('Document does not exist');
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(db, 'users', auth.currentUser.uid), (docSnapshot) => {
+      try {
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          setFullName(data.fullName);
+          setAge(data.age);
+          setRole(data.role);
+          setClubName(data.scoutForClub);
+          setImageURL(data.profileImage);
+          setPhoneNumber(data.phoneNumber);
+        } else {
+          console.log('Document does not exist');
+        }
+      } catch (error) {
+        console.error('Error processing snapshot:', error);
       }
-    } catch (error) {
-      console.error('Error getting document:', error);
-    }
-  };
+    });
 
-  // Call the fetchData function when the component mounts
-  fetchData();
-}, []);  // The empty dependency array ensures this effect runs only once when the component mounts
+    // Return a cleanup function to unsubscribe when the component unmounts
+    return () => unsubscribe();
+  }, []);  // The empty dependency array ensures this effect runs only once when the component mounts
 
 
 
@@ -93,8 +92,11 @@ useEffect(() => {
 <Text className="text-gray-700 top-1  ml-4">Age</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
 
-<Text className="text-gray-700 top-1  ml-4">Team</Text>
+<Text className="text-gray-700 top-1  ml-4">Working For</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {clubName}</Text>
+
+<Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
+<Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
  
 <Text className="text-gray-700 top-1  ml-4">Role</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>

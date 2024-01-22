@@ -9,7 +9,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, onSnapshot } from "firebase/firestore";
 import { db, auth, } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import * as ImagePicker from "expo-image-picker"
@@ -99,7 +99,7 @@ export const ScoutEdit = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
   const [clubName, setClubName] = useState("");
-
+  const [phoneNumber, setPhoneNumber] = useState("");
   const data = [
     { key: 'Beginner', value: 'Beginner' },
     { key: 'Intermediate', value: 'Intermediate' },
@@ -109,35 +109,31 @@ export const ScoutEdit = ({ navigation }) => {
   // Get the document
   // Listen for changes in the Firestore document
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const docSnapshot = await getDoc(doc(db, 'users', auth.currentUser.uid));
-
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          setFullName(data.fullName);
-          setAge(data.age);
-          setClubName(data.clubName);
-          setImage(data.profileImage);
-        } else {
-          console.log('Document does not exist');
-        }
-      } catch (error) {
-        console.error('Error getting document:', error);
+    const unsubscribe = onSnapshot(doc(db, 'users', auth.currentUser.uid), (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        setFullName(data.fullName);
+        setAge(data.age);
+        setClubName(data.scoutForClub);
+        setImage(data.profileImage);
+        setPhoneNumber(data.phoneNumber);
+      } else {
+        console.log('Document does not exist');
       }
-    };
+    });
 
-    // Call the fetchData function when the component mounts
-    fetchData();
+    // Return a cleanup function to unsubscribe when the component unmounts
+    return () => unsubscribe();
   }, []);
 
 
+  
   // Clean up the subscription when the component unmounts
 
   const updateData = () => {
     uploadPhoto()//to upload the photo
     updateDoc(doc(db, "users", auth.currentUser.uid), {
-      fullName: fullName, age: age, clubName: clubName
+      fullName: fullName, age: age, scoutForClub: clubName,phoneNumber:phoneNumber
     });
 
     console.log("Updated Successfully");
@@ -202,6 +198,17 @@ export const ScoutEdit = ({ navigation }) => {
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setAge(text)}
               value={age}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
+
+            <Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
+            <TextInput
+              className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl "
+              placeholder="0556483648"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setPhoneNumber(text)}
+              value={phoneNumber}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
