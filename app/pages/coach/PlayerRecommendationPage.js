@@ -91,6 +91,15 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         height: 185,
         weight: 80,
         age: 9,
+        assist: 22,
+        clearances: 23,
+        crosses: 22,
+        goals:60,
+        passes:100,
+        rating: 10,
+        saves: 0,
+        shotsOnTarget: 99,
+        tackles: 100
       };
 
       const response = await axios.post(
@@ -138,6 +147,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
 
     if (currentFormation.length >= index + 1) {
       // Update existing array at the specified index
+   
       currentFormation[index] = {
         fullName: playerDoc.data()?.fullName || "",
         age: playerDoc.data()?.age || 0,
@@ -147,6 +157,17 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         profileImage: playerDoc.data()?.imageURL || "",
         position: playerDoc.data()?.position || "",
         uid: playerDoc.data()?.uid || "",
+
+        assist: playerDoc.data()?.assist || 0,
+        clearances: playerDoc.data()?.clearances || 0,
+        crosses: playerDoc.data()?.crosses || 0,
+        goals: playerDoc.data()?.goals || 0,
+        passes: playerDoc.data()?.passes || 0,
+        rating: playerDoc.data()?.rating || 0,
+        saves: playerDoc.data()?.saves || 0,
+        shotsOnTarget: playerDoc.data()?.shotsOnTarget || 0,
+        tackles: playerDoc.data()?.tackles || 0,
+
       };
     } else {
       // If the array is smaller than the specified index, pad with empty values
@@ -165,6 +186,16 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         profileImage: playerDoc.data()?.imageURL || "",
         position: playerDoc.data()?.position || "",
         uid: playerDoc.data()?.uid || "",
+
+        assist: playerDoc.data()?.assist || 0,
+        clearances: playerDoc.data()?.clearances || 0,
+        crosses: playerDoc.data()?.crosses || 0,
+        goals: playerDoc.data()?.goals || 0,
+        passes: playerDoc.data()?.passes || 0,
+        rating: playerDoc.data()?.rating || 0,
+        saves: playerDoc.data()?.saves || 0,
+        shotsOnTarget: playerDoc.data()?.shotsOnTarget || 0,
+        tackles: playerDoc.data()?.tackles || 0,
       };
     }
 
@@ -215,6 +246,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         Player Recommendation System
       </Text>
 
+      
       {recommendations.length > 0 && (
         <View>
           <Text style={{ fontSize: 18, marginTop: 20 }}>
@@ -223,7 +255,10 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
           {recommendations.map((player, index) => (
             <><Text key={index}>
               {player.fullName} - Position: {player.position}, Age: {player.age},
-              Height: {player.height}, Weight: {player.weight}
+              Height: {player.height}, Weight: {player.weight}, assist: {player.assist}, 
+              clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
+              rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
+              tackles: {player.tackles} , crosses: {player.crosses}
             </Text>
 
               {player.clubName === clubName ? (
