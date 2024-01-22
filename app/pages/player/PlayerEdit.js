@@ -155,7 +155,7 @@ export const PlayerEdit = ({ navigation }) => {
 
         uploadTask.on(
           "state_changed",
-          (snapshot) => {},
+          (snapshot) => { },
           (error) => {
             // error function ....
             console.log(error);
@@ -307,17 +307,6 @@ export const PlayerEdit = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
-            <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-              placeholder="0553953640"
-              placeholderTextColor="#aaaaaa"
-              onChangeText={(text) => setPhoneNumber(text)}
-              value={phoneNumber}
-              underlineColorAndroid="transparent"
-              autoCapitalize="none"
-            />
-
             <Text className="text-gray-700 top-1 ml-4">height</Text>
             <TextInput
               className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
@@ -336,6 +325,17 @@ export const PlayerEdit = ({ navigation }) => {
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setWeight(text)}
               value={weight}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
+
+            <Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
+            <TextInput
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              placeholder="0553953640"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setPhoneNumber(text)}
+              value={phoneNumber}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />

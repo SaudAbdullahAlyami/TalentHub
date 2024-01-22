@@ -105,8 +105,6 @@ export const CoachFormation = ({ navigation }) => {
   }
 }
 
-
-
   const deletePlayer = async (playerUid) => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));

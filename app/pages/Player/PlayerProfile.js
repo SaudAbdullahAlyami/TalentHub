@@ -94,23 +94,20 @@ export const PlayerProfile = ({ navigation }) => {
             <Text className="text-gray-700 top-1  ml-4">Age</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
 
-            <Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
-            <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
-
-            <Text className="text-gray-700 top-1  ml-4">Role</Text>
-            <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>
-
-
             <Text className="text-gray-700 top-1  ml-4">Height</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {height}</Text>
-
 
             <Text className="text-gray-700 top-1  ml-4">Weight</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {weight}</Text>
 
+            <Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
+            <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
+
             <Text className="text-gray-700 top-1  ml-4">Postion</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {position}</Text>
 
+            <Text className="text-gray-700 top-1  ml-4">Role</Text>
+            <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {role}</Text>
 
             <Text className="text-gray-700 top-1  ml-4">Level</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {level}</Text>

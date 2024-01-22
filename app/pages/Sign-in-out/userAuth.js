@@ -158,7 +158,7 @@ export const UserAuth = () => {
   if (type === "Player") {
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "Playerprofile" }}>
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        
         <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
 
         {/* if player doesn't have a team 
@@ -172,6 +172,7 @@ export const UserAuth = () => {
           <Tab.Screen name="TournamentView" component={TournamentView} />
         )}
         <Tab.Screen name="PlayerNotification" component={PlayerNotification} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );
   }
