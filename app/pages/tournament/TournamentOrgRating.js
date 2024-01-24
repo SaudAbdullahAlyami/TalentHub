@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  FlatList,
+  FlatList,TouchableOpacity,
 } from "react-native";
 import { db, auth, firebase } from "../../component/config/config";
 
@@ -296,6 +296,8 @@ tackels=8
   const renderPlayer1Item = ({ item }) => {
     if(item !=null){
     return (
+
+       
       <View style={styles.playerContainer}>
         <Text>{item.fullName}</Text>
         <View style={styles.inputContainer}>
@@ -431,11 +433,26 @@ tackels=8
   const renderPlayer2Item = ({ item }) => {
     if(item !=null){
       return (
-        <View style={styles.playerContainer}>
-          <Text>{item.fullName}</Text>
-          <View style={styles.inputContainer}>
-            <Text> goals</Text>
-            <TextInput
+
+
+        
+        <View  style={{width:400}}>
+
+
+
+          
+                   
+              <Text className="text-white font-bold" style={styles.teamco} >Player:{item.fullName} Position:{item.position}</Text>
+            
+
+             <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
+
+         
+
+          <View  style={styles.inputContainer}>
+               
+            <Text className=" text-center  pb-2 font-bold" >Goals</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
               value={goal1}
@@ -443,14 +460,17 @@ tackels=8
                 setGoal1(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, goal1,0)}
-            />
+            
+              
+            
           </View>
+          
+
+
+            
           <View style={styles.inputContainer}>
-            <Text>Rating:</Text>
-            <TextInput
+            <Text  className="text-center   pb-2 font-bold" >Rating</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
               value={rating1}
@@ -458,153 +478,191 @@ tackels=8
                 setRating1(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, rating1,1)}
-            />
-          </View>
-  
+
+            
+      
+            </View>
+          
+          
+
+
+
+          
+
           <View style={styles.inputContainer}>
-            <Text> Assist:</Text>
-            <TextInput
+            <Text  className=" text-center color-00B365  pb-2 font-bold" >  Assists</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
               onChangeText={(text) => {
                 setAssist(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, assist,2)}
-            />
-          </View>
-  
+
+            
+               </View>
+
+               </View>
+         
+               <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
           <View style={styles.inputContainer}>
-            <Text> clearances:</Text>
-            <TextInput
+            <Text  className=" text-center   pb-2 font-bold" > Clearances</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
               onChangeText={(text) => {
                 setClearances(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, clearances,3)}
-            />
+
+             
+          
           </View>
-  
-  
+
+
+         
+
+
+         
           <View style={styles.inputContainer}>
-            <Text> crosses:</Text>
-            <TextInput
+            <Text   className=" text-center  right-1 pb-2 font-bold"> Crosses</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
               onChangeText={(text) => {
                 setCrosses(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, crosses,4)}
-            />
-          </View>
+
+            
+
+                </View>
   
           <View style={styles.inputContainer}>
-            <Text> passes:</Text>
-            <TextInput
+            <Text   className=" text-center   pb-2 font-bold"> Passes</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
+              placeholder="1"
               keyboardType="numeric"
               onChangeText={(text) => {
                 setPasses(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, passes,5)}
-            />
+
+
+            
+
+          
           </View>
-  
+          </View>
+
+
+
+          <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
+
           <View style={styles.inputContainer}>
-            <Text> saves:</Text>
-            <TextInput
+            <Text  className=" text-center left-1  pb-2 font-bold"> Saves</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-2"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="1"
               onChangeText={(text) => {
                 setSaves(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, saves,6)}
-            />
-          </View>
+            
+                 </View>
   
           <View style={styles.inputContainer}>
-            <Text> shotsOnTarget:</Text>
-            <TextInput
+            <Text  className=" text-center   pb-2 font-bold">  ShotsOnTarget</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="1"
               onChangeText={(text) => {
                 setShotsOnTarget(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, shotsOnTarget,7)}
-            />
+          
           </View>
-  
+          
           <View style={styles.inputContainer}>
-            <Text> tackles:</Text>
-            <TextInput
+            <Text  className=" text-center   pb-2 font-bold right-2"> Tackles</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl right-1"
               style={styles.input}
               keyboardType="numeric"
               onChangeText={(text) => {
                 setTackles(text);
               }}
             />
-            <Button
-              title="Save"
-              onPress={() => savePlayerData(item.uid, tackles,8)}
-            />
+           
           </View>
-  
-  
-  
+          </View>
+
+
         </View>
       )
             }
             
     };
 
+
+
+
+
+    
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{`${team1.name} vs ${team2.name}`}</Text>
-      <View style={styles.inputContainer}>
-        <Text>Goals for {team1.name}:</Text>
-        <TextInput
+
+
+      <View  style={{backgroundColor:"#00B365",width:400}} >
+
+
+
+      <Text className="self-center" style={styles.title}>Match Statistics</Text>
+     
+
+
+         <View style={{flexDirection: 'row',backgroundColor:"#00B365"}} >
+
+
+      <View style={styles.goalscon}>
+        <Text className="color-white font-bold mb-3" >Goals for {team1.name}:</Text>
+        
+        <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
           style={styles.input}
           keyboardType="numeric"
           value={team1Goals}
+          placeholder="Team goals"
           onChangeText={(text) => setTeam1Goals(text)}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <Text>Goals for {team2.name}:</Text>
-        <TextInput
+
+
+
+      <View style={styles.goalscon}>
+        <Text className="color-white font-bold mb-3">Goals for {team2.name}:</Text>
+        <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
           style={styles.input}
+          placeholder="Team goals"
           keyboardType="numeric"
           value={team2Goals}
           onChangeText={(text) => setTeam2Goals(text)}
         />
+        </View>
+
       </View>
-      <Text>{team1.name}</Text>
+
+      </View>
+
+
+      <Text >{team1.name}</Text>
       <FlatList
         data={player1Ratings}
         renderItem={({ item }) => renderPlayer1Item({ item })}
       />
-      <Text>{team2.name}</Text>
+      <Text >{team2.name}</Text>
       <FlatList
         data={player2Ratings}
         renderItem={({ item }) => renderPlayer2Item({ item })}
@@ -619,25 +677,61 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
+   
+    
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 1,
+    marginTop:39,
+    color:"white"
   },
   playerContainer: {
     marginBottom: 16,
   },
   inputContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     marginBottom: 8,
+    padding:20,
+    
+   
   },
   input: {
-    marginLeft: 8,
-    borderWidth: 2,
-    padding: 13,
-    width: 90,
-  },
+    
+    borderWidth: 1,
+    borderColor:'grey',
+    height:32,
+    width: 80,
+  },goalscon: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: 8,
+    padding:20,
+    left:42
+    
+  },  hi: {
+    borderBottomColor: "ddd",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+   
+    marginBottom:15,
+  },bgcolor:{
+
+    backgroundColor:"#00B365"
+  },teamco:{
+    backgroundColor:"#00B365",
+    width:400,
+   height:40,
+   fontSize:20,
+   paddingTop:5,
+   paddingLeft:5,
+
+
+
+
+
+
+
+  }
 });
