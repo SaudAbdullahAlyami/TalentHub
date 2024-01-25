@@ -36,7 +36,6 @@ export const CoachFormation = ({ navigation }) => {
   const [formationNames, setFormationNames] = useState([]);
   useEffect(() => {
     fetchData();
-    retrievePlayerInfoAtIndex();
     // Clean up the subscription when the component unmounts
     return () => {
       /* Cleanup logic if needed */
@@ -44,6 +43,7 @@ export const CoachFormation = ({ navigation }) => {
   }, [fetchData]);
 
   const fetchData = async () => {
+    retrievePlayerInfoAtIndex();
     try {
 
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
@@ -290,8 +290,11 @@ export const CoachFormation = ({ navigation }) => {
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
 
-          <Text className="font-bold text-black">{formationNames[0].fullName}</Text>
-
+          {formationNames[0] === null ? (
+          <Text className="font-bold text-black">LW</Text>
+          ) : (
+            <Text className="font-bold text-black">{formationNames[0] && formationNames[0].fullName}</Text>
+            )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(0)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>
@@ -306,7 +309,13 @@ export const CoachFormation = ({ navigation }) => {
           onPress={() => checkPlayerPosition(1)}
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
+
+          {formationNames[1] === null ? (
           <Text className="font-bold text-black">ST</Text>
+          ) : (
+            <Text className="font-bold text-black">{formationNames[1] && formationNames[1].fullName}</Text>
+            )}
+
 
           <TouchableOpacity onPress={() => deleteFromFormation(1)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>
@@ -319,7 +328,12 @@ export const CoachFormation = ({ navigation }) => {
           onPress={() => checkPlayerPosition(2)}
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
+          
+          {formationNames[2] === null ? (
           <Text className="font-bold text-black">RW</Text>
+          ) : (
+            <Text className="font-bold text-black">{formationNames[2] && formationNames[2].fullName}</Text>
+            )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(2)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>
@@ -332,7 +346,13 @@ export const CoachFormation = ({ navigation }) => {
           onPress={() => checkPlayerPosition(3)}
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          <Text className="font-bold text-black">{formationNames[3].fullName}</Text>
+          
+
+          {formationNames[3] === null ? (
+          <Text className="font-bold text-black">LW</Text>
+          ) : (
+            <Text className="font-bold text-black">{formationNames[3] && formationNames[3].fullName}</Text>
+            )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(3)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>
