@@ -74,15 +74,7 @@ export const CoachJoiningTournament = ({ navigation }) => {
   };
 
   const [filteredData, setFilteredData] = useState(data);
-  const [searchText, setSearchText] = useState("");
 
-  const handleSearch = (text) => {
-    setSearchText(text);
-    const filtered = data.filter((item) =>
-      item.tournamentName.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
 
   const render = ({ item }) => {
     return (
@@ -136,15 +128,7 @@ export const CoachJoiningTournament = ({ navigation }) => {
         />
       </View>
 
-      <TextInput
-        style={styles.searchBar}
-        className="p-3 bg-gray-100 text-gray-700  w-60 self-center rounded-2xl mb-3"
-        placeholder="Search for a team ..."
-        underlineColorAndroid="transparent"
-        autoCapitalize="none"
-        value={searchText}
-        onChangeText={handleSearch}
-      />
+    
 
       <View
         style={{ backgroundColor: "white", paddingBottom: 10 }}
