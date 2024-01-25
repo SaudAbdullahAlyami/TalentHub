@@ -30,7 +30,7 @@ import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth, firebaase } from "../../component/config/config";
 export const CoachFormation = ({ navigation }) => {
   const [members, setMembers] = useState([]);
-  
+
   const [clubName, setclubName] = useState("");
   const [formation, setFormation] = useState([]);
 
@@ -54,56 +54,59 @@ export const CoachFormation = ({ navigation }) => {
       } else {
         console.error("User has no clubName.");
       }
+      retrievePlayerInfoAtIndex(0)
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
-  async function  updateFormation(){
+  async function updateFormation() {
     const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
     const userClubName = userDoc.data().clubName;
-  const clubDoc = await getDoc(doc(db, "clubs", userClubName));
-  const currentFormation =clubDoc.data().formation;
-  for (let i=0;i<currentFormation.length;i++){
-    //there exist player in formation
-    if(currentFormation[i]!=null){
-      const userDoc = await getDoc(doc(db, "users", currentFormation[i].uid));
-    // check if player data diffrent from formation data
-      if((userDoc.data().assist != currentFormation[i].assist)||(userDoc.data().clearances != currentFormation[i].clearances)||(userDoc.data().crosses != currentFormation[i].crosses)
-      || (userDoc.data().goals != currentFormation[i].goals)||(userDoc.data().passes != currentFormation[i].passes)||(userDoc.data().rating != currentFormation[i].rating)||
-      (userDoc.data().saves!= currentFormation[i].saves)||(userDoc.data().assist != currentFormation[i].assist)||(userDoc.data().shotsOnTarget != currentFormation[i].shotsOnTarget)
-      ||(userDoc.data().tackles != currentFormation[i].tackles)
-      ){
+    const clubDoc = await getDoc(doc(db, "clubs", userClubName));
+    const currentFormation = clubDoc.data().formation;
+    for (let i = 0; i < currentFormation.length; i++) {
+      //there exist player in formation
+      if (currentFormation[i] != null) {
+        const userDoc = await getDoc(doc(db, "users", currentFormation[i].uid));
+        // check if player data diffrent from formation data
+        if ((userDoc.data().assist != currentFormation[i].assist) || (userDoc.data().clearances != currentFormation[i].clearances) || (userDoc.data().crosses != currentFormation[i].crosses)
+          || (userDoc.data().goals != currentFormation[i].goals) || (userDoc.data().passes != currentFormation[i].passes) || (userDoc.data().rating != currentFormation[i].rating) ||
+          (userDoc.data().saves != currentFormation[i].saves) || (userDoc.data().assist != currentFormation[i].assist) || (userDoc.data().shotsOnTarget != currentFormation[i].shotsOnTarget)
+          || (userDoc.data().tackles != currentFormation[i].tackles)
+        ) {
 
 
-        currentFormation[i] = {
-          fullName: userDoc.data()?.fullName || "",
-          position: userDoc.data()?.position || "",
-          uid: userDoc.data()?.uid || "",
-          // t3deelll s3oooooooooooooodddddddddddddddd
-          goals:userDoc.data().goals,
-          assist:userDoc.data().assist,
-          rating:userDoc.data().rating,
-          saves:userDoc.data().saves,
-          clearances:userDoc.data().clearances,
-          tackles:userDoc.data().tackles,
-          crosses :userDoc.data().crosses,
-          passes:userDoc.data().passes,
-          shotsOnTarget:userDoc.data().shotsOnTarget,
-      };
+          currentFormation[i] = {
+            fullName: userDoc.data()?.fullName || "",
+            position: userDoc.data()?.position || "",
+            uid: userDoc.data()?.uid || "",
+            // t3deelll s3oooooooooooooodddddddddddddddd
+            goals: userDoc.data().goals,
+            assist: userDoc.data().assist,
+            rating: userDoc.data().rating,
+            saves: userDoc.data().saves,
+            clearances: userDoc.data().clearances,
+            tackles: userDoc.data().tackles,
+            crosses: userDoc.data().crosses,
+            passes: userDoc.data().passes,
+            shotsOnTarget: userDoc.data().shotsOnTarget,
+          };
 
 
-        await updateDoc(doc(db, "clubs", userClubName),{
-          formation: currentFormation,
-        })
-        console.log("im inside loop and player name: "+currentFormation[i].fullName)
+          await updateDoc(doc(db, "clubs", userClubName), {
+            formation: currentFormation,
+          })
+          console.log("im inside loop and player name: " + currentFormation[i].fullName)
+        }
+
+      } else {
+        console.log("Player with index: " + i + " is null")
       }
-      
-    }else{
-      console.log("Player with index: "+i+" is null")
     }
   }
-}
+
+
 
   const deletePlayer = async (playerUid) => {
     try {
@@ -178,6 +181,8 @@ export const CoachFormation = ({ navigation }) => {
   };
 
 
+
+
   const checkPlayerPosition = async (indexPos) => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
@@ -239,9 +244,29 @@ export const CoachFormation = ({ navigation }) => {
     }
   };
 
+  const [playersName, setPlayersName] = useState([]);
 
+
+  const retrievePlayerInfoAtIndex = async (index) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const userClubName = userDoc.data().clubName;
+  
+      const clubDoc = await getDoc(doc(db, "clubs", userClubName));
+      const currentFormation = clubDoc.data()?.formation || [];
+  
+        // const fullName = currentFormation[index]?.fullName;
+        setPlayersName(currentFormation) 
+
+    } catch (error) {
+      console.error("Error retrieving player info:", error);
+      return "No Player";
+    }
+  };
+  
+  console.log(playersName[0])
+ 
   return (
-
 
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-1 flex justify-around my-5">
@@ -258,7 +283,9 @@ export const CoachFormation = ({ navigation }) => {
           onPress={() => checkPlayerPosition(0)}
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          <Text className="font-bold text-black">LW</Text>
+
+          <Text className="font-bold text-black">{playersName[0]}</Text>
+
 
           <TouchableOpacity onPress={() => deleteFromFormation(0)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>

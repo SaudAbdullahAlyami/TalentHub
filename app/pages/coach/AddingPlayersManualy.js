@@ -107,6 +107,11 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
     };
 
     // ==========================================Working hereee====================================================
+    
+
+
+
+
 
     const addmanualy = async (playerUid, index) => {
         const playerRef = doc(db, "users", playerUid);
