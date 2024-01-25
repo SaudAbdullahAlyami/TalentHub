@@ -33,9 +33,10 @@ export const CoachFormation = ({ navigation }) => {
 
   const [clubName, setclubName] = useState("");
   const [formation, setFormation] = useState([]);
-
+  const [formationNames, setFormationNames] = useState([]);
   useEffect(() => {
     fetchData();
+    retrievePlayerInfoAtIndex();
     // Clean up the subscription when the component unmounts
     return () => {
       /* Cleanup logic if needed */
@@ -44,6 +45,7 @@ export const CoachFormation = ({ navigation }) => {
 
   const fetchData = async () => {
     try {
+
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
       const userClubName = userDoc.data().clubName;
       setclubName(userClubName)
@@ -54,7 +56,7 @@ export const CoachFormation = ({ navigation }) => {
       } else {
         console.error("User has no clubName.");
       }
-      retrievePlayerInfoAtIndex(0)
+      
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -244,19 +246,23 @@ export const CoachFormation = ({ navigation }) => {
     }
   };
 
-  const [playersName, setPlayersName] = useState([]);
+ 
 
 
-  const retrievePlayerInfoAtIndex = async (index) => {
+  const retrievePlayerInfoAtIndex = async () => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
       const userClubName = userDoc.data().clubName;
   
       const clubDoc = await getDoc(doc(db, "clubs", userClubName));
-      const currentFormation = clubDoc.data()?.formation || [];
-  
-        // const fullName = currentFormation[index]?.fullName;
-        setPlayersName(currentFormation) 
+      const currentFormation = clubDoc.data().formation;
+      var data=[11]
+        
+        for(let i=0;i<currentFormation.length;i++){
+          data[i]=await currentFormation[i];
+        }
+        console.log(data[0].fullName)
+        setFormationNames(data) 
 
     } catch (error) {
       console.error("Error retrieving player info:", error);
@@ -264,7 +270,7 @@ export const CoachFormation = ({ navigation }) => {
     }
   };
   
-  console.log(playersName[0])
+  
  
   return (
 
@@ -284,7 +290,7 @@ export const CoachFormation = ({ navigation }) => {
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
 
-          <Text className="font-bold text-black">{playersName[0]}</Text>
+          <Text className="font-bold text-black">{formationNames[0].fullName}</Text>
 
 
           <TouchableOpacity onPress={() => deleteFromFormation(0)}>
@@ -326,7 +332,7 @@ export const CoachFormation = ({ navigation }) => {
           onPress={() => checkPlayerPosition(3)}
         >
           <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          <Text className="font-bold text-black">CM1</Text>
+          <Text className="font-bold text-black">{formationNames[3].fullName}</Text>
 
           <TouchableOpacity onPress={() => deleteFromFormation(3)}>
             <Text className="font-bold top-0 text-gre self-center">Delet</Text>

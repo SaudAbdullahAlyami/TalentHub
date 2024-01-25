@@ -52,7 +52,7 @@ export const TournamentNotification = ({ navigation }) => {
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
-    loadData();
+    loadData()
   };
 
   const deleteInvite = async (inviteId) => {
