@@ -573,12 +573,12 @@ export const ExistingTournament = ({ navigation }) => {
                 
                 <Text  className="top-3" style={styles.winner} >{matchup.whoWin}</Text> 
 
-                <Button
+                {/* <Button
           title="Start new Tournament"
           onPress={() => DeleteTournament()}
           color={"red"}
         />
-      
+       */}
 
              <View className="bg-white pt-7 "></View> 
 

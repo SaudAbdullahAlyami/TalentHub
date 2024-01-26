@@ -62,8 +62,13 @@ export const TournamentShowTeams = ({ navigation }) => {
 
   const render = ({ item }) => {
     return (
+
+
       <View style={styles.hi}>
         {/* NEW navigate through stack (: */}
+
+
+        <View className="self-center my-5" style={styles.teamshows} > 
 
         <View style={styles.pico}>
           <TouchableOpacity
@@ -85,16 +90,10 @@ export const TournamentShowTeams = ({ navigation }) => {
         <Text style={styles.text1} className="font-bold  ">
           {item.clubName}
         </Text>
-        <Text style={styles.text2}>
-          Team coach:{" "}
-          <Text style={{ fontWeight: "bold" }}>{item.fullName}</Text>
-        </Text>
-
-        <Text style={styles.text3} className="mb-3">
-          {item.description}
-        </Text>
+       
 
         <View style={styles.button1}></View>
+      </View>
       </View>
     );
   };
@@ -104,16 +103,18 @@ export const TournamentShowTeams = ({ navigation }) => {
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-row justify-center top-10">
         <Image
-          source={require("../../assets/teams.png")}
-          style={{ width: 300, height: 150 }}
+          source={require("../../assets/showteams.png")}
+          style={{ width: 300, height: 200 }}
         />
       </View>
+      <Text className="self-center  top-14 mb-3" style={styles.title}>Participated Clubs </Text>
+      
 
-      <View
+      <View  className="flex-1 top-16"
         style={{ backgroundColor: "white", paddingBottom: 10 }}
-        className="flex-1 bg-white top-16"
+        
       > 
-      <Text>Teams joined the tournament</Text>
+           
         <FlatList
           data={data}
           renderItem={render}
@@ -128,13 +129,15 @@ export const TournamentShowTeams = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   pico: {
-    top: 32,
+   top:9,
     paddingLeft: 18,
   },
   text1: {
     fontSize: 18,
     left: 103,
-    bottom: 30,
+    bottom: 40,
+    color:"white",
+    fontWeight:"bold"
   },
   text2: {
     fontSize: 14,
@@ -155,13 +158,26 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   hi: {
-    borderBottomColor: "ddd",
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  
 
     marginLeft: 10,
   },
   searchBar: {
     top: 60,
     width: 300,
-  },
+  }, title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color:'white'
+  },teamshows:{
+    backgroundColor: "#00B365" ,
+    width:370,
+    borderRadius:50,
+   
+    height:90,
+    
+
+
+
+  }
 });

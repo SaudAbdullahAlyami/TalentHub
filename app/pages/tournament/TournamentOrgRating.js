@@ -6,9 +6,10 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  FlatList,TouchableOpacity,
+  FlatList,TouchableOpacity,Image
 } from "react-native";
 import { db, auth, firebase } from "../../component/config/config";
+import { ArrowLeftIcon } from "react-native-heroicons/solid";
 
 export const TournamentOrgRating = ({ route, navigation }) => {
   const { team1, team2, matchIndex,whoWin,round } = route.params;
@@ -407,6 +408,12 @@ tackels=8
           />
             
         </View>
+
+
+           
+
+
+
         <Button
             title="Save Player data"
             onPress={() => {
@@ -439,11 +446,17 @@ tackels=8
         <View  style={{width:400}}>
 
 
-
-          
+                                  
+                  <View className="mb-9" style={styles.teamco} >
                    
-              <Text className="text-white font-bold" style={styles.teamco} >Player:{item.fullName} Position:{item.position}</Text>
             
+
+              <Image  className="top-4 left-3" source={require("../../assets/prof.png")}
+                style={{width: 60, height: 60}} />
+
+                <Text className="font-bold left-20 bottom-5"  >{item.fullName} {item.position}</Text> 
+
+              </View>
 
              <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
 
@@ -618,7 +631,12 @@ tackels=8
 
       <View  style={{backgroundColor:"#00B365",width:400}} >
 
-
+      <View className="flex-row justify-start">
+        <TouchableOpacity onPress={()=> navigation.goBack()} 
+        className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+          <ArrowLeftIcon size="20" color="black" />
+        </TouchableOpacity>
+       </View>
 
       <Text className="self-center" style={styles.title}>Match Statistics</Text>
      
@@ -662,7 +680,7 @@ tackels=8
         data={player1Ratings}
         renderItem={({ item }) => renderPlayer1Item({ item })}
       />
-      <Text >{team2.name}</Text>
+      <Text className="text-white text-center font-bold" style={styles.teamco} >{team2.name}</Text>
       <FlatList
         data={player2Ratings}
         renderItem={({ item }) => renderPlayer2Item({ item })}
@@ -723,10 +741,24 @@ const styles = StyleSheet.create({
     backgroundColor:"#00B365",
     width:400,
    height:40,
+   fontSize:28,
+   
+  
+      
+
+
+
+
+
+
+  },teampl:{
+    backgroundColor:"#00B365",
+    width:400,
+   height:40,
    fontSize:20,
    paddingTop:5,
    paddingLeft:5,
-
+   
 
 
 

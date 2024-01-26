@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  TextInput,
   TouchableOpacity,
   FlatList,
   Alert,
@@ -99,26 +98,61 @@ export const CoachJoiningTournament = ({ navigation }) => {
           {item.tournamentName}
         </Text>
 
-        <Text style={styles.text3} className="mb-3">
-          description:{item.description}
+        <Text style={styles.text2} className="mb-3 font-bold top-3 ">
+          {item.description}
         </Text>
+                     
 
-        <Text style={styles.text3} className="mb-3">
-          Start Date: {item.startDate.toLocaleString()}
+             <View className="self-center text-center items-center ">
+
+
+                
+             <View style={{flexDirection: 'row',alignSelf:"center",marginTop:15}} >
+
+
+        <View style={styles.colu} >
+       <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl ">
+         Start Date
+         </Text>
+        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
+         10.10.21 
+         {/* {item.startDate.toLocaleString()} */}
         </Text>
-
-        <Text style={styles.text3} className="mb-3">
-          End Date:
+        </View>
+        <View style={styles.colu} >
+        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
+        End Date
+         </Text>
+        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
+         20.20.22
         </Text>
+        </View>
+        </View>
 
-        <Text style={styles.text3} className="mb-3">
-          Teams participated: {item.teamsArrayIndex} /16
+            
+        <View style={{flexDirection: 'row',alignSelf:"center",}} >
+          
+        <View style={styles.colu} >
+        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
+        Teams
+         </Text>
+        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
+        {item.teamsArrayIndex} /16
         </Text>
+        </View>
 
-        <Text style={styles.text3} className="mb-3">
-          Prize: {item.prize}
+        <View style={styles.colu} >
+        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
+        Prize:
+         </Text>
+        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
+        {item.prize}SAR
         </Text>
+        </View></View>
 
+
+       
+        </View>
         <View style={styles.button1}>
           <TouchableOpacity
             onPress={() => inviteTournmant(item.tournamentOwnerUid)}
@@ -135,8 +169,8 @@ export const CoachJoiningTournament = ({ navigation }) => {
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
       <View className="flex-row justify-center top-10">
         <Image
-          source={require("../../assets/teams.png")}
-          style={{ width: 300, height: 150 }}
+          source={require("../../assets/tourna.png")}
+          style={{ width: 380, height: 150 }}
         />
       </View>
 
@@ -150,7 +184,7 @@ export const CoachJoiningTournament = ({ navigation }) => {
           keyExtractor={(item) => item.tournamentName}
         />
 
-        <View className="bg-white my-9"></View>
+        <View className="bg-white my-7"></View>
       </View>
     </View>
   );
@@ -161,19 +195,21 @@ const styles = StyleSheet.create({
     paddingLeft: 18,
   },
   text1: {
-    fontSize: 18,
+    fontSize: 19,
     left: 103,
     bottom: 30,
   },
   text2: {
-    fontSize: 14,
-    left: 103,
-    bottom: 25,
+    fontSize: 16,
+    marginBottom: 15,
+    marginTop: 5,
+    lineHeight:25,
   },
   text3: {
     fontSize: 14,
     marginBottom: 15,
     marginTop: 5,
+    lineHeight:25,
   },
   button1: {
     position: "absolute",
@@ -192,5 +228,20 @@ const styles = StyleSheet.create({
   searchBar: {
     top: 60,
     width: 300,
-  },
+  },roundtitle: {
+    fontSize: 16,
+    color: "white",
+    fontWeight:"bold",
+    padding:10,
+    backgroundColor:"#00B365",
+    width:120,
+    marginHorizontal:14,
+    textAlign:'center',
+   
+    
+ 
+    
+  },colu:{
+    flexDirection:"column"
+  }
 });
