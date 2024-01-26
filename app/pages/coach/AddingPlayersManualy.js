@@ -107,43 +107,45 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
     };
 
     // ==========================================Working hereee====================================================
-    
-
-
-
-
 
     const addmanualy = async (playerUid, index) => {
         const playerRef = doc(db, "users", playerUid);
         const playerDoc = await getDoc(playerRef);
-        
+    
         if (!playerDoc.exists()) {
             console.log("Player document does not exist!");
             return;
         }
-        
+    
         const clubName = playerDoc.data().clubName;
         const clubRef = doc(db, "clubs", clubName);
         const clubDoc = await getDoc(clubRef);
     
         let currentFormation = clubDoc.data()?.formation || [];
     
+        // Check if player already exists in the formation array
+        const playerExists = currentFormation.some((player) => player?.uid === playerDoc.data().uid);
+    
+        if (playerExists) {
+            console.log("The player is already in the formation!");
+            return;
+        }
+    
+        // Add the player at the specified index
         if (currentFormation.length >= index + 1) {
-            // Update existing array at the specified index
             currentFormation[index] = {
                 fullName: playerDoc.data()?.fullName || "",
                 position: playerDoc.data()?.position || "",
                 uid: playerDoc.data()?.uid || "",
-                // t3deelll s3oooooooooooooodddddddddddddddd
-                goals:playerDoc.data().goals,
-                assist:playerDoc.data().assist,
-                rating:playerDoc.data().rating,
-                saves:playerDoc.data().saves,
-                clearances:playerDoc.data().clearances,
-                tackles:playerDoc.data().tackles,
-                crosses :playerDoc.data().crosses,
-                passes:playerDoc.data().passes,
-                shotsOnTarget:playerDoc.data().shotsOnTarget,
+                goals: playerDoc.data().goals,
+                assist: playerDoc.data().assist,
+                rating: playerDoc.data().rating,
+                saves: playerDoc.data().saves,
+                clearances: playerDoc.data().clearances,
+                tackles: playerDoc.data().tackles,
+                crosses: playerDoc.data().crosses,
+                passes: playerDoc.data().passes,
+                shotsOnTarget: playerDoc.data().shotsOnTarget,
             };
         } else {
             // If the array is smaller than the specified index, pad with empty values
@@ -152,38 +154,31 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
                 console.log("stuck in the loop");
             }
     
-            // Add the player at the specified index
             currentFormation[index] = {
                 fullName: playerDoc.data()?.fullName || "",
                 position: playerDoc.data()?.position || "",
                 uid: playerDoc.data()?.uid || "",
-                // t3deelll s3oooooooooooooodddddddddddddddd
-                goals:playerDoc.data().goals,
-                assist:playerDoc.data().assist,
-                rating:playerDoc.data().rating,
-                saves:playerDoc.data().saves,
-                clearances:playerDoc.data().clearances,
-                tackles:playerDoc.data().tackles,
-                crosses :playerDoc.data().crosses,
-                passes:playerDoc.data().passes,
-                shotsOnTarget:playerDoc.data().shotsOnTarget,
+                goals: playerDoc.data().goals,
+                assist: playerDoc.data().assist,
+                rating: playerDoc.data().rating,
+                saves: playerDoc.data().saves,
+                clearances: playerDoc.data().clearances,
+                tackles: playerDoc.data().tackles,
+                crosses: playerDoc.data().crosses,
+                passes: playerDoc.data().passes,
+                shotsOnTarget: playerDoc.data().shotsOnTarget,
             };
         }
     
         await updateDoc(clubRef, {
             formation: currentFormation,
-            
         });
     
         console.log("Member added to the formation array!!");
     };
     
-    
-    
-
-
-
     const [isRefreshing, setIsRefreshing] = useState(false);
+    
     const onRefresh = useCallback(async () => {
         setIsRefreshing(true);
         await fetchData();

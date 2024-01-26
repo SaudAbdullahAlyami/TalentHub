@@ -2,11 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Button,
 
 } from "react-native";
-import { Avatar } from "react-native-paper";
 import {
   doc,
   addDoc,
