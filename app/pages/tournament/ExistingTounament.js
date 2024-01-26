@@ -338,7 +338,11 @@ export const ExistingTournament = ({ navigation }) => {
                 style={{width: 300, height: 300}} />
         </View>
         <Text className="self-center bottom-5 " style={styles.title}>Tournament Bracket</Text>
-        
+        <Button
+          title="Start new Tournament"
+          onPress={() => DeleteTournament()}
+          color={"red"}
+        />
 
 
        <View   className="flex-1 bg-white  px-8 pt-3  rounded-tr-3xl rounded-tl-2xl  self-center"  style={{ width:400}}>
@@ -569,16 +573,13 @@ export const ExistingTournament = ({ navigation }) => {
                <View className="items-center" style={styles.bgchamp}>
                <Image source={require("../../assets/trophy.png")}
                 style={{width: 300, height: 200}} />
+                
                 <Text className="top-3" style={styles.champtitle} >Tornament Champion</Text>
                 
                 <Text  className="top-3" style={styles.winner} >{matchup.whoWin}</Text> 
 
-                {/* <Button
-          title="Start new Tournament"
-          onPress={() => DeleteTournament()}
-          color={"red"}
-        />
-       */}
+                
+      
 
              <View className="bg-white pt-7 "></View> 
 

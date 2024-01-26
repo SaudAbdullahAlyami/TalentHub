@@ -12,7 +12,7 @@ import { Avatar } from "react-native-paper";
 
 import { doc, collection, getDocs, getDoc, addDoc } from "firebase/firestore";
 
-import { db, auth, firebase } from "../../component/config/config";
+import { db, auth } from "../../component/config/config";
 
 export const CoachJoiningTournament = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -47,25 +47,51 @@ export const CoachJoiningTournament = ({ navigation }) => {
       ) {
         const fullName = coachDoc.data().fullName;
         const imageURL = coachDoc.data().profileImage;
+        const clubName = coachDoc.data().clubName;
 
-        // Create an invitation in Firestore
-        const invitationRef = collection(db, "invitations");
-        const newInvitationDoc = await addDoc(invitationRef, {
-          senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
-          senderName: fullName,
-          senderImage: imageURL,
-          receiverUid: TourId,
-          status: "Pending",
-          // Add any additional details you want to include in the invitation
-        });
+        const clubDoc = await getDoc(doc(db, "clubs", clubName));
+
+        //
+        let isTheTeamReadyToPlay = true;
+        const formation = coachDoc.data().formation;
+
+        const currentFormation = clubDoc.data().formation;
+        var data = [10];
+
+        for (let i = 0; i < currentFormation.length; i++) {
+          data[i] = await currentFormation[i];
+        }
+        for (let i = 0; i < data.length; i++) {
+          if (data[i] === null) {
+            isTheTeamReadyToPlay = false;
+          }
+        }
+        
+        
+        console.log("is the team have 11 players in formation? " + isTheTeamReadyToPlay);
+
+        if (isTheTeamReadyToPlay == true) {
+          // Create an invitation in Firestore
+          const invitationRef = collection(db, "invitations");
+          const newInvitationDoc = await addDoc(invitationRef, {
+            senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
+            senderName: fullName,
+            senderImage: imageURL,
+            receiverUid: TourId,
+            status: "Pending",
+            // Add any additional details you want to include in the invitation
+          });
+          console.log("Joining sent successfully!");
+          Alert.alert("Successfully ","The Join Request has send successfully.")
+        } else {
+          Alert.alert("Error ","Your team formation is not full please add players in your formation.")
+        }
       } else {
-        Alert.alert("Empty Fields", "Please fill in all required fields.");
       }
       // Notify the player about the invitation
       // You can use FCM or another notification method here
-      console.log("Joining sent successfully!");
+      
     } catch (error) {
-      Alert.alert(" Update your profile", "Please fill all required fields.");
       console.log(error);
     }
   };
@@ -97,61 +123,81 @@ export const CoachJoiningTournament = ({ navigation }) => {
         <Text style={styles.text1} className="font-bold  ">
           {item.tournamentName}
         </Text>
+        <Text style={styles.text2} className="mb-3 font-bold top-3 ">
+          Location:{item.city}
+        </Text>
 
         <Text style={styles.text2} className="mb-3 font-bold top-3 ">
           {item.description}
         </Text>
-                     
 
-             <View className="self-center text-center items-center ">
+        <View className="self-center text-center items-center ">
+          <View
+            style={{ flexDirection: "row", alignSelf: "center", marginTop: 15 }}
+          >
+            <View style={styles.colu}>
+              <Text
+                style={styles.roundtitle}
+                className=" Self-center items-center text-center rounded-3xl "
+              >
+                Start Date
+              </Text>
+              <Text
+                style={styles.text3}
+                className=" self-center items-center text-center font-bold"
+              >
+                {item.startDate}
 
+                {/* {item.startDate.toLocaleString()} */}
+              </Text>
+            </View>
+            <View style={styles.colu}>
+              <Text
+                style={styles.roundtitle}
+                className=" Self-center items-center text-center rounded-3xl"
+              >
+                End Date
+              </Text>
+              <Text
+                style={styles.text3}
+                className=" self-center items-center text-center font-bold"
+              >
+                {item.endDate}
+              </Text>
+            </View>
+          </View>
 
-                
-             <View style={{flexDirection: 'row',alignSelf:"center",marginTop:15}} >
+          <View style={{ flexDirection: "row", alignSelf: "center" }}>
+            <View style={styles.colu}>
+              <Text
+                style={styles.roundtitle}
+                className=" Self-center items-center text-center rounded-3xl"
+              >
+                Teams
+              </Text>
+              <Text
+                style={styles.text3}
+                className=" self-center items-center text-center font-bold"
+              >
+                {item.teamsArrayIndex} /16
+              </Text>
+            </View>
 
-
-        <View style={styles.colu} >
-       <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl ">
-         Start Date
-         </Text>
-        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
-         10.10.21 
-         {/* {item.startDate.toLocaleString()} */}
-        </Text>
-        </View>
-        <View style={styles.colu} >
-        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
-        End Date
-         </Text>
-        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
-         20.20.22
-        </Text>
-        </View>
-        </View>
-
-            
-        <View style={{flexDirection: 'row',alignSelf:"center",}} >
-          
-        <View style={styles.colu} >
-        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
-        Teams
-         </Text>
-        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
-        {item.teamsArrayIndex} /16
-        </Text>
-        </View>
-
-        <View style={styles.colu} >
-        <Text style={styles.roundtitle} className=" Self-center items-center text-center rounded-3xl">
-        Prize:
-         </Text>
-        <Text style={styles.text3} className=" self-center items-center text-center font-bold">
-        {item.prize}SAR
-        </Text>
-        </View></View>
-
-
-       
+            <View style={styles.colu}>
+              <Text
+                style={styles.roundtitle}
+                className=" Self-center items-center text-center rounded-3xl"
+              >
+                Prize:
+              </Text>
+              <Text
+                style={styles.text3}
+                className=" self-center items-center text-center font-bold"
+              >
+                {item.prize}SAR
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.button1}>
           <TouchableOpacity
@@ -203,13 +249,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
     marginTop: 5,
-    lineHeight:25,
+    lineHeight: 25,
   },
   text3: {
     fontSize: 14,
     marginBottom: 15,
     marginTop: 5,
-    lineHeight:25,
+    lineHeight: 25,
   },
   button1: {
     position: "absolute",
@@ -228,20 +274,18 @@ const styles = StyleSheet.create({
   searchBar: {
     top: 60,
     width: 300,
-  },roundtitle: {
+  },
+  roundtitle: {
     fontSize: 16,
     color: "white",
-    fontWeight:"bold",
-    padding:10,
-    backgroundColor:"#00B365",
-    width:120,
-    marginHorizontal:14,
-    textAlign:'center',
-   
-    
- 
-    
-  },colu:{
-    flexDirection:"column"
-  }
+    fontWeight: "bold",
+    padding: 10,
+    backgroundColor: "#00B365",
+    width: 120,
+    marginHorizontal: 14,
+    textAlign: "center",
+  },
+  colu: {
+    flexDirection: "column",
+  },
 });

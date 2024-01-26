@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { doc, setDoc, updateDoc,getDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -18,62 +18,38 @@ export const CreateTournament = ({ navigation }) => {
   const [tournamentName, setTournamentName] = useState("");
   const [description, setDescription] = useState("");
   const [prize, setPrize] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [teams, setTeams] = useState(
     Array.from({ length: 16 }, (_, index) => ({
       name: `Team ${index + 1}`,
       players: [],
-      teamImage:null
+      teamImage: null,
     }))
   );
   const [matchs, setmatchs] = useState([]);
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date());
-  const [showDateStartPicker, setShowDateStartPicker] = useState(false);
-  const [showDateEndPicker, setShowDateEndPicker] = useState(false);
 
-  const openDateStartPicker = () => {
-    setShowDateStartPicker(true);
-  };
-
-  const openDateEndPicker = () => {
-    setShowDateEndPicker(true);
-  };
-
-  const handleDateStartChange = (event, date) => {
-    setShowDateStartPicker(false);
-    if (date) {
-      setSelectedStartDate(date);
-    }
-  };
-
-  const handleDateEndChange = (event, date) => {
-    setShowDateEndPicker(false);
-    if (date) {
-      setSelectedEndDate(date);
-    }
-  };
-
-  const createData = async() => {
+  const createData = async () => {
     try {
-      const organizerDoc = await getDoc(doc(db,"users",auth.currentUser.uid));
-      const image =organizerDoc.data().profileImage
+      const organizerDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+      const image = organizerDoc.data().profileImage;
       setDoc(doc(db, "tournament", tournamentName), {
         tournamentOwnerUid: auth.currentUser.uid,
-        tournamentImage:image,
+        tournamentImage: image,
         tournamentName: tournamentName,
         teams: teams,
         prize: prize,
         city: city,
         description: description,
         teamsArrayIndex: 0,
-        startDate: selectedStartDate,
-        endDate: selectedEndDate,  
-        isFinished:false,
-        //creating empty matchs 
-        matchs:matchs,
-        matchsRound2:matchs,
-        matchsRound3:matchs,
-        matchsRound4:matchs
+        startDate: startDate,
+        endDate: endDate,
+        isFinished: false,
+        //creating empty matchs
+        matchs: matchs,
+        matchsRound2: matchs,
+        matchsRound3: matchs,
+        matchsRound4: matchs,
       });
 
       updateDoc(doc(db, "users", auth.currentUser.uid), {
@@ -118,7 +94,7 @@ export const CreateTournament = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <Text className="text-gray-700 top-1 ml-4">City</Text>
+            <Text className="text-gray-700 top-1 ml-4">Location</Text>
             <TextInput
               className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
               placeholder="Dammam"
@@ -129,7 +105,7 @@ export const CreateTournament = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <Text className="text-gray-700 top-1 ml-4">description</Text>
+            <Text className="text-gray-700 top-1 ml-4">Description</Text>
             <TextInput
               className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
               placeholder="vnsdivns vidsojvno"
@@ -140,29 +116,28 @@ export const CreateTournament = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <Text>Select Start Date:</Text>
-            <Button title="Open Date Picker" onPress={openDateStartPicker} />
-            {showDateStartPicker && (
-              <DateTimePicker
-                value={selectedStartDate}
-                mode="date"
-                display="default"
-                onChange={handleDateStartChange}
-              />
-            )}
-            <Text>Start Date is :{selectedStartDate.getFullYear()}/{1 + selectedStartDate.getMonth()}/{selectedStartDate.getDate()}</Text>
+            <Text className="text-gray-700 top-1 ml-4">Start Date</Text>
+            <TextInput
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              placeholder="2024/2/11"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setStartDate(text)}
+              value={startDate}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
 
-            <Text>Select End Date:</Text>
-            <Button title="Open Date Picker" onPress={openDateEndPicker} />
-            {showDateEndPicker && (
-              <DateTimePicker
-                value={selectedEndDate}
-                mode="date"
-                display="default"
-                onChange={handleDateEndChange}
-              />
-            )}
-            <Text>End Date is :{selectedEndDate.getFullYear()}/{1 + selectedEndDate.getMonth()}/{selectedEndDate.getDate()}</Text>
+
+            <Text className="text-gray-700 top-1 ml-4">End Date</Text>
+            <TextInput
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              placeholder="2024/2/11"
+              placeholderTextColor="#aaaaaa"
+              onChangeText={(text) => setEndDate(text)}
+              value={endDate}
+              underlineColorAndroid="transparent"
+              autoCapitalize="none"
+            />
 
             <TouchableOpacity
               onPress={() => createData()}

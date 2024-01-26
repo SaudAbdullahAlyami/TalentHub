@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     StatusBar,
     FlatList,
-    RefreshControl, ImageBackground
+    RefreshControl, ImageBackground,Alert
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -127,7 +127,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
         const playerExists = currentFormation.some((player) => player?.uid === playerDoc.data().uid);
     
         if (playerExists) {
-            console.log("The player is already in the formation!");
+            Alert.alert("The player is already in the formation!");
             return;
         }
     

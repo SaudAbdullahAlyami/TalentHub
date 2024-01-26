@@ -26,6 +26,10 @@ export const SignUp = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [city, setCity] = useState("");
   const [profileImage, setProfileImage] = useState("https://thinksport.com.au/wp-content/uploads/2020/01/avatar-.jpg");
+  const [members, setMembers] = useState([]);
+  const [formation, setFormation] = useState(
+    Array.from({ length: 11 }, () => null)
+  );
 
  
 
@@ -70,9 +74,34 @@ export const SignUp = ({ navigation }) => {
 
     setTimeout(() => {
       createUserWithEmailAndPassword(auth, value.email, value.password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           //ADD in db
-          if(role=="Coach"||role=="Tournament Organizer"){
+          if(role=="Coach"){
+
+            await setDoc(doc(db, "users", userCredential.user.uid), {
+            uid: userCredential.user.uid,
+            email: value.email,
+            fullName: fullName,
+            clubName: clubName,
+            description: description,
+            city: city,
+            role: role,
+            profileImage:profileImage,
+            tournament:"",
+            phoneNumber:""
+          });
+
+          await setDoc(doc(db,"clubs",clubName), {
+            members: members,
+            formation:formation,
+            clubName: clubName,
+            description: description,
+            city: city,
+            tournament:""
+          });
+          console.log("The",role," Was Added Successfully");
+
+        }else if(role=="Tournament Organizer"){
           setDoc(doc(db, "users", userCredential.user.uid), {
             uid: userCredential.user.uid,
             email: value.email,
