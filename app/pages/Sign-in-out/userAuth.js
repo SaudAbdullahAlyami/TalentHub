@@ -29,6 +29,7 @@ import { CoachJoiningTournament } from "../coach/CoachJoiningTournament";
 import { TournamentOrgRating } from "../tournament/TournamentOrgRating";
 import { TournamentShowTeams } from "../tournament/TournamentShowTeams";
 import { TournamentView } from "../player/TournamentView";
+import { TournamentVisitProfile } from "../tournament/TournamentVisitProfile";
 import { CoachVisitTourPage } from "../coach/CoachVisitTourPage";
 import { db, auth } from "../../component/config/config";
 import {
@@ -81,28 +82,18 @@ export const UserAuth = () => {
     )
   }
 
-  //Notification stack coach
-  const CoachNotificationStack = createStackNavigator();
-  function CoachNotificationstack({ navigation }) {
-    return (
-      <CoachNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachNotification" }}>
-        <CoachNotificationStack.Screen name="CoachNotification" component={CoachNotification} />
-        <CoachNotificationStack.Screen name="CoachVisitProfile" component={CoachVisitProfile} />
-      </CoachNotificationStack.Navigator>
-    )
-  }
 
   const CoachJoiningTourStack = createStackNavigator();
   function CoachJoiningTourstack({ navigation }) {
     return (
       <CoachJoiningTourStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachJoiningTournament" }}>
-        <CoachJoiningTourStack.Screen name="CoachJoiningTournament" component={CoachJoiningTournament}/>
+        <CoachJoiningTourStack.Screen name="CoachJoiningTournament" component={CoachJoiningTournament} />
         <CoachJoiningTourStack.Screen name="CoachJoiningTourPage" component={CoachVisitTourPage} />
       </CoachJoiningTourStack.Navigator>
     )
   }
 
-  
+
   //formation stack player
   const PlayerFormationStack = createStackNavigator();
   function PlayerFormationstack({ navigation }) {
@@ -154,6 +145,40 @@ export const UserAuth = () => {
     )
   }
 
+  
+  //Notification stack coach
+  const CoachNotificationStack = createStackNavigator();
+  function CoachNotificationstack({ navigation }) {
+    return (
+      <CoachNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachNotification" }}>
+        <CoachNotificationStack.Screen name="CoachNotification" component={CoachNotification} />
+        <CoachNotificationStack.Screen name="CoachVisitProfile" component={CoachVisitProfile} />
+      </CoachNotificationStack.Navigator>
+    )
+  }
+
+  // Notification Tournament Stack
+  const TournamentNotificationStack = createStackNavigator();
+  function TournamentNotificationstack({ navigation }) {
+    return (
+      <TournamentNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentNotification" }}>
+        <TournamentNotificationStack.Screen name="TournamentNotification" component={TournamentNotification} />
+        <TournamentNotificationStack.Screen name="TournamentVisitProfile" component={TournamentVisitProfile} />
+      </TournamentNotificationStack.Navigator>
+    )
+  }
+
+  // TournamentShowTeams  Stack
+  const TournamentShowTeamsStack = createStackNavigator();
+  function TournamentShowTeamsstack({ navigation }) {
+    return (
+      <TournamentShowTeamsStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentShowTeams" }}>
+        <TournamentShowTeamsStack.Screen name="TournamentShowTeams" component={TournamentShowTeams} />
+        <TournamentShowTeamsStack.Screen name="TournamentVisitProfile" component={TournamentVisitProfile} />
+      </TournamentShowTeamsStack.Navigator>
+    )
+  }
+
   const ExistingTournamentstack = createStackNavigator();
   function ExistingTournamentStack({ navigation }) {
     return (
@@ -169,7 +194,7 @@ export const UserAuth = () => {
   if (type === "Player") {
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "Playerprofile" }}>
-        
+
         <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
 
         {/* if player doesn't have a team 
@@ -199,7 +224,7 @@ export const UserAuth = () => {
       </Tab.Navigator>
     );
   }
- 
+
 
   else if (type === "Scout") {
     return (
@@ -221,10 +246,11 @@ export const UserAuth = () => {
         ) : (
           <>
             <Tab.Screen name="ExistingTournamentStack" component={ExistingTournamentStack} />
-            <Tab.Screen name="TournamentShowTeams" component={TournamentShowTeams} />
+            <Tab.Screen name="TournamentShowTeamsstack" component={TournamentShowTeamsstack} />
           </>
+          
         )}
-        <Tab.Screen name="TournamentNotification" component={TournamentNotification} />
+        <Tab.Screen name="TournamentNotificationstack" component={TournamentNotificationstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
 
       </Tab.Navigator>

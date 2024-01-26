@@ -68,8 +68,8 @@ export const TournamentShowTeams = ({ navigation }) => {
         <View style={styles.pico}>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("PlayerProfile", {
-                screen: "PlayerVisitProfile",
+              navigation.navigate("TournamentShowTeamsstack", {
+                screen: "TournamentVisitProfile",
                 params: { itemId: item.id },
               })
             }
