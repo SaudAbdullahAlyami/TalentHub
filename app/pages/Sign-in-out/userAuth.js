@@ -18,6 +18,7 @@ import { PlayerRecommendationPage } from "../coach/PlayerRecommendationPage";
 import { ScoutRecommendation } from "../scout/ScoutRecommendation";
 import { ScoutProfile } from "../scout/ScoutProfile";
 import { ScoutEdit } from "../scout/ScoutEdit";
+import { ScoutVisitProfile } from "../scout/ScoutVisitProfile";
 import { AddingPlayersManualy } from "../coach/AddingPlayersManualy";
 import { AddplayerToformation } from "../coach/AddplayerToformation";
 import { TournamentEdit } from "../tournament/TournamentEdit";
@@ -172,6 +173,16 @@ export const UserAuth = () => {
     )
   }
 
+  const ScoutRecommendationStack = createStackNavigator();
+  function ScoutRecommendationstack({ navigation }) {
+    return (
+      <ScoutRecommendationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "ScoutRecommendation" }}>
+        <ScoutRecommendationStack.Screen name="ScoutRecommendation" component={ScoutRecommendation} />
+        <ScoutRecommendationStack.Screen name="ScoutVisitProfile" component={ScoutVisitProfile} />
+      </ScoutRecommendationStack.Navigator>
+    )
+  }
+
   // =========================================================================================================================
 
 
@@ -268,7 +279,7 @@ export const UserAuth = () => {
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "ScoutProfileStack" }}>
         <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
         <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
-        <Tab.Screen name="ScoutRecommendation" component={ScoutRecommendation} />
+        <Tab.Screen name="ScoutRecommendationstack" component={ScoutRecommendationstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );

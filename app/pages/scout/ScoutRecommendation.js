@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button,TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { Avatar } from "react-native-paper";
 
 export const ScoutRecommendation = ({ navigation }) => {
 
@@ -84,13 +85,26 @@ export const ScoutRecommendation = ({ navigation }) => {
                         Recommendations:
                     </Text>
                     {recommendations.map((player, index) => (
-                        <><Text key={index}>
-                            {player.fullName} - Position: {player.position}, Age: {player.age},
-                            Height: {player.height}, Weight: {player.weight}, assist: {player.assist},
-                            clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
-                            rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
-                            tackles: {player.tackles} , crosses: {player.crosses}
-                        </Text>
+                        <>
+
+                            <TouchableOpacity
+                                onPress={() =>
+                                    navigation.navigate("ScoutRecommendationstack", {
+                                        screen: "ScoutVisitProfile",
+                                        params: { itemId: player.uid },
+                                    })
+                                }
+                            >
+                                <Avatar.Image size={75} source={{ uri: player.profileImage }} />
+
+                            </TouchableOpacity>
+                            <Text key={index}>
+                                {player.fullName} - Position: {player.position}, Age: {player.age},
+                                Height: {player.height}, Weight: {player.weight}, assist: {player.assist},
+                                clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
+                                rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
+                                tackles: {player.tackles} , crosses: {player.crosses}
+                            </Text>
 
                         </>
 

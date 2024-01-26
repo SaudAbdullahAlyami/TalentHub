@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Button,
+  TouchableOpacity
 
 } from "react-native";
 import {
@@ -14,7 +15,7 @@ import {
   deleteDoc,
   onSnapshot,
 } from "firebase/firestore";
-
+import { Avatar } from "react-native-paper";
 import { db, auth, firebaase } from "../../component/config/config";
 
 import axios from 'axios';
@@ -92,8 +93,8 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         assist: 22,
         clearances: 23,
         crosses: 22,
-        goals:60,
-        passes:100,
+        goals: 60,
+        passes: 100,
         rating: 10,
         saves: 0,
         shotsOnTarget: 99,
@@ -145,7 +146,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
 
     if (currentFormation.length >= index + 1) {
       // Update existing array at the specified index
-   
+
       currentFormation[index] = {
         fullName: playerDoc.data()?.fullName || "",
         age: playerDoc.data()?.age || 0,
@@ -205,7 +206,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
     });
 
     console.log("Member added to the formation array!!");
-    
+
   }
 
   const invitePlayer = async (playerUid) => {
@@ -244,20 +245,34 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         Player Recommendation System
       </Text>
 
-      
+
       {recommendations.length > 0 && (
         <View>
           <Text style={{ fontSize: 18, marginTop: 20 }}>
             Recommendations:
           </Text>
           {recommendations.map((player, index) => (
-            <><Text key={index}>
-              {player.fullName} - Position: {player.position}, Age: {player.age},
-              Height: {player.height}, Weight: {player.weight}, assist: {player.assist}, 
-              clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
-              rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
-              tackles: {player.tackles} , crosses: {player.crosses}
-            </Text>
+            <>
+
+              <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("CoachFormationstack", {
+                screen: "CoachVisitProfile",
+                params: { itemId: player.uid },
+              })
+            }
+          >
+            <Avatar.Image size={75} source={{ uri: player.profileImage }} />
+          </TouchableOpacity>
+
+
+              <Text key={index}>
+                {player.fullName} - Position: {player.position}, Age: {player.age},
+                Height: {player.height}, Weight: {player.weight}, assist: {player.assist},
+                clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
+                rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
+                tackles: {player.tackles} , crosses: {player.crosses}
+              </Text>
 
               {player.clubName === clubName ? (
                 <Button title="Add Player" onPress={() => addPlayer(player.uid)} />
