@@ -189,8 +189,8 @@ export const PlayerNotification = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("PlayerProfile", {
-              screen: "PlayerVisitProfile",
+            navigation.navigate("PlayerNotificationstack", {
+              screen: "PlayerVisitCoach",
               params: { itemId: item.senderUid },
             })
           }

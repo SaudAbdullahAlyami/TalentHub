@@ -119,7 +119,7 @@ const handleSearch = (text) => {
         {/* NEW navigate through stack (: */}
 
         <View  style={styles.pico}>
-        <TouchableOpacity onPress={()=>navigation.navigate('PlayerProfile', { screen: 'PlayerVisitProfile' ,params: {itemId:item.id}})}>
+        <TouchableOpacity onPress={()=>navigation.navigate('PlayerFormationJoinstack', { screen: 'PlayerVisitCoach' ,params: {itemId:item.id}})}>
         <Avatar.Image
           backgroundColor="grey"
           size={75}
@@ -127,8 +127,6 @@ const handleSearch = (text) => {
         />
         </TouchableOpacity>
         </View>
-
-
 
         <Text style={styles.text1} className="font-bold  ">{item.clubName}
         </Text>

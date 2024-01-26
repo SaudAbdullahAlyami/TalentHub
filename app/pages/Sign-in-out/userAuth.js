@@ -31,6 +31,7 @@ import { TournamentShowTeams } from "../tournament/TournamentShowTeams";
 import { TournamentView } from "../player/TournamentView";
 import { TournamentVisitProfile } from "../tournament/TournamentVisitProfile";
 import { CoachVisitTourPage } from "../coach/CoachVisitTourPage";
+import { PlayerVisitCoach } from "../player/PlayerVisitCoach";
 import { db, auth } from "../../component/config/config";
 import {
   doc,
@@ -54,7 +55,8 @@ export const UserAuth = () => {
   });
 
 
-
+  // ========================================= COACH =========================================================================
+  // =========================================================================================================================
 
   //profile stack coach
   const CoachProfileStack = createStackNavigator();
@@ -93,17 +95,22 @@ export const UserAuth = () => {
     )
   }
 
-
-  //formation stack player
-  const PlayerFormationStack = createStackNavigator();
-  function PlayerFormationstack({ navigation }) {
+  //Notification stack coach
+  const CoachNotificationStack = createStackNavigator();
+  function CoachNotificationstack({ navigation }) {
     return (
-      <PlayerFormationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerFormation" }}>
-        <PlayerFormationStack.Screen name="PlayerFormation" component={PlayerFormation} />
-        <PlayerFormationStack.Screen name="PlayerVisitProfile" component={PlayerVisitProfile} />
-      </PlayerFormationStack.Navigator>
+      <CoachNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachNotification" }}>
+        <CoachNotificationStack.Screen name="CoachNotification" component={CoachNotification} />
+        <CoachNotificationStack.Screen name="CoachVisitProfile" component={CoachVisitProfile} />
+      </CoachNotificationStack.Navigator>
     )
   }
+  // =========================================================================================================================
+
+
+
+  // ========================================= PLAYER =========================================================================
+  // =========================================================================================================================
 
   // profile player
   const PlayerProfilestack = createStackNavigator();
@@ -116,10 +123,44 @@ export const UserAuth = () => {
       </PlayerProfilestack.Navigator>
     )
   }
+  //formation stack player
+  const PlayerFormationStack = createStackNavigator();
+  function PlayerFormationstack({ navigation }) {
+    return (
+      <PlayerFormationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerFormation" }}>
+        <PlayerFormationStack.Screen name="PlayerFormation" component={PlayerFormation} />
+        <PlayerFormationStack.Screen name="PlayerVisitProfile" component={PlayerVisitProfile} />
+      </PlayerFormationStack.Navigator>
+    )
+  }
+
+  const PlayerFormationJoinStack = createStackNavigator();
+  function PlayerFormationJoinstack({ navigation }) {
+    return (
+      <PlayerFormationJoinStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerFormationJoin" }}>
+        <PlayerFormationJoinStack.Screen name="PlayerFormationJoin" component={PlayerFormationJoin} />
+        <PlayerFormationJoinStack.Screen name="PlayerVisitCoach" component={PlayerVisitCoach} />
+      </PlayerFormationJoinStack.Navigator>
+    )
+  }
+
+
+  const PlayerNotificationStack = createStackNavigator();
+  function PlayerNotificationstack({ navigation }) {
+    return (
+      <PlayerNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "PlayerNotification" }}>
+        <PlayerNotificationStack.Screen name="PlayerNotification" component={PlayerNotification} />
+        <PlayerNotificationStack.Screen name="PlayerVisitCoach" component={PlayerVisitCoach} />
+      </PlayerNotificationStack.Navigator>
+    )
+  }
+
+  // =========================================================================================================================
 
 
 
-
+  // ========================================= SCOUT =========================================================================
+  // =========================================================================================================================
   // profile Scout
   const ScoutProfilestack = createStackNavigator();
   function ScoutProfileStack({ navigation }) {
@@ -131,9 +172,11 @@ export const UserAuth = () => {
     )
   }
 
+  // =========================================================================================================================
 
 
-
+  // ========================================= TOURNAMENT =========================================================================
+  // =========================================================================================================================
   // profile Tournament
   const TournamentProfilestack = createStackNavigator();
   function TournamentProfileStack({ navigation }) {
@@ -145,30 +188,7 @@ export const UserAuth = () => {
     )
   }
 
-  
-  //Notification stack coach
-  const CoachNotificationStack = createStackNavigator();
-  function CoachNotificationstack({ navigation }) {
-    return (
-      <CoachNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachNotification" }}>
-        <CoachNotificationStack.Screen name="CoachNotification" component={CoachNotification} />
-        <CoachNotificationStack.Screen name="CoachVisitProfile" component={CoachVisitProfile} />
-      </CoachNotificationStack.Navigator>
-    )
-  }
-
-  // Notification Tournament Stack
-  const TournamentNotificationStack = createStackNavigator();
-  function TournamentNotificationstack({ navigation }) {
-    return (
-      <TournamentNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentNotification" }}>
-        <TournamentNotificationStack.Screen name="TournamentNotification" component={TournamentNotification} />
-        <TournamentNotificationStack.Screen name="TournamentVisitProfile" component={TournamentVisitProfile} />
-      </TournamentNotificationStack.Navigator>
-    )
-  }
-
-  // TournamentShowTeams  Stack
+  // TournamentShowTeams Stack
   const TournamentShowTeamsStack = createStackNavigator();
   function TournamentShowTeamsstack({ navigation }) {
     return (
@@ -189,8 +209,25 @@ export const UserAuth = () => {
     )
   }
 
+  // Notification Tournament Stack
+  const TournamentNotificationStack = createStackNavigator();
+  function TournamentNotificationstack({ navigation }) {
+    return (
+      <TournamentNotificationStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "TournamentNotification" }}>
+        <TournamentNotificationStack.Screen name="TournamentNotification" component={TournamentNotification} />
+        <TournamentNotificationStack.Screen name="TournamentVisitProfile" component={TournamentVisitProfile} />
+      </TournamentNotificationStack.Navigator>
+    )
+  }
+  // =========================================================================================================================
 
-  ///MMMMMMMMMMMMMAAAAAAAAAAAAAIIIIIIIIIIIIINNNNNNNNNNN
+
+
+
+
+
+
+  ///============================================== MAIN ===================================================================
   if (type === "Player") {
     return (
       <Tab.Navigator screenOptions={{ headerShown: false, initialRouteName: "Playerprofile" }}>
@@ -200,14 +237,14 @@ export const UserAuth = () => {
         {/* if player doesn't have a team 
     and if he has a team        */}
         {clubName === '' ? (
-          <Tab.Screen name="PlayerFormationJoin" component={PlayerFormationJoin} />
+          <Tab.Screen name="PlayerFormationJoinstack" component={PlayerFormationJoinstack} />
         ) : (
           <Tab.Screen name="PlayerFormationstack" component={PlayerFormationstack} />
         )}
         {tournament !== '' && (
           <Tab.Screen name="TournamentView" component={TournamentView} />
         )}
-        <Tab.Screen name="PlayerNotification" component={PlayerNotification} />
+        <Tab.Screen name="PlayerNotificationstack" component={PlayerNotificationstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );
@@ -248,7 +285,7 @@ export const UserAuth = () => {
             <Tab.Screen name="ExistingTournamentStack" component={ExistingTournamentStack} />
             <Tab.Screen name="TournamentShowTeamsstack" component={TournamentShowTeamsstack} />
           </>
-          
+
         )}
         <Tab.Screen name="TournamentNotificationstack" component={TournamentNotificationstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />

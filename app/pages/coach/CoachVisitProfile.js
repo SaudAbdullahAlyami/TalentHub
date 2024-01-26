@@ -89,8 +89,6 @@ export const CoachVisitProfile = ({ route,navigation  }) => {
             <Text className="text-gray-700 top-1  ml-4">Full Name</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {fullName}</Text>
 
-
-
             <Text className="text-gray-700 top-1  ml-4">Age</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {age}</Text>
 
