@@ -38,17 +38,28 @@ export const CoachNotification = ({ navigation }) => {
         where("receiverUid", "==", auth.currentUser.uid)
       );
       const querySnapshot = await getDocs(q);
-
+  
       const invitations = [];
       querySnapshot.forEach((doc) => {
-        invitations.push({ id: doc.id, ...doc.data() });
+        const invitationData = { id: doc.id, ...doc.data() };
+  
+        // Check if an invitation with similar data already exists in the array
+        const existingInvitation = invitations.find(
+          (existingInvitation) => existingInvitation.senderName === invitationData.senderName
+        );
+  
+        // If it doesn't exist, push the invitation to the array
+        if (!existingInvitation) {
+          invitations.push(invitationData);
+        }
       });
-
+  
       setData(invitations);
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
   };
+  
 
   const deleteInvite = async (inviteId) => {
     await deleteDoc(doc(db, "invitations", inviteId));

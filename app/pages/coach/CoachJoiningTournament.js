@@ -9,12 +9,11 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-
 import { Avatar } from "react-native-paper";
 
 import { doc, collection, getDocs, getDoc, addDoc } from "firebase/firestore";
 
-import { db, auth } from "../../component/config/config";
+import { db, auth, firebase } from "../../component/config/config";
 
 export const CoachJoiningTournament = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -27,16 +26,15 @@ export const CoachJoiningTournament = ({ navigation }) => {
       let items = [];
       docSnap.forEach((doc) => {
         const dataa = doc.data();
-        
-            items.push({ ...doc.data(), id: doc.id });
-          
+
+        items.push({ ...doc.data(), id: doc.id });
       });
       setData(items);
       setFilteredData(items);
     });
   };
 
-  const invitePlayer = async (TourId) => {
+  const inviteTournmant = async (TourId) => {
     try {
       if (TourId == null) {
         console.log("TourId == null");
@@ -75,7 +73,6 @@ export const CoachJoiningTournament = ({ navigation }) => {
 
   const [filteredData, setFilteredData] = useState(data);
 
-
   const render = ({ item }) => {
     return (
       <View style={styles.hi}>
@@ -83,17 +80,17 @@ export const CoachJoiningTournament = ({ navigation }) => {
 
         <View style={styles.pico}>
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("PlayerProfile", {
-                screen: "PlayerVisitProfile",
-                params: { itemId: item.id },
-              })
-            }
+            onPress={() => {
+              navigation.navigate("CoachJoiningTourstack", {
+                screen: "CoachJoiningTourPage",
+                params: { itemId: item.tournamentOwnerUid },
+              });
+            }}
           >
             <Avatar.Image
               backgroundColor="grey"
               size={75}
-              source={{ uri: item.profileImage }}
+              source={{ uri: item.tournamentImage }}
             />
           </TouchableOpacity>
         </View>
@@ -101,15 +98,30 @@ export const CoachJoiningTournament = ({ navigation }) => {
         <Text style={styles.text1} className="font-bold  ">
           {item.tournamentName}
         </Text>
-        
 
         <Text style={styles.text3} className="mb-3">
-          {item.description}
+          description:{item.description}
+        </Text>
+
+        <Text style={styles.text3} className="mb-3">
+          Start Date: {item.startDate.toLocaleString()}
+        </Text>
+
+        <Text style={styles.text3} className="mb-3">
+          End Date:
+        </Text>
+
+        <Text style={styles.text3} className="mb-3">
+          Teams participated: {item.teamsArrayIndex} /16
+        </Text>
+
+        <Text style={styles.text3} className="mb-3">
+          Prize: {item.prize}
         </Text>
 
         <View style={styles.button1}>
           <TouchableOpacity
-            onPress={() => invitePlayer(item.tournamentOwnerUid)}
+            onPress={() => inviteTournmant(item.tournamentOwnerUid)}
             className="bg-yellow-400  py-3 	 w-28 rounded-xl"
           >
             <Text className=" text-center ">Ask to join</Text>
@@ -127,8 +139,6 @@ export const CoachJoiningTournament = ({ navigation }) => {
           style={{ width: 300, height: 150 }}
         />
       </View>
-
-    
 
       <View
         style={{ backgroundColor: "white", paddingBottom: 10 }}

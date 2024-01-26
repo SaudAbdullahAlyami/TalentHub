@@ -2,25 +2,19 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
-  Button,
   Image,
-  Pressable,
   TextInput,
   TouchableOpacity,
-  StatusBar,
   Alert,
-  ScrollView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from "react-native-paper";
 import {
   SelectList,
-  MultipleSelectList,
 } from "react-native-dropdown-select-list";
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db, auth, firebase } from "../../component/config/config";
+import { db, auth,  } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -218,6 +212,7 @@ export const PlayerEdit = ({ navigation }) => {
         setHeight(doc.data().height);
         setWeight(doc.data().weight);
         setLevel(doc.data().level);
+        setPhoneNumber(doc.data().phoneNumber);
         setImage(doc.data().profileImage);
       }
     );

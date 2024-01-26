@@ -33,7 +33,7 @@ export const TournamentNotification = ({ navigation }) => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
   const loadData = async () => {
     try {
@@ -43,16 +43,26 @@ export const TournamentNotification = ({ navigation }) => {
         where("receiverUid", "==", auth.currentUser.uid)
       );
       const querySnapshot = await getDocs(q);
+  
       const invitations = [];
       querySnapshot.forEach((doc) => {
-        invitations.push({ ...doc.data(), id: doc.id });
+        const invitationData = { id: doc.id, ...doc.data() };
+  
+        // Check if an invitation with similar data already exists in the array
+        const existingInvitation = invitations.find(
+          (existingInvitation) => existingInvitation.senderName === invitationData.senderName
+        );
+  
+        // If it doesn't exist, push the invitation to the array
+        if (!existingInvitation) {
+          invitations.push(invitationData);
+        }
       });
-
+  
       setData(invitations);
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
-    loadData()
   };
 
   const deleteInvite = async (inviteId) => {

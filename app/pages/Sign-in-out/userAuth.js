@@ -29,6 +29,7 @@ import { CoachJoiningTournament } from "../coach/CoachJoiningTournament";
 import { TournamentOrgRating } from "../tournament/TournamentOrgRating";
 import { TournamentShowTeams } from "../tournament/TournamentShowTeams";
 import { TournamentView } from "../player/TournamentView";
+import { CoachVisitTourPage } from "../coach/CoachVisitTourPage";
 import { db, auth } from "../../component/config/config";
 import {
   doc,
@@ -88,6 +89,16 @@ export const UserAuth = () => {
         <CoachNotificationStack.Screen name="CoachNotification" component={CoachNotification} />
         <CoachNotificationStack.Screen name="CoachVisitProfile" component={CoachVisitProfile} />
       </CoachNotificationStack.Navigator>
+    )
+  }
+
+  const CoachJoiningTourStack = createStackNavigator();
+  function CoachJoiningTourstack({ navigation }) {
+    return (
+      <CoachJoiningTourStack.Navigator screenOptions={{ headerShown: false, initialRouteName: "CoachJoiningTournament" }}>
+        <CoachJoiningTourStack.Screen name="CoachJoiningTournament" component={CoachJoiningTournament}/>
+        <CoachJoiningTourStack.Screen name="CoachJoiningTourPage" component={CoachVisitTourPage} />
+      </CoachJoiningTourStack.Navigator>
     )
   }
 
@@ -183,7 +194,7 @@ export const UserAuth = () => {
         <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
         <Tab.Screen name="CoachFormationstack" component={CoachFormationstack} />
         <Tab.Screen name="CoachNotificationstack" component={CoachNotificationstack} />
-        <Tab.Screen name="CoachJoiningTournament" component={CoachJoiningTournament} />
+        <Tab.Screen name="CoachJoiningTourstack" component={CoachJoiningTourstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );

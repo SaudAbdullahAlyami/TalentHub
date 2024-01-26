@@ -261,7 +261,7 @@ export const CoachFormation = ({ navigation }) => {
         for(let i=0;i<currentFormation.length;i++){
           data[i]=await currentFormation[i];
         }
-        console.log(data[0].fullName)
+        
         setFormationNames(data) 
 
     } catch (error) {
@@ -275,13 +275,21 @@ export const CoachFormation = ({ navigation }) => {
   return (
 
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
+      
       <View className="flex-1 flex justify-around my-5">
+        
         <View className="flex-row justify-center top-7" >
+          
           <Image source={require("../../assets/field.jpg")}
             style={{ width: 315, height: 450 }} />
+            
         </View>
 
         {/* Here ------------------------------------------------------------- */}
+        <View style={styles.refresh}>
+        <TouchableOpacity onPress={()=>{onRefresh()}}><Text>refresh</Text></TouchableOpacity>
+        </View>
+        
 
         <TouchableOpacity
           style={styles.posstionLw}
@@ -591,6 +599,13 @@ const styles = StyleSheet.create({
     left: 65,
     width: 40,
     height: 40,
+
+  },
+  refresh: {
+    bottom: 380,
+    left: 65,
+    width: 50,
+    height: 30,
 
   },
   posstionRw: {
