@@ -107,6 +107,14 @@ export const TournamentNotification = ({ navigation }) => {
         console.log("tournament added to team");
 
         const players = clubDoc.data().formation;
+        for (let i = 0; i < players.length; i++) {
+        let uiid = players[i].uid;
+         await updateDoc(doc(db, "users", uiid), {
+          tournament: tourName
+        });
+ 
+}
+
         const tournamentDoc = await getDoc(doc(db, "tournament", tourName));
 
         if (tournamentDoc.exists()) {

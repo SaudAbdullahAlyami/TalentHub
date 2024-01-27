@@ -365,9 +365,9 @@ export const ExistingTournament = ({ navigation }) => {
         )}
 
              <Text className="self-center bottom-9  rounded-3xl "  style={styles.roundtitle} >Round of 16</Text>
-        {matchups.map((matchup, index) => (
+        {matchups.map((matchup,  ) => (
           <View  style={styles.hi}>
-          <View key={index} style={styles.matchupContainer}>
+          <View  style={styles.matchupContainer}>
             
           <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
             size={40} 
@@ -429,10 +429,10 @@ export const ExistingTournament = ({ navigation }) => {
 
         <Text className="self-center bottom-5 items-center  rounded-3xl"  style={styles.roundtitle} >Quarter-finals</Text>
         
-        {matchupsRound2.map((matchup, index) => (
+        {matchupsRound2.map((matchup,  ) => (
 
         <View  style={styles.hi}>
-          <View key={index} style={styles.matchupContainer}>
+          <View  style={styles.matchupContainer}>
             <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
             size={40} 
               source={({uri : matchup.team1.teamImage})}
@@ -477,10 +477,10 @@ export const ExistingTournament = ({ navigation }) => {
           />
           )}
           
-           {matchupsRound3.map((matchup, index) => (
+           {matchupsRound3.map((matchup,  ) => (
             
           <View  style={styles.hi}>
-          <View key={index} style={styles.matchupContainer}>
+          <View  style={styles.matchupContainer}>
           <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
             size={40} 
               source={({uri : matchup.team1.teamImage})}
@@ -522,7 +522,7 @@ export const ExistingTournament = ({ navigation }) => {
                <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Final</Text>
          </TouchableOpacity>
         )}
-        {matchupsRound4.map((matchup, index) => (
+        {matchupsRound4.map((matchup,  ) => (
           <>
 
 
@@ -531,7 +531,7 @@ export const ExistingTournament = ({ navigation }) => {
 
             <View  style={styles.hif}>
 
-            <View key={index} style={styles.matchupContainer}>
+            <View  style={styles.matchupContainer}>
 
 
             <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
