@@ -293,7 +293,7 @@ export const PlayerEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">Age</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="18"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setAge(text)}
@@ -304,7 +304,7 @@ export const PlayerEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">height</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="180"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setHeight(text)}
@@ -315,7 +315,7 @@ export const PlayerEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">Weight</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="80"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setWeight(text)}
@@ -326,7 +326,7 @@ export const PlayerEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">Phone Number</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="0553953640"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setPhoneNumber(text)}

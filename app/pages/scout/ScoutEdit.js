@@ -193,7 +193,7 @@ export const ScoutEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">Age</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="18"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setAge(text)}
@@ -215,7 +215,7 @@ export const ScoutEdit = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1 ml-4">Team</Text>
             <TextInput
-              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
+              className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2xl"
               placeholder="Al-Hilal"
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setClubName(text)}
@@ -224,10 +224,7 @@ export const ScoutEdit = ({ navigation }) => {
               autoCapitalize="none"
             />
 
-            <View className="text-gray-700 top-2">
-
-
-            </View>
+           
 
             <TouchableOpacity onPress={() => updateData()}
 
@@ -236,6 +233,7 @@ export const ScoutEdit = ({ navigation }) => {
             </TouchableOpacity>
             <View className="bg-white my-9"></View>
             <View className="bg-white my-9"></View>
+            <View className="bg-white my-2"></View>
 
           </View>
         </KeyboardAwareScrollView>
