@@ -100,7 +100,9 @@ export const TournamentShowTeams = ({ navigation }) => {
 
   
   return (
+    
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
+      
       <View className="flex-row justify-center top-10">
         <Image
           source={require("../../assets/showteams.png")}
@@ -111,7 +113,7 @@ export const TournamentShowTeams = ({ navigation }) => {
       
 
       <View  className="flex-1 top-16"
-        style={{ backgroundColor: "white", paddingBottom: 10 }}
+        style={{ backgroundColor: "white" }}
         
       > 
            

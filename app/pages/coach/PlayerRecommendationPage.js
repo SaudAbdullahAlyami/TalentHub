@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity
+  TouchableOpacity, StyleSheet, ScrollView,Image
 
 } from "react-native";
 import {
@@ -240,51 +240,332 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
   }
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: 20, marginBottom: 10 }}>
-        Player Recommendation System
-      </Text>
+    <View style={{ backgroundColor: "white", width: 400 }}>
+       
 
 
       {recommendations.length > 0 && (
         <View>
-          <Text style={{ fontSize: 18, marginTop: 20 }}>
-            Recommendations:
-          </Text>
-          {recommendations.map((player, index) => (
-            <>
+          <ScrollView >
+           
+            {recommendations.map((player, index) => (
+              <>
 
-              <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("CoachFormationstack", {
-                screen: "CoachVisitProfile",
-                params: { itemId: player.uid },
-              })
-            }
-          >
-            <Avatar.Image size={75} source={{ uri: player.profileImage }} />
-          </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("CoachFormationstack", {
+                      screen: "CoachVisitProfile",
+                      params: { itemId: player.uid },
+                    })
+                  }
+                >
+                  <View className="mb-9" style={styles.teamco} >
 
 
-              <Text key={index}>
-                {player.fullName} - Position: {player.position}, Age: {player.age},
-                Height: {player.height}, Weight: {player.weight}, assist: {player.assist},
-                clearances: {player.clearances}, goals: {player.goals}, passes: {player.passes},
-                rating: {player.rating}, saves: {player.saves}, shotsOnTarget: {player.shotsOnTarget},
-                tackles: {player.tackles} , crosses: {player.crosses}
-              </Text>
+                    <Avatar.Image className="left-3 top-3" size={75} source={{ uri: player.profileImage }} />
 
-              {player.clubName === clubName ? (
-                <Button title="Add Player" onPress={() => addPlayer(player.uid)} />
-              ) : (
-                <Button title="Invite Player" onPress={() => invitePlayer(player.uid)} />
-              )}
 
-            </>
 
-          ))}
+                  </View>
+
+                </TouchableOpacity>
+                <Text className="font-bold left-24 bottom-7 "  >{player.fullName}{"\n"}{player.position}</Text>
+
+                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Age {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.age}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Height {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.height}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Weight {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.weight}</Text>
+                      </View>
+
+                    </Text>
+                   
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Rating {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.rating}</Text>
+                      </View>
+
+                    </Text>
+                    <View className="my-2"></View>
+                  </View>
+                      <View className="my-2"></View>
+                </View>
+
+                <View className="my-3"></View>
+                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Goals {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.goals}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Assists {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.assist}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}>Shots On Target{"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.shotsOnTarget}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Crosses {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.crosses}</Text>
+                      </View>
+
+                    </Text>
+
+                    <View className="my-2"></View>
+                  </View>
+                      <View className="my-2"></View>
+                </View>
+
+                <View className="my-3"></View>
+                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}> Saves {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player. saves}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}>Clearances {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.clearances}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}>Tackles {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text style={styles.text}>{player.tackles}</Text>
+                      </View>
+
+                    </Text>
+
+                  </View>
+
+
+
+                  <View style={styles.inputContainer}>
+                    <Text className=" text-center   pb-2 font-bold" key={index}>Passes {"\n"}{"\n"}
+
+                      <View style={styles.bigBox}>
+                        <Text      style={styles.text}>{player.passes}</Text>
+
+                        
+                      </View>
+
+                    </Text>
+                     
+                  </View>
+
+                        
+                 
+                 
+                </View>
+                     
+
+               
+
+              
+
+                {player.clubName === clubName ? (
+                 <TouchableOpacity onPress={() => addPlayer(player.uid)}>
+                 <Text className="self-center   rounded-3xl" style={styles.Button2} >Add player</Text>
+               </TouchableOpacity>
+                ) : (
+                  <Button title="Invite Player" onPress={() => invitePlayer(player.uid)} />
+                )}
+               
+
+              </>
+                  
+            ))}</ScrollView>
         </View>
       )}
+     
+        
+         
+
+     
+          
+     
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+
+
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 1,
+    marginTop: 39,
+    color: "white"
+  },
+  playerContainer: {
+    marginBottom: 16,
+  },
+  inputContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+
+    paddingHorizontal: 13,
+
+
+  },
+  input: {
+
+    borderWidth: 1,
+    borderColor: 'grey',
+    height: 32,
+    padding: 30,
+    backgroundColor: "grey",
+    paddingHorizontal: 30
+  }, goalscon: {
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: 8,
+    padding: 20,
+    left: 42
+
+  }, hi: {
+    borderBottomColor: "ddd",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+
+    marginBottom: 15,
+  }, bgcolor: {
+
+    backgroundColor: "#00B365"
+  }, teamco: {
+    backgroundColor: "#00B365",
+    width: 400,
+    height: 40,
+    fontSize: 28,
+
+  }, teampl: {
+    backgroundColor: "#00B365",
+    width: 400,
+    height: 40,
+    fontSize: 20,
+    paddingTop: 5,
+    paddingLeft: 5,
+
+  }, teamco2: {
+    backgroundColor: "#FFD14E",
+    width: 400,
+    height: 40,
+    fontSize: 28,
+  }, button1: {
+    backgroundColor: "#00b365",
+
+  }, bigBox: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    padding: 10,
+    width: 50, // Adjust the width as needed
+    height: 50, // Adjust the height as needed
+    justifyContent: 'center', // Center the text vertically
+    alignItems: 'center', // Center the text horizontally
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  }, Button2: {
+    fontSize: 20,
+    color: "white",
+    right: 4,
+    fontWeight: "bold",
+    padding: 15,
+    backgroundColor: "#00B365",
+    width: 180,
+    margin: 15,
+    textAlign: 'center'
+
+
+  }
+});

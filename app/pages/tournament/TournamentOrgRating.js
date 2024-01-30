@@ -1,4 +1,5 @@
 import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
+
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -6,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  FlatList,TouchableOpacity,Image
+  FlatList,TouchableOpacity,Image,ScrollView
 } from "react-native";
 import { db, auth, firebase } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
@@ -299,122 +300,184 @@ tackels=8
     return (
 
        
-      <View style={styles.playerContainer}>
-        <Text>{item.fullName}</Text>
-        <View style={styles.inputContainer}>
-          <Text> goals</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setGoal1(text);
-            }}
-          />
-        
-        </View>
-        <View style={styles.inputContainer}>
-          <Text>Rating:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setRating1(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> Assist:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setAssist(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> clearances:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setClearances(text);
-            }}
-          />
-          
-        </View>
+      <View  style={{width:400}}>
 
 
-        <View style={styles.inputContainer}>
-          <Text> crosses:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setCrosses(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> passes:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setPasses(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> saves:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setSaves(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> shotsOnTarget:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setShotsOnTarget(text);
-            }}
-          />
-          
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text> tackles:</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="numeric"
-            onChangeText={(text) => {
-              setTackles(text);
-            }}
-          />
+                                  
+                  <View className="mb-9" style={styles.teamco2} >
+                   
             
-        </View>
+
+              <Image  className="top-4 left-3" source={require("../../assets/profo2.png")}
+                style={{width: 60, height: 60}} />
+
+                <Text className="font-bold left-20 bottom-5"  >{item.fullName} {item.position}</Text> 
+
+              </View>
+
+             <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
+
+         
+
+          <View  style={styles.inputContainer}>
+               
+            <Text className=" text-center  pb-2 font-bold" >Goals</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              value={goal1}
+              onChangeText={(text) => {
+                setGoal1(text);
+              }}
+            />
+            
+              
+            
+          </View>
+          
+
+
+            
+          <View style={styles.inputContainer}>
+            <Text  className="text-center   pb-2 font-bold" >Rating</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              value={rating1}
+              onChangeText={(text) => {
+                setRating1(text);
+              }}
+            />
+
+            
+      
+            </View>
+          
+          
+
+
+
+          
+
+          <View style={styles.inputContainer}>
+            <Text  className=" text-center color-00B365  pb-2 font-bold" >  Assists</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setAssist(text);
+              }}
+            />
+
+            
+               </View>
+
+               </View>
+         
+               <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
+          <View style={styles.inputContainer}>
+            <Text  className=" text-center   pb-2 font-bold" > Clearances</Text>
+            <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setClearances(text);
+              }}
+            />
+
+             
+          
+          </View>
+
+
+         
+
+
+         
+          <View style={styles.inputContainer}>
+            <Text   className=" text-center  right-1 pb-2 font-bold"> Crosses</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setCrosses(text);
+              }}
+            />
+
+            
+
+                </View>
+  
+          <View style={styles.inputContainer}>
+            <Text   className=" text-center   pb-2 font-bold"> Passes</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setPasses(text);
+              }}
+            />
+
+
+            
+
+          
+          </View>
+          </View>
+
+
+
+          <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,}} >
+
+          <View style={styles.inputContainer}>
+            <Text  className=" text-center left-1  pb-2 font-bold"> Saves</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-2"
+              style={styles.input}
+              keyboardType="numeric"
+              
+              onChangeText={(text) => {
+                setSaves(text);
+              }}
+            />
+            
+                 </View>
+  
+          <View style={styles.inputContainer}>
+            <Text  className=" text-center   pb-2 font-bold">  ShotsOnTarget</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+              style={styles.input}
+              keyboardType="numeric"
+              
+              onChangeText={(text) => {
+                setShotsOnTarget(text);
+              }}
+            />
+          
+          </View>
+          
+          <View style={styles.inputContainer}>
+            <Text  className=" text-center   pb-2 font-bold right-2"> Tackles</Text>
+            <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl right-1"
+              style={styles.input}
+              keyboardType="numeric"
+              onChangeText={(text) => {
+                setTackles(text);
+              }}
+            />
+           
+          </View>
+          </View>
+
+
+        
 
 
            
 
 
 
-        <Button
+        {/* <Button
             title="Save Player data"
             onPress={() => {
               savePlayerData(item.uid, goal1,0)
@@ -427,7 +490,7 @@ tackels=8
               savePlayerData(item.uid, shotsOnTarget,7)
               savePlayerData(item.uid, tackles,8)
             }}
-          />
+          /> */}
 
 
       </View>
@@ -555,7 +618,7 @@ tackels=8
             <Text   className=" text-center   pb-2 font-bold"> Passes</Text>
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
-              placeholder="1"
+              
               keyboardType="numeric"
               onChangeText={(text) => {
                 setPasses(text);
@@ -578,7 +641,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-2"
               style={styles.input}
               keyboardType="numeric"
-              placeholder="1"
+              
               onChangeText={(text) => {
                 setSaves(text);
               }}
@@ -591,7 +654,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              placeholder="1"
+              
               onChangeText={(text) => {
                 setShotsOnTarget(text);
               }}
@@ -660,8 +723,8 @@ tackels=8
 
 
       <View style={styles.goalscon}>
-        <Text className="color-white font-bold mb-3">Goals for {team2.name}:</Text>
-        <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
+        <Text className="color-white font-bold mb-3 left-7">Goals for {team2.name}:</Text>
+        <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-7"
           style={styles.input}
           placeholder="Team goals"
           keyboardType="numeric"
@@ -673,19 +736,33 @@ tackels=8
       </View>
 
       </View>
+      <ScrollView>
 
+      <Text  className="text-white text-center font-bold" style={styles.teamco2} >{team1.name}</Text>
 
-      <Text >{team1.name}</Text>
+      <View>
       <FlatList
         data={player1Ratings}
         renderItem={({ item }) => renderPlayer1Item({ item })}
       />
+      </View>
       <Text className="text-white text-center font-bold" style={styles.teamco} >{team2.name}</Text>
+      <View>
       <FlatList
+      
         data={player2Ratings}
         renderItem={({ item }) => renderPlayer2Item({ item })}
-      />
-      <Button title="Save" onPress={handleSave} />
+      /></View>
+      </ScrollView>
+     
+      <TouchableOpacity
+          style={styles.button1}
+          onPress={handleSave}
+          className="py-3 	 right-2  w-20 rounded-xl"
+        >
+          <Text className=" text-center text-white font-bold">Save</Text>
+        </TouchableOpacity>
+
     </View>
   );
 };
@@ -742,14 +819,6 @@ const styles = StyleSheet.create({
     width:400,
    height:40,
    fontSize:28,
-   
-  
-      
-
-
-
-
-
 
   },teampl:{
     backgroundColor:"#00B365",
@@ -759,11 +828,13 @@ const styles = StyleSheet.create({
    paddingTop:5,
    paddingLeft:5,
    
-
-
-
-
-
-
-  }
+  },teamco2:{
+    backgroundColor:"#FFD14E",
+    width:400,
+   height:40,
+   fontSize:28,
+  }, button1: {
+    backgroundColor: "#00b365",
+   
+  },
 });

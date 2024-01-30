@@ -106,14 +106,14 @@ export const TournamentNotification = ({ navigation }) => {
         });
         console.log("tournament added to team");
 
-        const players = clubDoc.data().formation;
-        for (let i = 0; i < players.length; i++) {
-        let uiid = players[i].uid;
-         await updateDoc(doc(db, "users", uiid), {
-          tournament: tourName
-        });
+         const players = clubDoc.data().formation;
+//         for (let i = 0; i < players.length; i++) {
+//         let uiid = players[i].uid;
+//          await updateDoc(doc(db, "users", uiid), {
+//           tournament: tourName
+//         });
  
-}
+// }
 
         const tournamentDoc = await getDoc(doc(db, "tournament", tourName));
 
@@ -163,14 +163,8 @@ export const TournamentNotification = ({ navigation }) => {
 
   const render = ({ item }) => {
     return (
-      <View
-        style={{
-          padding: 16,
-          backgroundColor: "#f0f0f0",
-          borderRadius: 16,
-          marginBottom: 16,
-        }}
-      >
+      <View style={styles.hi}>
+        <View style={styles.pico}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("TournamentNotificationstack", {
@@ -179,40 +173,80 @@ export const TournamentNotification = ({ navigation }) => {
             })
           }
         >
-          <Avatar.Image size={100} source={{ uri: item.senderImage }} />
-        </TouchableOpacity>
-        <Text>Coach :{item.senderName}</Text>
+            <Avatar.Image size={75} source={{ uri: item.senderImage }} />
+          </TouchableOpacity>
+        </View>
 
-        <Button
-          title="Accept"
-          color={"green"}
+        <Text style={styles.text1} className="font-bold  ">
+          {item.senderName}
+        </Text>
+        <Text style={styles.text2}>
+          Player position:{" "}
+          <Text style={{ fontWeight: "bold" }}>{item.senderPosition}</Text>
+        </Text>
+
+        <TouchableOpacity
+          style={styles.button1}
           onPress={() =>
             handleInvite("Accepted", item.id, item.senderUid, item.receiverUid)
           }
-        />
-        <Button
-          title="Reject"
-          color={"red"}
-          onPress={() =>
-            handleInvite("Rejected", item.id, item.senderUid, item.receiverUid)
-          }
-        />
+          className="py-3  self-end	 right-2  w-28 rounded-xl"
+        >
+          <Text className=" text-center text-white">Accept</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => handleInvite("Rejected", item.id, item.senderUid)}
+          className="py-3 bg-red-500 w-28 self-end right-2 bottom-20  	rounded-xl"
+        >
+          <Text className="text-  text-center text-white">Reject</Text>
+        </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <View className="flex-1 bg-white" style={{ backgroundColor: "#00B365" }}>
-      <View className="flex-row justify-start"></View>
+    <View className="flex-1 " style={{ backgroundColor: "#00B365" }}>
+      <View className="flex-row justify-center top-10">
+        <Image
+          source={require("../../assets/coachnoti.png")}
+          style={{ width: 150, height: 150 }}
+        />
+      </View>
 
       <View
-        style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white top-8 px-8 pt-8"
+        style={{ backgroundColor: "white", paddingBottom: 10 }}
+        className="flex-1 bg-white top-16"
       >
         <FlatList data={data} renderItem={render} />
-
-        <View className="bg-white my-9"></View>
       </View>
+      <View className="bg-white my-6"></View>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  pico: {
+    top: 32,
+    paddingLeft: 18,
+  },
+  text1: {
+    fontSize: 18,
+    left: 103,
+    bottom: 30,
+  },
+  text2: {
+    fontSize: 14,
+    left: 103,
+    bottom: 25,
+  },
+  button1: {
+    backgroundColor: "#00b365",
+    bottom: 85,
+  },
+  hi: {
+    borderBottomColor: "ddd",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    height: 140,
+    marginLeft: 10,
+  },
+});

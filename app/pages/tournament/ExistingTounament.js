@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity,Image } from "react-native";
+import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from "react-native";
 import {
   setDoc,
   doc,
@@ -95,8 +95,8 @@ export const ExistingTournament = ({ navigation }) => {
           team2,
           matchIndex: matchIndex,
           whoWin: "",
-          team1Goals:'0',
-          team2Goals:'0'
+          team1Goals: '0',
+          team2Goals: '0'
         });
         matchIndex++;
       }
@@ -329,282 +329,282 @@ export const ExistingTournament = ({ navigation }) => {
 
   return (
 
-  <View style={styles.container}>
+    <View style={styles.container}>
       <ScrollView>
 
         <View className="flex-row justify-center"  >
- 
-            <Image source={require("../../assets/tour2.png")}
-                style={{width: 300, height: 300}} />
+
+          <Image source={require("../../assets/tour2.png")}
+            style={{ width: 300, height: 300 }} />
         </View>
         <Text className="self-center bottom-5 " style={styles.title}>Tournament Bracket</Text>
-        <Button
-          title="Start new Tournament"
-          onPress={() => DeleteTournament()}
-          color={"red"}
-        />
-
-
-       <View   className="flex-1 bg-white  px-8 pt-3  rounded-tr-3xl rounded-tl-2xl  self-center"  style={{ width:400}}>
-
-    
-       
-        <TouchableOpacity  style={styles.refresh} onPress={() => getData()}>
-        <Image source={require("../../assets/refresh.png")}
-                style={{width: 30, height: 30}} />
-          
-        </TouchableOpacity>
 
 
 
-        {matchups.length == 0 && (
-          <Button
-            title="randomize round 1"
-            onPress={() => generateMatchups()}
-          />
-        )}
-
-             <Text className="self-center bottom-9  rounded-3xl "  style={styles.roundtitle} >Round of 16</Text>
-        {matchups.map((matchup,  ) => (
-          <View  style={styles.hi}>
-          <View  style={styles.matchupContainer}>
-            
-          <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
-            size={40} 
-              source={({uri : matchup.team1.teamImage})}
-              
-            />
- <Avatar.Image  style={styles.photo2} backgroundColor="pink" className="left-52"
-            size={40} 
-              source={({uri : matchup.team2.teamImage})}
-               /> 
-               
-
-               <View  className="w-20 items-end">
-            <Text style={styles.matchupText} >
-              {matchup.team1.name} 
-              </Text>
-              </View>
-
-                                
-               <View  className="w-20 items-start">
-              <Text style={styles.matchupText2}>
-               {matchup.team2.name}
-               </Text></View>
-
-
-              
-            
-            {/* <Text> Winner is :{matchup.whoWin}</Text>  */}
-            
-          </View>
-          
-          
-          <View  className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l"   style={{backgroundColor: "#00B365"}}         >
-          <Text className="top-1 font-bold "      style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
-          </View>
-
-
-          <TouchableOpacity style={styles.arrow}  onPress={() => handleMatchButtonClick(matchup, 1)}>
-               <Image source={require("../../assets/arrow.png")}
-                style={{width: 20, height: 15}} />
-               </TouchableOpacity>
-
-
-          </View>
+        <View className="flex-1 bg-white  px-8 pt-3  rounded-tr-3xl rounded-tl-2xl  self-center" style={{ width: 400 }}>
 
 
 
-        ))
-        
-        }
+          <TouchableOpacity style={styles.refresh} onPress={() => getData()}>
+            <Image source={require("../../assets/refresh.png")}
+              style={{ width: 30, height: 30 }} />
 
-        {round1Complete && matchupsRound2.length==0 &&(
-          <Button
-            title="Start Round2"
-            onPress={() => fetchRound2()}
-            style={{ backgroundColor: "green" }}
-          />
-        )}
+          </TouchableOpacity>
 
-        <Text className="self-center bottom-5 items-center  rounded-3xl"  style={styles.roundtitle} >Quarter-finals</Text>
-        
-        {matchupsRound2.map((matchup,  ) => (
 
-        <View  style={styles.hi}>
-          <View  style={styles.matchupContainer}>
-            <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
-            size={40} 
-              source={({uri : matchup.team1.teamImage})}
-              
-            />
-             <Avatar.Image  style={styles.photo2} backgroundColor="pink" className="left-52"
-            size={40} 
-              source={({uri : matchup.team2.teamImage})}
-               /> 
-               
-               <View  className="w-20 items-end">
-            <Text style={styles.matchupText} >
-              {matchup.team1.name} 
-              </Text>
-              </View>
 
-                                
-               <View  className="w-20 items-start">
-              <Text style={styles.matchupText2}>
-               {matchup.team2.name}
-               </Text></View>
-          </View>
-          
-          <View  className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l"   style={{backgroundColor: "#00B365"}}         >
-          <Text className="top-1 font-bold "      style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
-          </View>
-
-          <TouchableOpacity style={styles.arrow}  onPress={() => handleMatchButtonClick(matchup, 2)}>
-               <Image source={require("../../assets/arrow.png")}
-                style={{width: 20, height: 15}} />
-               </TouchableOpacity>
-               
-          </View>
-          
-          ))}
-            <Text  className="self-center bottom-5 rounded-3xl"  style={styles.roundtitle}>Semi-finals</Text>
-           {round2Complete &&matchupsRound3.length==0 && (
-          <Button
-            title="Start Round3"
-            onPress={() => fetchRound3()}
-            style={{ backgroundColor: "green" }}
-          />
+          {matchups.length == 0 && (
+            <TouchableOpacity onPress={() => generateMatchups()}>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Round of 16</Text>
+            </TouchableOpacity>
           )}
-          
-           {matchupsRound3.map((matchup,  ) => (
-            
-          <View  style={styles.hi}>
-          <View  style={styles.matchupContainer}>
-          <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
-            size={40} 
-              source={({uri : matchup.team1.teamImage})}
-              
-            />
-             <Avatar.Image  style={styles.photo2} backgroundColor="pink" className="left-52"
-            size={40} 
-              source={({uri : matchup.team2.teamImage})}
-               /> 
-               
-               <View  className="w-20 items-end">
-            <Text style={styles.matchupText} >
-              {matchup.team1.name} 
-              </Text>
+
+          <Text className="self-center bottom-9  rounded-3xl " style={styles.roundtitle} >Round of 16</Text>
+          {matchups.map((matchup,) => (
+            <View style={styles.hi}>
+              <View style={styles.matchupContainer}>
+
+                <Avatar.Image style={styles.photo1} backgroundColor="grey"
+                  size={40}
+                  source={({ uri: matchup.team1.teamImage })}
+
+                />
+                <Avatar.Image style={styles.photo2} backgroundColor="pink" className="left-52"
+                  size={40}
+                  source={({ uri: matchup.team2.teamImage })}
+                />
+
+
+                <View className="w-20 items-end">
+                  <Text style={styles.matchupText} >
+                    {matchup.team1.name}
+                  </Text>
+                </View>
+
+
+                <View className="w-20 items-start">
+                  <Text style={styles.matchupText2}>
+                    {matchup.team2.name}
+                  </Text></View>
+
+
+
+
+                {/* <Text> Winner is :{matchup.whoWin}</Text>  */}
+
               </View>
 
-                                
-               <View  className="w-20 items-start">
-              <Text style={styles.matchupText2}>
-               {matchup.team2.name}
-               </Text></View>
-          </View>
-          
-          <View  className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l"   style={{backgroundColor: "#00B365"}}         >
-          <Text className="top-1 font-bold "      style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
-          </View>
 
-          <TouchableOpacity style={styles.arrow}  onPress={() => handleMatchButtonClick(matchup, 3)}>
-               <Image source={require("../../assets/arrow.png")}
-                style={{width: 20, height: 15}} />
-               </TouchableOpacity>
-
-
-          </View>
-        ))}
-        {round3Complete &&matchupsRound4.length==0 && (
-
-          <TouchableOpacity  onPress={() => fetchRound4()}>
-               <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Final</Text>
-         </TouchableOpacity>
-        )}
-        {matchupsRound4.map((matchup,  ) => (
-          <>
-
-
-
-            <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Final</Text>
-
-            <View  style={styles.hif}>
-
-            <View  style={styles.matchupContainer}>
-
-
-            <Avatar.Image  style={styles.photo1}  backgroundColor="grey" 
-              size={40} 
-              source={({uri : matchup.team1.teamImage})}
-               />
-             <Avatar.Image  style={styles.photo2} backgroundColor="pink" className="left-52"
-              size={40} 
-              source={({uri : matchup.team2.teamImage})}
-               /> 
-               
-               <View  className="w-20 items-end">
-              <Text style={styles.matchupText} >
-              {matchup.team1.name} 
-              </Text>
+              <View className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l" style={{ backgroundColor: "#00B365" }}         >
+                <Text className="top-1 font-bold " style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
               </View>
 
-                                
-               <View  className="w-20 items-start">
-              <Text style={styles.matchupText2}>
-               {matchup.team2.name}
-               </Text></View>
-               </View>
-          
-             <View  className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l"   style={{backgroundColor: "#00B365"}}         >
-             <Text className="top-1 font-bold "      style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
-             </View>
 
-              <TouchableOpacity style={styles.arrow}  onPress={() => handleMatchButtonClick(matchup, 4)}>
-               <Image source={require("../../assets/arrow.png")}
-                style={{width: 20, height: 15}} />
-               </TouchableOpacity>
-                        
+              <TouchableOpacity style={styles.arrow} onPress={() => handleMatchButtonClick(matchup, 1)}>
+                <Image source={require("../../assets/arrow.png")}
+                  style={{ width: 20, height: 15 }} />
+              </TouchableOpacity>
 
 
-
-
-              
-               <View className="items-center" style={styles.bgchamp}>
-               <Image source={require("../../assets/trophy.png")}
-                style={{width: 300, height: 200}} />
-                
-                <Text className="top-3" style={styles.champtitle} >Tornament Champion</Text>
-                
-                <Text  className="top-3" style={styles.winner} >{matchup.whoWin}</Text> 
-
-                
-      
-
-             <View className="bg-white pt-7 "></View> 
-
-               </View>
-                        
-
-              
-               
             </View>
 
-          </>
-        ))}
+
+
+          ))
+
+          }
+
+          {round1Complete && matchupsRound2.length == 0 && (
+            <TouchableOpacity onPress={() => fetchRound2()}>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Quarter-finals</Text>
+            </TouchableOpacity>
+          )}
+
+
+          <Text className="self-center bottom-5 items-center  rounded-3xl" style={styles.roundtitle} >Quarter-finals</Text>
+          {matchupsRound2.map((matchup,) => (
+            <>
+
+              <View style={styles.hi}>
+                <View style={styles.matchupContainer}>
+                  <Avatar.Image style={styles.photo1} backgroundColor="grey"
+                    size={40}
+                    source={({ uri: matchup.team1.teamImage })}
+
+                  />
+                  <Avatar.Image style={styles.photo2} backgroundColor="pink" className="left-52"
+                    size={40}
+                    source={({ uri: matchup.team2.teamImage })}
+                  />
+
+                  <View className="w-20 items-end">
+                    <Text style={styles.matchupText} >
+                      {matchup.team1.name}
+                    </Text>
+                  </View>
+
+
+                  <View className="w-20 items-start">
+                    <Text style={styles.matchupText2}>
+                      {matchup.team2.name}
+                    </Text></View>
+                </View>
+
+                <View className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l" style={{ backgroundColor: "#00B365" }}         >
+                  <Text className="top-1 font-bold " style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
+                </View>
+
+                <TouchableOpacity style={styles.arrow} onPress={() => handleMatchButtonClick(matchup, 2)}>
+                  <Image source={require("../../assets/arrow.png")}
+                    style={{ width: 20, height: 15 }} />
+                </TouchableOpacity>
+
+              </View>
+            </>
+          ))}
+
+          {round2Complete && matchupsRound3.length == 0 && (
+            <TouchableOpacity onPress={() => fetchRound3()}>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Semi-finals</Text>
+            </TouchableOpacity>
+          )}
+          <Text className="self-center bottom-5 rounded-3xl" style={styles.roundtitle}>Semi-finals</Text>
+          {matchupsRound3.map((matchup,) => (
+            <>
+
+
+
+              <View style={styles.hi}>
+
+                <View style={styles.matchupContainer}>
+                  <Avatar.Image style={styles.photo1} backgroundColor="grey"
+                    size={40}
+                    source={({ uri: matchup.team1.teamImage })}
+
+                  />
+                  <Avatar.Image style={styles.photo2} backgroundColor="pink" className="left-52"
+                    size={40}
+                    source={({ uri: matchup.team2.teamImage })}
+                  />
+
+                  <View className="w-20 items-end">
+                    <Text style={styles.matchupText} >
+                      {matchup.team1.name}
+                    </Text>
+                  </View>
+
+
+                  <View className="w-20 items-start">
+                    <Text style={styles.matchupText2}>
+                      {matchup.team2.name}
+                    </Text></View>
+                </View>
+
+                <View className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l" style={{ backgroundColor: "#00B365" }}         >
+                  <Text className="top-1 font-bold " style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
+                </View>
+
+                <TouchableOpacity style={styles.arrow} onPress={() => handleMatchButtonClick(matchup, 3)}>
+                  <Image source={require("../../assets/arrow.png")}
+                    style={{ width: 20, height: 15 }} />
+                </TouchableOpacity>
+
+
+              </View>
+            </>
+          ))}
+          {round3Complete && matchupsRound4.length == 0 && (
+
+            <TouchableOpacity onPress={() => fetchRound4()}>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Final</Text>
+            </TouchableOpacity>
+          )}
+          <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Final</Text>
+          {matchupsRound4.map((matchup,) => (
+            <>
 
 
 
 
-      </View>
-      
-      
-   
-          
-     
+              <View style={styles.hif}>
 
-          
-          </ScrollView>
+                <View style={styles.matchupContainer}>
+
+
+                  <Avatar.Image style={styles.photo1} backgroundColor="grey"
+                    size={40}
+                    source={({ uri: matchup.team1.teamImage })}
+                  />
+                  <Avatar.Image style={styles.photo2} backgroundColor="pink" className="left-52"
+                    size={40}
+                    source={({ uri: matchup.team2.teamImage })}
+                  />
+
+                  <View className="w-20 items-end">
+                    <Text style={styles.matchupText} >
+                      {matchup.team1.name}
+                    </Text>
+                  </View>
+
+
+                  <View className="w-20 items-start">
+                    <Text style={styles.matchupText2}>
+                      {matchup.team2.name}
+                    </Text></View>
+                </View>
+
+                <View className=" w-16 h-9 bottom-7 self-center rounded-r rounded-l" style={{ backgroundColor: "#00B365" }}         >
+                  <Text className="top-1 font-bold " style={styles.matchupscore}>   {matchup.team1Goals} - {matchup.team2Goals} </Text>
+                </View>
+
+                <TouchableOpacity style={styles.arrow} onPress={() => handleMatchButtonClick(matchup, 4)}>
+                  <Image source={require("../../assets/arrow.png")}
+                    style={{ width: 20, height: 15 }} />
+                </TouchableOpacity>
+
+
+
+
+
+
+                <View className="items-center" style={styles.bgchamp}>
+                  <Image source={require("../../assets/trophy.png")}
+                    style={{ width: 300, height: 200 }} />
+
+                  <Text className="top-3" style={styles.champtitle} >Tornament Champion</Text>
+
+                  <Text className="top-3" style={styles.winner} >{matchup.whoWin}</Text>
+
+
+                  <TouchableOpacity onPress={() => DeleteTournament()}>
+                    <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start New Tournament</Text>
+                  </TouchableOpacity>
+
+
+                  <View className="bg-white pt-7 "></View>
+
+                </View>
+
+
+
+
+              </View>
+
+            </>
+          ))}
+
+
+
+
+        </View>
+
+
+
+
+
+
+
+      </ScrollView>
     </View>
   );
 };
@@ -614,130 +614,130 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-   ,backgroundColor: "#00B365" 
+    , backgroundColor: "#00B365"
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color:'white'
+    color: 'white'
   },
   matchupContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    
+
   },
   matchupText: {
     fontSize: 12,
-    
+
     fontWeight: 'bold',
     color: "#00B365",
 
-  
+
   }, matchupText2: {
     fontSize: 12,
-    
+
     fontWeight: 'bold',
     color: "#00B365",
 
-  
+
   },
   hi: {
     borderBottomColor: "ddd",
     borderBottomWidth: StyleSheet.hairlineWidth,
     height: 50,
-    marginBottom:23,
+    marginBottom: 23,
   }, hif: {
     borderBottomColor: "ddd",
     borderBottomWidth: StyleSheet.hairlineWidth,
     height: 50,
-    marginBottom:320,
-   
+    marginBottom: 320,
+
   },
-  button1:{
+  button1: {
 
     position: 'absolute',
     top: 300, // Adjust the top position as needed
     right: 10, // Adjust the right position as needed
-  
+
     padding: 10,
     borderRadius: 5,
-   
-  },
-  photo1:{
-    
 
-      position: 'absolute',
-      left:88,
-     // Adjust the right position as needed
-    
-  
-    
+  },
+  photo1: {
+
+
+    position: 'absolute',
+    left: 88,
+    // Adjust the right position as needed
+
+
+
 
   }, matchupscore: {
     fontSize: 20,
-    color:"white",
-    right:4,
-    
-    
-  },photo2:{
-    
+    color: "white",
+    right: 4,
+
+
+  }, photo2: {
+
 
     position: 'absolute',
-   // Adjust the right position as needed
-  
-
-  
-
-},arrow:{
-
-alignItems:'flex-end',
-bottom:52,
-left:310,
-
-width:30,
+    // Adjust the right position as needed
 
 
-},refresh:{
 
-  alignItems:'flex-end',
-  bottom:1,
-  left:310,
-  
-  width:30,
-  
-  
-  },roundtitle: {
+
+  }, arrow: {
+
+    alignItems: 'flex-end',
+    bottom: 52,
+    left: 310,
+
+    width: 30,
+
+
+  }, refresh: {
+
+    alignItems: 'flex-end',
+    bottom: 1,
+    left: 310,
+
+    width: 30,
+
+
+  }, roundtitle: {
     fontSize: 20,
     color: "white",
-    right:4,
-    fontWeight:"bold",
-    padding:25,
-    backgroundColor:"#00B365",
-    width:180,
-    margin:20,
-    textAlign:'center'
- 
-    
+    right: 4,
+    fontWeight: "bold",
+    padding: 25,
+    backgroundColor: "#00B365",
+    width: 180,
+    margin: 20,
+    textAlign: 'center'
+
+
   }, bgchamp: {
-    backgroundColor:"#00B365",
-    width:400,
-    alignSelf:"center",
-    bottom:20,
-height:420,
-  },champtitle: {
+    backgroundColor: "#00B365",
+    width: 400,
+    alignSelf: "center",
+    bottom: 20,
+    height: 420,
+  }, champtitle: {
     fontSize: 30,
     color: "white",
-    fontWeight:"bold",
-    textAlign:'center'
- 
-    
-  },winner: {
+    fontWeight: "bold",
+    textAlign: 'center'
+
+
+  }, winner: {
     fontSize: 26,
     color: "#FFC727",
-    fontWeight:"bold",
-    textAlign:'center'
- 
-    
+    fontWeight: "bold",
+    textAlign: 'center'
+
+
   }
 });

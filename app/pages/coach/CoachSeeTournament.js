@@ -135,7 +135,7 @@ export const CoachSeeTournament = ({ navigation }) => {
                 style={{ backgroundColor: "#00B365" }}
               >
                 <Text className="top-1 font-bold " style={styles.matchupscore}>
-                  {" "}
+                  {" "}{" "}
                   {matchup.team1Goals} - {matchup.team2Goals}{" "}
                 </Text>
               </View>
@@ -274,11 +274,11 @@ export const CoachSeeTournament = ({ navigation }) => {
                   style={{ backgroundColor: "#00B365" }}
                 >
                   <Text
-                    className="top-1 font-bold "
+                    className="top-1 font-bold  "
                     style={styles.matchupscore}
                   >
-                    {" "}
-                    {matchup.team1Goals} - {matchup.team2Goals}{" "}
+                    {" "}{" "}
+                      {matchup.team1Goals} - {matchup.team2Goals}{" "}
                   </Text>
                 </View>
 
@@ -365,6 +365,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     right: 4,
+    alignItems:'center'
+    ,textAlign:"center"
   },
   photo2: {
     position: "absolute",

@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   StatusBar,
   FlatList,
-  RefreshControl, ImageBackground
+  RefreshControl, ImageBackground, ScrollView, Modal
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -56,11 +56,28 @@ export const CoachFormation = ({ navigation }) => {
       } else {
         console.error("User has no clubName.");
       }
-      
+
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
+
+  const pagess = [
+    {
+      image: require("../../assets/manu.png"),
+      text: 'Choose from club list',
+      text2:'Choose a player from the club list that fits the position.',
+      btnText: "Choose from club list",
+      navigate: "AddingPlayersManualy"
+    },
+    {
+      image: require("../../assets/recom.png"),
+      text: 'Recommend a player',
+      text2:'Recommend a player from the recommendation system who is most suitable for the position.',
+      btnText: "Recommend a player",
+      navigate: "PlayerRecommendationPage"
+    }
+  ]
 
   async function updateFormation() {
     const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
@@ -158,7 +175,7 @@ export const CoachFormation = ({ navigation }) => {
     return (
       <View className="mr-3"
       >
-        <ImageBackground source={require("../../assets/bk1.png")}
+        <ImageBackground source={require("../../assets/ss.png")}
           style={{ width: 110, height: 160 }}>
           <TouchableOpacity
             onPress={() =>
@@ -174,15 +191,31 @@ export const CoachFormation = ({ navigation }) => {
             <Text style={styles.fullName}>{item.fullName}</Text>
             <Text style={styles.position}>{item.position}</Text>
           </View>
-          <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
-            <Text className="font-bold top-5 text-gre self-center">Delete</Text>
-          </TouchableOpacity>
+
         </ImageBackground>
       </View>
     );
   };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inde, setInde] = useState(null);
 
+  const onScroll = (event) => {
+    const scrollViewWidth = event.nativeEvent.layoutMeasurement.width;
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(contentOffsetX / scrollViewWidth);
+    setCurrentIndex(index);
+   
+  };
 
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleRadioButtonPress = (value) => {
+
+    setCurrentIndex(value)
+  };
 
 
   const checkPlayerPosition = async (indexPos) => {
@@ -200,7 +233,10 @@ export const CoachFormation = ({ navigation }) => {
           // You can also show an alert, toast, or any other UI notification.
         } else {
           // LW position is null or undefined, navigate to AddplayerToformation screen
-          navigation.navigate("AddplayerToformation", { index: indexPos });
+          setInde(indexPos); // Set the inde state variable
+          setModalVisible(true);
+
+
         }
       } else {
         console.error("User document does not exist.");
@@ -246,66 +282,67 @@ export const CoachFormation = ({ navigation }) => {
     }
   };
 
- 
+
 
 
   const retrievePlayerInfoAtIndex = async () => {
     try {
       const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
       const userClubName = userDoc.data().clubName;
-  
+
       const clubDoc = await getDoc(doc(db, "clubs", userClubName));
       const currentFormation = clubDoc.data().formation;
-      var data=[11]
-        
-        for(let i=0;i<currentFormation.length;i++){
-          data[i]=await currentFormation[i];
-        }
-        
-        setFormationNames(data) 
+      var data = [11]
+
+      for (let i = 0; i < currentFormation.length; i++) {
+        data[i] = await currentFormation[i];
+      }
+
+      setFormationNames(data)
 
     } catch (error) {
       console.error("Error retrieving player info:", error);
       return "No Player";
     }
   };
-  
-  
- 
+
+
+
   return (
 
     <View className="flex-1" style={{ backgroundColor: "#00B365" }}>
-      
-      <View className="flex-1 flex justify-around my-5">
-        
+
+      <View className="flex-1 flex justify-around top-5 ">
+
         <View className="flex-row justify-center top-7" >
-          
-          <Image source={require("../../assets/field.jpg")}
-            style={{ width: 315, height: 450 }} />
-            
+
+          <Image source={require("../../assets/FF2.png")}
+            style={{ width: 320, height: 470 }} />
+
         </View>
 
         {/* Here ------------------------------------------------------------- */}
         <View style={styles.refresh}>
-        <TouchableOpacity onPress={()=>{onRefresh()}}><Text>refresh</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => { onRefresh() }}><Text>refresh</Text></TouchableOpacity>
         </View>
-        
+
 
         <TouchableOpacity
           style={styles.posstionLw}
           className="items-center"
           onPress={() => checkPlayerPosition(0)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
+
 
           {formationNames[0] === null ? (
-          <Text className="font-bold text-black">LW</Text>
+            <Text className="font-bold right-1 " style={{ top: 55}}>LW</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[0] && formationNames[0].fullName}</Text>
-            )}
+            <Text className="font-bold right-1" style={{ top: 55}} >{formationNames[0] && formationNames[0].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(0)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:28}} />
           </TouchableOpacity>
 
         </TouchableOpacity>
@@ -316,17 +353,18 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(1)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
+
 
           {formationNames[1] === null ? (
-          <Text className="font-bold text-black">ST</Text>
+            <Text className="font-bold  top-14 right-1" style={{ top: 51 }} >ST</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[1] && formationNames[1].fullName}</Text>
-            )}
+            <Text className="font-bold   top-14 right-1"  style={{ top: 51 }}>{formationNames[1] && formationNames[1].fullName}</Text>
+          )}
 
 
           <TouchableOpacity onPress={() => deleteFromFormation(1)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6 " source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15, bottom:31 }} />
           </TouchableOpacity>
         </TouchableOpacity>
 
@@ -335,53 +373,64 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(2)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[2] === null ? (
-          <Text className="font-bold text-black">RW</Text>
+            <Text className="font-bold top-14" style={{ top: 57 }}>RW</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[2] && formationNames[2].fullName}</Text>
-            )}
+            <Text className="font-bold top-14 " style={{ top: 57 }} >{formationNames[2] && formationNames[2].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(2)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15, bottom:25 }} />
           </TouchableOpacity>
+
+
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.posstionCm1}
           className="items-center"
-          onPress={() => checkPlayerPosition(3)}
+          onPress={() => {
+            checkPlayerPosition(3);
+            
+          }}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
 
           {formationNames[3] === null ? (
-          <Text className="font-bold text-black">CM1</Text>
+            <Text className="font-bold top-14 " style={{ top: 54 }} >CM1</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[3] && formationNames[3].fullName}</Text>
-            )}
+            <Text className="font-bold top-14" style={{ top: 54 }} >{formationNames[3] && formationNames[3].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(3)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15, bottom:31}} />
           </TouchableOpacity>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity  
           style={styles.posstionCm2}
-          className="items-center"
-          onPress={() => checkPlayerPosition(4)}
+          className="items-center "
+          onPress={() => {
+            checkPlayerPosition(4);
+            
+          }}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[4] === null ? (
-          <Text className="font-bold text-black">CM2</Text>
+            <Text className="font-bold top-14 " style={{ top: 52 }} >CM2</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[4] && formationNames[4].fullName}</Text>
-            )}
+            <Text className="font-bold top-14 " style={{ top: 52 }} >{formationNames[4] && formationNames[4].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(4)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15 ,bottom:33}} />
           </TouchableOpacity>
         </TouchableOpacity>
 
@@ -390,16 +439,17 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(5)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[5] === null ? (
-          <Text className="font-bold text-black">CM3</Text>
+            <Text className="font-bold text-black" style={{ top: 55 }}>CM3</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[5] && formationNames[5].fullName}</Text>
-            )}
+            <Text className="font-bold text-black"  style={{ top: 55 }}>{formationNames[5] && formationNames[5].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(5)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:30 }} />
           </TouchableOpacity>
         </TouchableOpacity>
 
@@ -408,35 +458,40 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(6)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[6] === null ? (
-          <Text className="font-bold text-black">LB</Text>
+            <Text className="font-bold text-black"style={{ top: 52 }} >LB</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[6] && formationNames[6].fullName}</Text>
-            )}
+            <Text className="font-bold text-black" style={{ top: 52 }}>{formationNames[6] && formationNames[6].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(6)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:31 }} />
           </TouchableOpacity>
         </TouchableOpacity>
+
 
         <TouchableOpacity
           style={styles.posstionCb1}
           className="items-center"
           onPress={() => checkPlayerPosition(7)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[7] === null ? (
-          <Text className="font-bold text-black">CB1</Text>
+            <Text className="font-bold text-black" style={{ top: 55 }}>CB1</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[7] && formationNames[7].fullName}</Text>
-            )}
+            <Text className="font-bold text-black"  style={{ top: 55 }}>{formationNames[7] && formationNames[7].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(7)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:30 }} />
           </TouchableOpacity>
+
+
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -444,16 +499,17 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(8)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[8] === null ? (
-          <Text className="font-bold text-black">CB2</Text>
+            <Text className="font-bold text-black" style={{ top: 54 }}>CB2</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[8] && formationNames[8].fullName}</Text>
-            )}
+            <Text className="font-bold text-black"  style={{ top: 54 }}>{formationNames[8] && formationNames[8].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(8)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:32 }} />
           </TouchableOpacity>
         </TouchableOpacity>
 
@@ -462,39 +518,180 @@ export const CoachFormation = ({ navigation }) => {
           className="items-center"
           onPress={() => checkPlayerPosition(9)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[9] === null ? (
-          <Text className="font-bold text-black">RB</Text>
+            <Text className="font-bold text-black" style={{ top: 55 }}>RB</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[9] && formationNames[9].fullName}</Text>
-            )}
+            <Text className="font-bold text-black"  style={{ top: 55 }}>{formationNames[9] && formationNames[9].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(9)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:30 }} />
           </TouchableOpacity>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.posstiongk}
-          className="items-center"
+          className="items-center "
           onPress={() => checkPlayerPosition(10)}
         >
-          <Image source={require("../../assets/player.png")} style={{ width: 40, height: 40 }} />
-          
+
+
           {formationNames[10] === null ? (
-          <Text className="font-bold text-black">GK</Text>
+            <Text className="font-bold text-black "  style={{ top: 51 }}>GK</Text>
           ) : (
-            <Text className="font-bold text-black">{formationNames[10] && formationNames[10].fullName}</Text>
-            )}
+            <Text className="font-bold text-black" style={{ top: 51 }}>{formationNames[10] && formationNames[10].fullName}</Text>
+          )}
 
           <TouchableOpacity onPress={() => deleteFromFormation(10)}>
-            <Text className="font-bold top-0 text-gre self-center">Delet</Text>
+            <Image className=" bottom-4 left-6" source={require("../../assets/remove.png")}
+              style={{ width: 15, height: 15,bottom:31 }} />
           </TouchableOpacity>
+
+
         </TouchableOpacity>
 
         {/* Here ------------------------------------------------------------- */}
       </View>
+
+
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+
+
+        <View style={styles.modalContainer}>
+
+          <ScrollView
+            style={styles.scrollView}
+            horizontal={true}
+            pagingEnabled={true}
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={16}
+            onScroll={onScroll}
+          >
+
+            {
+              pagess.map((e, i) => (
+                <View key={i} style={styles.page}>
+                  <View className="bottom-20 justify-center">
+                    <Image source={e.image}
+                      style={{ width: 360, height: 280 }} />
+                  </View>
+                  
+
+                  <Text  style={styles.titletext}>{e.text}</Text>
+                       
+
+                  <Text  style={styles.text2}>{e.text2}</Text>    
+
+
+
+                  {
+                    i === 0 ? (
+                      <TouchableOpacity style={styles.button}
+                        onPress={() => {
+                          navigation.navigate(e.navigate, { index: inde });
+                          closeModal();
+                        }}
+
+                        className="py-3 self-center w-28 rounded-2xl">
+                        <Text className=" text-center  text-white font-bold">{e.btnText}</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity style={styles.button}
+                        onPress={() => {
+                          navigation.navigate(e.navigate, { index: inde });
+                          closeModal();
+                        }}
+
+                        className="py-3 self-center	  w-28 rounded-2xl">
+                        <Text className=" text-center  text-white font-bold" >{e.btnText}</Text>
+                      </TouchableOpacity>
+                    )
+                  }
+
+
+
+
+                </View>
+              ))
+            }
+
+            {/* Page 2 */}
+            {/* {currentIndex === 1 && (
+              <View style={styles.page}>
+
+                <View className="bottom-20 justify-center">
+                  <Image source={require("../../assets/recom.png")}
+                    style={{ width: 360, height: 280 }} />
+                </View>
+
+
+
+                <Text>Page 2 Content</Text>
+
+                <TouchableOpacity className="text-gray-700  right-3 ml-4" onPress={() => handleRadioButtonPress(0)}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View
+                      style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        borderColor: 'black',
+                        marginRight: 10,
+                        backgroundColor:
+                          currentIndex === 0 ? '#00b365' : 'transparent',
+                      }}
+                    />
+                    <Text>go to page 1</Text>
+
+
+                  </View>
+                </TouchableOpacity>
+
+
+
+                <TouchableOpacity className="text-gray-700  right-3 ml-4" onPress={() => handleRadioButtonPress(1)}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View
+                      style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        borderColor: 'black',
+                        marginRight: 10,
+                        backgroundColor:
+                          currentIndex === 1 ? '#00b365' : 'transparent',
+                      }}
+                    />
+                    <Text>page 2</Text>
+
+
+                  </View>
+                </TouchableOpacity>
+
+
+
+
+
+              </View>
+            )} */}
+          </ScrollView>
+
+          {/* Close Modal Button */}
+          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+          <Image source={require("../../assets/close.png")}
+            style={{ width: 25, height: 25 }} />
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+
+
+
 
       <View>
         <TouchableOpacity
@@ -529,7 +726,8 @@ const styles = StyleSheet.create({
   fullName: {
     fontSize: 16,          // Example font size
     fontWeight: 'bold',
-    marginBottom: '2%',    // 2% of the screen height margin at the bottom
+    marginBottom: '2%',
+        // 2% of the screen height margin at the bottom
   },
   position: {
     fontSize: 14,          // Example font size
@@ -538,67 +736,82 @@ const styles = StyleSheet.create({
   },
 
   posstionLb: {
-    bottom: '29%',
-    left: 60,
-    width: 40,
-    height: 40,
-
+    bottom: 150,
+    left: 53,
+    width: 65
+    , height: 60,
+    color: "#263238",
   },
   posstiongk: {
+    width: 65
+    , height: 60,
+    alignSelf: "center",
+    bottom: 49,
+    textAlign: "center",
+    right: 4,
 
-    width: 40,
-    height: 40,
-
-    alignSelf: 'center'
   },
   posstionRb: {
-    bottom: 140,
-    left: 314,
-    width: 40,
-    height: 40,
+    bottom: 178,
+    left: 270,
+    width: 65
+    , height: 60,
+    color: "#263238",
 
   },
   posstionCb1: {
-    bottom: 90,
-    left: 245,
-    width: 40,
-    height: 40,
-
+    bottom: 102,
+    left: 214,
+    width: 65
+    , height: 60,
+    color: "#263238",
   },
   posstionCb2: {
-    bottom: 94,
-    left: 130,
-    width: 40,
-    height: 40,
+    bottom: 107,
+    left: 110,
+    width: 60
+    , height: 65,
+    color: "#263238",
 
   },
   posstionCm1: {
-    bottom: '40%',
+    bottom: 184,
     alignSelf: 'center',
-    width: 40,
-    height: 40,
+    height: 60,
+    color: "#263238",
+    width: 65,
+    right: 3,
+
+
 
   },
   posstionCm2: {
-    bottom: 255,
-    width: 40,
-    left: 110,
-    height: 40,
+    bottom: 228,
+    height: 60,
+    color: "#263238",
+    width: 65
+    , left: 79,
 
 
   },
   posstionCm3: {
-    bottom: 259,
-    left: 263,
-    width: 40,
-    height: 40,
+    bottom: 237,
+    left: 244,
+    color: "#263238",
+    width: 65
+    , height: 60,
+
+
 
   },
   posstionLw: {
-    bottom: 345,
-    left: 65,
-    width: 40,
-    height: 40,
+    bottom: 312,
+    left: 60,
+
+    height: 60,
+    color: "#263238",
+    width: 65
+
 
   },
   refresh: {
@@ -609,17 +822,88 @@ const styles = StyleSheet.create({
 
   },
   posstionRw: {
-    bottom: 348,
-    left: 310,
-    width: 40,
-    height: 40,
+    bottom: 328,
+    left: 260,
+    height: 60,
+    color: "#263238",
+    width: 65,
+
 
   },
   posstionSt: {
-    bottom: 375,
-    width: 40,
-    height: 40,
+    bottom: 353,
+    height: 60,
+    color: "#263238",
+    width: 65,
+    right: 1,
 
     alignSelf: 'center',
   },
+  button: {
+    position: 'absolute',
+    top: 410, // Adjust the top position as needed
+     // Adjust the right position as needed
+    backgroundColor:'#F4C611',
+    padding: 10,
+    width:200,
+    
+  },
+  modalContainer: {
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
+    width: '90%',
+    left: 20,
+
+    top: 30,
+    borderRadius: 20,
+
+  },
+  scrollView: {
+
+    width: '100%',
+
+  },
+  page: {
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
+    width: 360,
+    height: 500,
+    borderRadius: 20,
+
+
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    padding: 10,
+   
+    borderRadius: 5,
+  },titletext:{
+  fontSize:30,
+  bottom:55,
+  fontWeight:"bold",
+  color:"#F4C611",
+  textAlign:'center'
+
+
+
+
+  },text2:{
+    fontSize:14,
+    bottom:48,
+    fontWeight:"bold",
+    color:"#263238",
+    textAlign:'center',
+    width:300
+  
+  
+  
+  
+    },
 });
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   createStackNavigator,
   TransitionPresets,
@@ -380,53 +381,95 @@ export const UserAuth = () => {
   if (type === "Player") {
     return (
       <Tab.Navigator
-        screenOptions={{
+        initialRouteName={"PlayerProfile"}
+        screenOptions={({ route }) => ({
           headerShown: false,
-          initialRouteName: "Playerprofile",
-        }}
+          tabBarActiveTintColor: '#00B365',
+        tabBarInactiveTintColor: 'grey',
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            const rn = route.name;
+
+            if (rn === "PlayerProfile") {
+              iconName = focused ? 'person' : 'person-outline';
+            } else if (rn === "PlayerFormationJoinstack") {
+              iconName = focused ? 'football' : 'football-outline';
+            } else if (rn === "PlayerFormationstack") {
+              iconName = focused ? 'football' : 'football-outline';
+            } else if (rn === "PlayerSeeTournament") {
+              iconName = focused ? "trophy" : "trophy-outline";
+            } else if (rn === "PlayerNotificationstack") {
+              iconName = focused ? "notifications" : "notifications-outline";
+            } else if (rn === "Settings") {
+              iconName = focused ? 'settings' : 'settings-outline';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        
       >
         <Tab.Screen name="PlayerProfile" component={PlayerProfileStack} />
 
-        {/* if player doesn't have a team 
-    and if he has a team        */}
+        {/* Render PlayerFormationJoinstack or PlayerFormationstack based on whether the player has a team */}
         {clubName === "" ? (
-          <Tab.Screen
-            name="PlayerFormationJoinstack"
-            component={PlayerFormationJoinstack}
-          />
+          <Tab.Screen name="PlayerFormationJoinstack" component={PlayerFormationJoinstack} />
         ) : (
-          <Tab.Screen
-            name="PlayerFormationstack"
-            component={PlayerFormationstack}
-          />
+          <Tab.Screen name="PlayerFormationstack" component={PlayerFormationstack} />
         )}
+
+        {/* Render PlayerSeeTournament based on whether there's an active tournament */}
         {tournament !== "" && (
           <Tab.Screen name="PlayerSeeTournament" component={PlayerSeeTournament} />
         )}
-        <Tab.Screen
-          name="PlayerNotificationstack"
-          component={PlayerNotificationstack}
-        />
+
+        <Tab.Screen name="PlayerNotificationstack" component={PlayerNotificationstack} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );
   } else if (type === "Coach") {
     return (
       <Tab.Navigator
-        screenOptions={{
+        initialRouteName={"CoachProfileStack"}
+        screenOptions={({ route }) => ({
           headerShown: false,
-          initialRouteName: "CoachProfileStack",
-        }}
+          tabBarActiveTintColor: '#00B365',
+        tabBarInactiveTintColor: 'grey',
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            const rn = route.name;
+
+            if (rn === "CoachProfileStack") {
+              iconName = focused ? 'person' : 'person-outline';
+            } else if (rn === "CoachNotificationstack") {
+              iconName = focused ? "notifications" : "notifications-outline"
+            } else if (rn === "CoachSeeTournament") {
+              iconName = focused ? "trophy" : 'trophy-outline';
+            } else if (rn === "CoachJoiningTourstack") {
+              iconName = focused ? "trophy" : 'trophy-outline';
+            }
+
+            else if (rn === "CoachFormationstack") {
+              iconName = focused ? 'football' : 'football-outline';
+            } else if (rn === "Settings") {
+              iconName = focused ? 'settings' : 'settings-outline';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+    
       >
         <Tab.Screen name="CoachProfileStack" component={CoachProfilestack} />
         <Tab.Screen
           name="CoachFormationstack"
           component={CoachFormationstack}
         />
-        <Tab.Screen
-          name="CoachNotificationstack"
-          component={CoachNotificationstack}
-        />
+
         {tournament !== "" ? (
           <Tab.Screen
             name="CoachSeeTournament"
@@ -438,6 +481,10 @@ export const UserAuth = () => {
             component={CoachJoiningTourstack}
           />
         )}
+        <Tab.Screen
+          name="CoachNotificationstack"
+          component={CoachNotificationstack}
+        />
 
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
@@ -445,11 +492,32 @@ export const UserAuth = () => {
   } else if (type === "Scout") {
     return (
       <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          initialRouteName: "ScoutProfileStack",
-        }}
-      >
+      initialRouteName={"ScoutProfileStack"}
+      screenOptions={({ route }) => ({
+        tabBarActiveTintColor: '#00B365',
+        tabBarInactiveTintColor: 'grey',
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          const rn = route.name;
+
+          if (rn === "ScoutProfileStack") {
+            iconName = focused ? 'person' : 'person-outline';
+          }  else if (rn === "Tournamet") {
+            iconName = focused ? "trophy" : 'trophy-outline';
+          } else if (rn === "ScoutRecommendationstack") {
+            iconName = focused ? "desktop" : 'desktop-outline';
+          } else if (rn === "Settings") {
+            iconName = focused ? 'settings' : 'settings-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+   
+    >
         <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
         <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
         <Tab.Screen
@@ -462,11 +530,38 @@ export const UserAuth = () => {
   } else if (type === "Tournament Organizer") {
     return (
       <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          initialRouteName: "TournamentProfileStack",
-        }}
-      >
+      initialRouteName={"TournamentProfileStack"}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarActiveTintColor: '#00B365',
+        tabBarInactiveTintColor: 'grey',
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          const rn = route.name;
+
+          if (rn === "TournamentProfileStack") {
+            iconName = focused ? 'person' : 'person-outline';
+          } else if (rn === "TournamentNotificationstack") {
+            iconName = focused ? "notifications" : "notifications-outline"
+          } else if (rn === "CreateTournament") {
+            iconName = focused ? "trophy" : 'trophy-outline';
+          } else if (rn === "ExistingTournamentStack") {
+            iconName = focused ? "trophy" : 'trophy-outline';
+          }
+
+          else if (rn === "TournamentShowTeamsstack") {
+            iconName = focused ? 'shirt' : 'shirt-outline';
+          } else if (rn === "Settings") {
+            iconName = focused ? 'settings' : 'settings-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+     
+    >
         <Tab.Screen
           name="TournamentProfileStack"
           component={TournamentProfileStack}
