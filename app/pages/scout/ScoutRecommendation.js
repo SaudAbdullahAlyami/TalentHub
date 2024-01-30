@@ -32,7 +32,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             };
 
             console.log(position);
-            const response = await axios.post('http://10.0.2.2:5000/get_recommendations', data, {
+            const response = await axios.post('http://46.101.208.187/api/get_recommendations', data, {
                 timeout: 5000,
                 headers: {
                     "Content-Type": "application/json",

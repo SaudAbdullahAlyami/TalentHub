@@ -102,7 +102,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       };
 
       const response = await axios.post(
-        'http://10.0.2.2:5000/get_recommendations',
+        'http://46.101.208.187/api/get_recommendations',
         data,
         {
           timeout: 5000,
