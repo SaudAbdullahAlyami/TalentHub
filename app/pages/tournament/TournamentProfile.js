@@ -115,7 +115,14 @@ export const TournamentProfile = ({ navigation }) => {
 
 <Text className="text-gray-700 top-1  ml-4">City</Text>
 <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {city}</Text>
-
+<TouchableOpacity
+              onPress={() => handleSignOut()}
+              className="py-3 bg-yellow-400 top-9 rounded-xl"
+            >
+              <Text className="text-xl  font-bold  text-center text-gray-700">
+                Sign Out
+              </Text>
+            </TouchableOpacity>
 
 </View>
         

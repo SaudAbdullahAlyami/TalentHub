@@ -8,11 +8,12 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from "react-native-paper";
-
+import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 
 export const CoachProfile = ({ navigation }) => {
+  const { user, handleSignOut } = useAuthentication();
   const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
@@ -94,6 +95,15 @@ export const CoachProfile = ({ navigation }) => {
               {" "}
               {level}
             </Text>
+
+            <TouchableOpacity
+              onPress={() => handleSignOut()}
+              className="py-3 bg-yellow-400 top-9 rounded-xl"
+            >
+              <Text className="text-xl  font-bold  text-center text-gray-700">
+                Sign Out
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View className="bg-white my-9"></View>

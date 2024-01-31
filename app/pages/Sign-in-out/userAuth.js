@@ -40,6 +40,9 @@ import { CoachSeeTournament } from "../coach/CoachSeeTournament";
 import { PlayerSeeTournament } from "../player/PlayerSeeTournament";
 import { db, auth } from "../../component/config/config";
 import { doc, onSnapshot } from "firebase/firestore";
+import { ScoutListOfTournaments } from "../scout/ScoutListOfTournaments";
+import { ScoutSeeTheTournament } from "../scout/ScoutSeeTheTournament";
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -264,6 +267,22 @@ export const UserAuth = () => {
     );
   }
 
+  const ScoutTournamentstack = createStackNavigator();
+  function ScoutTournamentStack({ navigation }) {
+    return (
+      <ScoutTournamentstack.Navigator
+        screenOptions={{ headerShown: false, initialRouteName: "ScoutListOfTournaments" }}
+      >
+        <ScoutTournamentstack.Screen
+          name="ScoutListOfTournaments"
+          component={ScoutListOfTournaments}
+        />
+        <ScoutTournamentstack.Screen name="ScoutSeeTheTournament" component={ScoutSeeTheTournament} />
+      </ScoutTournamentstack.Navigator>
+    );
+  }
+
+
   const ScoutRecommendationStack = createStackNavigator();
   function ScoutRecommendationstack({ navigation }) {
     return (
@@ -426,7 +445,6 @@ export const UserAuth = () => {
         )}
 
         <Tab.Screen name="PlayerNotificationstack" component={PlayerNotificationstack} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );
   } else if (type === "Coach") {
@@ -486,9 +504,10 @@ export const UserAuth = () => {
           component={CoachNotificationstack}
         />
 
-        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     );
+
+    //==========================================================================
   } else if (type === "Scout") {
     return (
       <Tab.Navigator
@@ -504,7 +523,7 @@ export const UserAuth = () => {
 
           if (rn === "ScoutProfileStack") {
             iconName = focused ? 'person' : 'person-outline';
-          }  else if (rn === "Tournamet") {
+          }  else if (rn === "ScoutTournamentStack") {
             iconName = focused ? "trophy" : 'trophy-outline';
           } else if (rn === "ScoutRecommendationstack") {
             iconName = focused ? "desktop" : 'desktop-outline';
@@ -519,12 +538,13 @@ export const UserAuth = () => {
    
     >
         <Tab.Screen name="ScoutProfileStack" component={ScoutProfileStack} />
-        <Tab.Screen name="Tournamet" component={ScoutProfileStack} />
         <Tab.Screen
           name="ScoutRecommendationstack"
           component={ScoutRecommendationstack}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="ScoutTournamentStack" component={ScoutTournamentStack} />
+        
+       
       </Tab.Navigator>
     );
   } else if (type === "Tournament Organizer") {
@@ -584,7 +604,7 @@ export const UserAuth = () => {
           name="TournamentNotificationstack"
           component={TournamentNotificationstack}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+ 
       </Tab.Navigator>
     );
   }

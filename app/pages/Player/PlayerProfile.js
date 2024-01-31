@@ -14,6 +14,7 @@ import { db, auth, } from "../../component/config/config";
 import { Video, ResizeMode } from 'expo-av';
 
 export const PlayerProfile = ({ navigation }) => {
+  const { user, handleSignOut } = useAuthentication();
   const [imageURL, setImageURL] = useState(null);
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
@@ -113,6 +114,15 @@ export const PlayerProfile = ({ navigation }) => {
               resizeMode={ResizeMode.CONTAIN}
               isLooping
             />
+
+<TouchableOpacity
+              onPress={() => handleSignOut()}
+              className="py-3 bg-yellow-400 top-9 rounded-xl"
+            >
+              <Text className="text-xl  font-bold  text-center text-gray-700">
+                Sign Out
+              </Text>
+            </TouchableOpacity>
           </View>
          
           <View className="bg-white my-9"></View><View className="bg-white my-4"></View>

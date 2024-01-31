@@ -29,6 +29,7 @@ export const ScoutVisitProfile = ({ route,navigation  }) => {
   const [video, setVideo] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [videoRef, setVideoRef] = useState(null);
+  
   useEffect(() => {
 
 
