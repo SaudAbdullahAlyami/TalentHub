@@ -27,7 +27,7 @@ export const CoachFormation = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-    return () => {};
+    return () => { };
   }, [isRefreshing]);
 
   const pagess = [
@@ -114,14 +114,14 @@ export const CoachFormation = ({ navigation }) => {
     return (
       <View className=""
       >
-             <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
+        <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
           <Image
-                source={require("../../assets/remove.png")}
-                style={{ width: moderateScale(15), height: moderateScale(15),alignSelf:"flex-end" }}
-              />
-           
-          </TouchableOpacity>
-        <ImageBackground      source={require("../../assets/card.png")}
+            source={require("../../assets/remove.png")}
+            style={{ width: moderateScale(15), height: moderateScale(15), alignSelf: "flex-end" }}
+          />
+
+        </TouchableOpacity>
+        <ImageBackground source={require("../../assets/card.png")}
           style={{ width: 100, height: 160 }}>
           <TouchableOpacity
             onPress={() =>
@@ -134,10 +134,10 @@ export const CoachFormation = ({ navigation }) => {
             <Avatar.Image className="self-center top-3" size={65} source={{ uri: item.profileImage }} />
           </TouchableOpacity>
           <View style={styles.container}>
-            <Text  className="top-1 "   style={styles.fullName}>{item.fullName}</Text>
+            <Text className="top-1 " style={styles.fullName}>{item.fullName}</Text>
             <Text style={styles.position}>{item.position}</Text>
           </View>
-     
+
         </ImageBackground>
       </View>
     );
@@ -322,7 +322,7 @@ export const CoachFormation = ({ navigation }) => {
             className="items-center"
             onPress={() => checkPlayerPosition(0)}
           >
-          
+
             <TouchableOpacity
               activeOpacity={0.8}
               style={{ alignSelf: "flex-end", top: verticalScale(5), }}
@@ -333,18 +333,18 @@ export const CoachFormation = ({ navigation }) => {
                 style={{
                   width: moderateScale(15),
                   height: moderateScale(15),
-                 
+
                 }}
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/lw.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
-            
+              source={require("../../assets/lw.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
+
             {formationNames[0] === null ? (
               <Text className="font-bold ">LW</Text>
             ) : (
@@ -362,7 +362,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end" , top: verticalScale(5),}}
+              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
               onPress={() => deleteFromFormation(1)}
             >
               <Image
@@ -371,12 +371,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/st.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/st.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[1] === null ? (
               <Text className="font-bold">ST</Text>
             ) : (
@@ -402,12 +402,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/rw.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/rw.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[2] === null ? (
               <Text className="font-bold">RW</Text>
             ) : (
@@ -436,12 +436,12 @@ export const CoachFormation = ({ navigation }) => {
             </TouchableOpacity>
 
             <Image
-                source={require("../../assets/cm1.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/cm1.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[3] === null ? (
               <Text className="font-bold ">CM1</Text>
             ) : (
@@ -469,12 +469,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/cm2.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/cm2.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[4] === null ? (
               <Text className="font-bold  ">CM2</Text>
             ) : (
@@ -500,12 +500,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/cm3.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/cm3.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[5] === null ? (
               <Text className="font-bold text-black">CM3</Text>
             ) : (
@@ -531,12 +531,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/lb.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/lb.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[6] === null ? (
               <Text className="font-bold text-black">LB</Text>
             ) : (
@@ -562,12 +562,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/cb2.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/cb2.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[7] === null ? (
               <Text className="font-bold text-black">CB1</Text>
             ) : (
@@ -593,12 +593,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/cb1.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/cb1.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[8] === null ? (
               <Text className="font-bold text-black">CB2</Text>
             ) : (
@@ -624,12 +624,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/rb.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/rb.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[9] === null ? (
               <Text className="font-bold text-black">RB</Text>
             ) : (
@@ -655,12 +655,12 @@ export const CoachFormation = ({ navigation }) => {
               />
             </TouchableOpacity>
             <Image
-                source={require("../../assets/gk.png")}
-                style={{
-                  width: moderateScale(60),
-                  height: moderateScale(50),
-                }}
-              />
+              source={require("../../assets/gk.png")}
+              style={{
+                width: moderateScale(60),
+                height: moderateScale(50),
+              }}
+            />
             {formationNames[10] === null ? (
               <Text className="font-bold text-black ">GK</Text>
             ) : (
@@ -763,9 +763,9 @@ export const CoachFormation = ({ navigation }) => {
             }}
             renderItem={render}
             horizontal
-            // refreshControl={
-            //   <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-            // }
+          // refreshControl={
+          //   <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          // }
           />
         </View>
       </View>
@@ -799,8 +799,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     color: "#263238",
-    flexDirection:"column"
-    
+    flexDirection: "column"
+
   },
   posstiongk: {
     position: "absolute",
@@ -810,8 +810,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "center",
     bottom: verticalScale(-22),
-   
-    flexDirection:"column"
+
+    flexDirection: "column"
   },
   posstionRb: {
     position: "absolute",
@@ -822,7 +822,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     color: "#263238",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   posstionCb1: {
     position: "absolute",
@@ -833,7 +833,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     color: "#263238",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   posstionCb2: {
     position: "absolute",
@@ -844,7 +844,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     color: "#263238",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   posstionCm1: {
     position: "absolute",
@@ -855,8 +855,8 @@ const styles = StyleSheet.create({
     width: moderateScale(70),
     alignItems: "center",
     justifyContent: "space-between",
-    
-    flexDirection:"column"
+
+    flexDirection: "column"
   },
   posstionCm2: {
     position: "absolute",
@@ -867,8 +867,8 @@ const styles = StyleSheet.create({
     left: scale(72),
     alignItems: "center",
     justifyContent: "space-between",
-    flexDirection:"column"
-    
+    flexDirection: "column"
+
   },
   posstionCm3: {
     bottom: verticalScale(225),
@@ -879,7 +879,7 @@ const styles = StyleSheet.create({
     width: moderateScale(70),
     alignItems: "center",
     justifyContent: "space-between",
-    flexDirection:"column"
+    flexDirection: "column"
 
   },
   posstionLw: {
@@ -891,7 +891,7 @@ const styles = StyleSheet.create({
     width: moderateScale(70),
     alignItems: "center",
     justifyContent: "space-between",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   refresh: {
     bottom: 380,
@@ -908,7 +908,7 @@ const styles = StyleSheet.create({
     width: moderateScale(70),
     alignItems: "center",
     justifyContent: "space-between",
-    flexDirection:"column"
+    flexDirection: "column"
   },
   posstionSt: {
     position: "absolute",
@@ -919,8 +919,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "space-between",
-    
-    flexDirection:"column"
+
+    flexDirection: "column"
   },
   button: {
     position: "absolute",

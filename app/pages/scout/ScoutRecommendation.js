@@ -116,7 +116,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             </View>
 
             {recommendations.length > 0 && (
-                <View style={{ backgroundColor: "white", width: 400, flex: 1 }}>
+                <View style={{ backgroundColor: "white", width: "100%", flex: 1, }}>
                     
 
                         {recommendations.map((player, index) => (
@@ -124,8 +124,8 @@ export const ScoutRecommendation = ({ navigation }) => {
 
                                 <TouchableOpacity
                                     onPress={() =>
-                                        navigation.navigate("CoachFormationstack", {
-                                            screen: "CoachVisitProfile",
+                                        navigation.navigate("ScoutRecommendationstack", {
+                                            screen: "ScoutVisitProfile",
                                             params: { itemId: player.uid },
                                         })
                                     }
@@ -379,7 +379,7 @@ export const ScoutRecommendation = ({ navigation }) => {
         backgroundColor: "#00B365"
     }, teamco: {
         backgroundColor: "#00B365",
-        width: 400,
+        width: "100%",
         height: 40,
         fontSize: 28,
 

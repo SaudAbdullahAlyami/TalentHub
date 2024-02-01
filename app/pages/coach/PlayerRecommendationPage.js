@@ -240,12 +240,12 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
   }
 
   return (
-    <View style={{ backgroundColor: "white", width: 400 ,flex:1}}>
+    <View style={{ backgroundColor: "white", width: "100%" ,flex:1,}}>
        
 
 
       {recommendations.length > 0 && (
-        <View style={{ backgroundColor: "white", width: 400 ,flex:1}}>
+        <View style={{ backgroundColor: "white", width: "100%" ,flex:1}}>
           <ScrollView >
            
             {recommendations.map((player, index) => (
@@ -521,13 +521,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#00B365"
   }, teamco: {
     backgroundColor: "#00B365",
-    width: 400,
+    width: "100%",
     height: 40,
     fontSize: 28,
+    
 
   }, teampl: {
     backgroundColor: "#00B365",
-    width: 400,
+    width: "100%",
     height: 40,
     fontSize: 20,
     paddingTop: 5,
@@ -535,7 +536,7 @@ const styles = StyleSheet.create({
 
   }, teamco2: {
     backgroundColor: "#FFD14E",
-    width: 400,
+    width: "100%",
     height: 40,
     fontSize: 28,
   }, button1: {
