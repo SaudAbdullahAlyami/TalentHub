@@ -355,7 +355,7 @@ export const ExistingTournament = ({ navigation }) => {
 
           {matchups.length == 0 && (
             <TouchableOpacity onPress={() => generateMatchups()}>
-              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Round of 16</Text>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitlestart} >Start Round of 16</Text>
             </TouchableOpacity>
           )}
 
@@ -416,7 +416,7 @@ export const ExistingTournament = ({ navigation }) => {
 
           {round1Complete && matchupsRound2.length == 0 && (
             <TouchableOpacity onPress={() => fetchRound2()}>
-              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Quarter-finals</Text>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitlestart} >Start Quarter-finals</Text>
             </TouchableOpacity>
           )}
 
@@ -465,7 +465,7 @@ export const ExistingTournament = ({ navigation }) => {
 
           {round2Complete && matchupsRound3.length == 0 && (
             <TouchableOpacity onPress={() => fetchRound3()}>
-              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Semi-finals</Text>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitlestart} >Start Semi-finals</Text>
             </TouchableOpacity>
           )}
           <Text className="self-center bottom-5 rounded-3xl" style={styles.roundtitle}>Semi-finals</Text>
@@ -516,7 +516,7 @@ export const ExistingTournament = ({ navigation }) => {
           {round3Complete && matchupsRound4.length == 0 && (
 
             <TouchableOpacity onPress={() => fetchRound4()}>
-              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start Final</Text>
+              <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitlestart} >Start Final</Text>
             </TouchableOpacity>
           )}
           <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Final</Text>
@@ -736,6 +736,18 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "#FFC727",
     fontWeight: "bold",
+    textAlign: 'center'
+
+
+  },roundtitlestart: {
+    fontSize: 20,
+    color: "white",
+    right: 4,
+    fontWeight: "bold",
+    padding: 25,
+    backgroundColor: "#FFC727",
+    width: 210,
+    margin: 20,
     textAlign: 'center'
 
 

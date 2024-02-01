@@ -240,12 +240,12 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
   }
 
   return (
-    <View style={{ backgroundColor: "white", width: 400 }}>
+    <View style={{ backgroundColor: "white", width: 400 ,flex:1}}>
        
 
 
       {recommendations.length > 0 && (
-        <View>
+        <View style={{ backgroundColor: "white", width: 400 ,flex:1}}>
           <ScrollView >
            
             {recommendations.map((player, index) => (
