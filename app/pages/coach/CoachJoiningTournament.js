@@ -48,6 +48,7 @@ export const CoachJoiningTournament = ({ navigation }) => {
         const fullName = coachDoc.data().fullName;
         const imageURL = coachDoc.data().profileImage;
         const clubName = coachDoc.data().clubName;
+        
 
         const clubDoc = await getDoc(doc(db, "clubs", clubName));
 
@@ -77,6 +78,8 @@ export const CoachJoiningTournament = ({ navigation }) => {
             senderUid: auth.currentUser.uid, // Assuming user is the coach sending the invitation
             senderName: fullName,
             senderImage: imageURL,
+            senderClub:  clubName,
+
             receiverUid: TourId,
             status: "Pending",
             // Add any additional details you want to include in the invitation

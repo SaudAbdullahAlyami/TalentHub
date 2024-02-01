@@ -178,11 +178,11 @@ export const TournamentNotification = ({ navigation }) => {
         </View>
 
         <Text style={styles.text1} className="font-bold  ">
-          {item.senderName}
+          {item.senderClub}
         </Text>
         <Text style={styles.text2}>
-          Player position:{" "}
-          <Text style={{ fontWeight: "bold" }}>{item.senderPosition}</Text>
+          Club coach:{" "}
+          <Text style={{ fontWeight: "bold" }}>{item.senderName}</Text>
         </Text>
 
         <TouchableOpacity

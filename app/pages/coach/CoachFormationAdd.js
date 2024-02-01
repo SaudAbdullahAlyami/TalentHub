@@ -45,12 +45,15 @@ export const CoachFormationAdd = ({ navigation }) => {
       const coachDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
       const fullName = coachDoc.data().fullName;
       const imageURL = coachDoc.data().profileImage;
+      const clubName = coachDoc.data().clubName
       // Create an invitation in Firestore
       const invitationRef = collection(db, "invitations");
       const newInvitationDoc = await addDoc(invitationRef, {
         senderUid: auth.currentUser.uid,
         senderName: fullName,
         senderImage: imageURL,
+        senderClub:  clubName,
+
         receiverUid: playerUid,
         status: "Pending",
 
@@ -120,7 +123,7 @@ export const CoachFormationAdd = ({ navigation }) => {
   };
 
   return (
-    <View className="flex-1 " style={{ backgroundColor: "white" }}>
+    <View className="flex-1 " style={{ backgroundColor: "white"}}>
 
       <View style={styles.bg}>
       <Searchbar className="w-80 self-center top-7"
@@ -130,13 +133,13 @@ export const CoachFormationAdd = ({ navigation }) => {
         />
 
       </View>
-      <View style={{ backgroundColor: "white", paddingBottom: 10 }}>
+      <View style={{ backgroundColor: "white", paddingBottom: 10,flex:1  }}>
     
         <ScrollView>
           {Object.keys(groupedPlayers).map((title) =>
             renderPlayers(groupedPlayers[title], title, navigation)
           )}
-          <View className="bg-white my-6"></View>
+          
         </ScrollView>
       </View>
     </View>
