@@ -131,7 +131,11 @@ export const CoachFormation = ({ navigation }) => {
               })
             }
           >
-            <Avatar.Image className="self-center top-3" size={65} source={{ uri: item.profileImage }} />
+            <Avatar.Image
+              className="self-center top-3"
+              size={65}
+              source={{ uri: item.profileImage }}
+            />
           </TouchableOpacity>
           <View style={styles.container}>
             <Text className="top-1 " style={styles.fullName}>{item.fullName}</Text>
@@ -322,10 +326,9 @@ export const CoachFormation = ({ navigation }) => {
             className="items-center"
             onPress={() => checkPlayerPosition(0)}
           >
-
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(0)}
             >
               <Image
@@ -333,7 +336,6 @@ export const CoachFormation = ({ navigation }) => {
                 style={{
                   width: moderateScale(15),
                   height: moderateScale(15),
-
                 }}
               />
             </TouchableOpacity>
@@ -393,7 +395,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(2)}
             >
               <Image
@@ -426,7 +428,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(3)}
             >
               <Image
@@ -460,7 +462,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(4)}
             >
               <Image
@@ -491,12 +493,12 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(5)}
             >
               <Image
                 source={require("../../assets/remove.png")}
-                style={{ width: moderateScale(15), height: moderateScale(15), }}
+                style={{ width: moderateScale(15), height: moderateScale(15) }}
               />
             </TouchableOpacity>
             <Image
@@ -522,7 +524,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(6)}
             >
               <Image
@@ -553,7 +555,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(7)}
             >
               <Image
@@ -584,7 +586,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(8)}
             >
               <Image
@@ -615,7 +617,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(9)}
             >
               <Image
@@ -646,7 +648,7 @@ export const CoachFormation = ({ navigation }) => {
           >
             <TouchableOpacity
               activeOpacity={0.8}
-              style={{ alignSelf: "flex-end", top: verticalScale(5), }}
+              style={{ alignSelf: "flex-end", top: verticalScale(5) }}
               onPress={() => deleteFromFormation(10)}
             >
               <Image

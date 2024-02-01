@@ -325,7 +325,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              value={goal1}
+              placeholder="0"
               onChangeText={(text) => {
                 setGoal1(text);
               }}
@@ -343,7 +343,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              value={rating1}
+              placeholder="0"
               onChangeText={(text) => {
                 setRating1(text);
               }}
@@ -364,6 +364,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setAssist(text);
               }}
@@ -380,6 +381,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setClearances(text);
               }}
@@ -399,6 +401,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setCrosses(text);
               }}
@@ -412,7 +415,7 @@ tackels=8
             <Text   className=" text-center   pb-2 font-bold"> Passes</Text>
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
-              
+              placeholder="0"
               keyboardType="numeric"
               onChangeText={(text) => {
                 setPasses(text);
@@ -435,7 +438,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-2"
               style={styles.input}
               keyboardType="numeric"
-              
+              placeholder="0"
               onChangeText={(text) => {
                 setSaves(text);
               }}
@@ -448,7 +451,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              
+              placeholder="0"
               onChangeText={(text) => {
                 setShotsOnTarget(text);
               }}
@@ -461,6 +464,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl right-1"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setTackles(text);
               }}
@@ -476,22 +480,25 @@ tackels=8
            
 
 
-
-        {/* <Button
-            title="Save Player data"
-            onPress={() => {
-              savePlayerData(item.uid, goal1,0)
-              savePlayerData(item.uid, rating1,1)
-              savePlayerData(item.uid, assist,2)
-              savePlayerData(item.uid, clearances,3)
-              savePlayerData(item.uid, crosses,4)
-              savePlayerData(item.uid, passes,5)
-              savePlayerData(item.uid, saves,6)
-              savePlayerData(item.uid, shotsOnTarget,7)
-              savePlayerData(item.uid, tackles,8)
-            }}
-          /> */}
-
+          <View style={styles.container}>
+          <TouchableOpacity
+          style={styles.button1}
+          onPress={() => {
+            savePlayerData(item.uid, goal1,0)
+            savePlayerData(item.uid, rating1,1)
+            savePlayerData(item.uid, assist,2)
+            savePlayerData(item.uid, clearances,3)
+            savePlayerData(item.uid, crosses,4)
+            savePlayerData(item.uid, passes,5)
+            savePlayerData(item.uid, saves,6)
+            savePlayerData(item.uid, shotsOnTarget,7)
+            savePlayerData(item.uid, tackles,8)
+          }}
+          className="py-3 	 right-2 my-5 w-40 rounded-xl"
+        >
+          <Text className=" text-center text-white font-bold">Save {item.fullName} data</Text>
+        </TouchableOpacity>
+</View>
 
       </View>
     )
@@ -531,7 +538,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              value={goal1}
+              placeholder="0"
               onChangeText={(text) => {
                 setGoal1(text);
               }}
@@ -549,7 +556,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              value={rating1}
+              placeholder="0"
               onChangeText={(text) => {
                 setRating1(text);
               }}
@@ -570,6 +577,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setAssist(text);
               }}
@@ -586,6 +594,7 @@ tackels=8
             <TextInput  className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setClearances(text);
               }}
@@ -605,6 +614,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
+              placeholder="0"
               onChangeText={(text) => {
                 setCrosses(text);
               }}
@@ -618,7 +628,7 @@ tackels=8
             <Text   className=" text-center   pb-2 font-bold"> Passes</Text>
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
-              
+              placeholder="0"
               keyboardType="numeric"
               onChangeText={(text) => {
                 setPasses(text);
@@ -641,7 +651,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl left-2"
               style={styles.input}
               keyboardType="numeric"
-              
+              placeholder="0"
               onChangeText={(text) => {
                 setSaves(text);
               }}
@@ -654,7 +664,7 @@ tackels=8
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl"
               style={styles.input}
               keyboardType="numeric"
-              
+              placeholder="0"
               onChangeText={(text) => {
                 setShotsOnTarget(text);
               }}
@@ -666,6 +676,7 @@ tackels=8
             <Text  className=" text-center   pb-2 font-bold right-2"> Tackles</Text>
             <TextInput   className="bg-gray-100 text-center  text-gray-700 rounded-2xl right-1"
               style={styles.input}
+              placeholder="0"
               keyboardType="numeric"
               onChangeText={(text) => {
                 setTackles(text);
@@ -674,7 +685,25 @@ tackels=8
            
           </View>
           </View>
-
+          <View style={styles.container}>
+          <TouchableOpacity
+          style={styles.button1}
+          onPress={() => {
+            savePlayerData(item.uid, goal1,0)
+            savePlayerData(item.uid, rating1,1)
+            savePlayerData(item.uid, assist,2)
+            savePlayerData(item.uid, clearances,3)
+            savePlayerData(item.uid, crosses,4)
+            savePlayerData(item.uid, passes,5)
+            savePlayerData(item.uid, saves,6)
+            savePlayerData(item.uid, shotsOnTarget,7)
+            savePlayerData(item.uid, tackles,8)
+          }}
+          className="py-3 	 right-2 my-5 w-40 rounded-xl"
+        >
+          <Text className=" text-center text-white font-bold">Save {item.fullName} data</Text>
+        </TouchableOpacity>
+</View>
 
         </View>
       )

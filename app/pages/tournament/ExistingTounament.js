@@ -576,13 +576,10 @@ export const ExistingTournament = ({ navigation }) => {
                   <Text className="top-3" style={styles.winner} >{matchup.whoWin}</Text>
 
 
-                  <TouchableOpacity onPress={() => DeleteTournament()}>
-                    <Text className="self-center bottom-5   rounded-3xl" style={styles.roundtitle} >Start New Tournament</Text>
-                  </TouchableOpacity>
+                 
 
 
-                  <View className="bg-white pt-7 "></View>
-
+                  
                 </View>
 
 
@@ -602,7 +599,9 @@ export const ExistingTournament = ({ navigation }) => {
 
 
 
-
+ <TouchableOpacity onPress={() => DeleteTournament()}>
+                    <Text className="self-center bottom-5 my-9  rounded-3xl" style={styles.roundtitlestart} >Start New Tournament</Text>
+                  </TouchableOpacity>
 
       </ScrollView>
     </View>

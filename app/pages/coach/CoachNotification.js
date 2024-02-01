@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  RefreshControl,
   FlatList,
 } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -25,6 +26,8 @@ import { db, auth } from "../../component/config/config";
 
 export const CoachNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
 
   useEffect(() => {
     loadData();
@@ -60,7 +63,11 @@ export const CoachNotification = ({ navigation }) => {
     }
   };
   
-
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+  };
   const deleteInvite = async (inviteId) => {
     await deleteDoc(doc(db, "invitations", inviteId));
     console.log("Deleted notification Successfully");
@@ -245,7 +252,11 @@ export const CoachNotification = ({ navigation }) => {
         style={{ backgroundColor: "white", paddingBottom: 10 }}
         className="flex-1 bg-white top-16"
       >
-        <FlatList data={data} renderItem={render} />
+        <FlatList data={data} renderItem={render} 
+         refreshControl={
+               <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+             }
+             />
       </View>
       <View className="bg-white my-6"></View>
     </View>
