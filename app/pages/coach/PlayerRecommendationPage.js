@@ -3,7 +3,8 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity, StyleSheet, ScrollView,Image,Alert
+  TouchableOpacity, StyleSheet, ScrollView,Image,
+  Alert
 
 } from "react-native";
 import {
@@ -202,7 +203,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       description: clubDoc.data()?.description || "",
       city: clubDoc.data()?.city || "",
     });
-    Alert.alert("Player added to the formation")
+    Alert.alert("Successfully","Player added to the formation")
     console.log("Member added to the formation array!!");
 
   }
