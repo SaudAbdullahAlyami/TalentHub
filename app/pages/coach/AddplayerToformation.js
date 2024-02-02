@@ -1,30 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
-  StatusBar,
-  FlatList,
-  ScrollView,
+
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Avatar } from "react-native-paper";
-import { useAuthentication } from "../../useAuthentication";
-import {
-  doc,
-  onSnapshot,
-  collection,
-  setDoc,
-  getDocs,
-  addDoc, getDoc
-} from "firebase/firestore";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { db, auth, firebaase } from "../../component/config/config";
+
 
 export const AddplayerToformation = ({route, navigation }) => {
   const {index} =route.params
@@ -35,7 +17,7 @@ export const AddplayerToformation = ({route, navigation }) => {
       <TouchableOpacity style={styles.button1}
         onPress={() => navigation.navigate("AddingPlayersManualy",{index})}
         className="py-3  self-end	 right-2  w-28 rounded-xl">
-        <Text className=" text-center text-clack">Add From the team Mnaualy</Text>
+        <Text className=" text-center text-clack">Add From the team Manualy</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button1}

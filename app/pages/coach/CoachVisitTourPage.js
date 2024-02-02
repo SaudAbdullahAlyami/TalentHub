@@ -3,20 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
   StatusBar,
-  ScrollView,
-  FlatList
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
-import { useAuthentication } from "../../useAuthentication";
-import { doc, getDoc,onSnapshot } from "firebase/firestore";
-import { db ,auth,firebase } from "../../component/config/config";
+import { doc,onSnapshot } from "firebase/firestore";
+import { db  } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 
 

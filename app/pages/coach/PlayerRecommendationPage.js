@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,11 +12,9 @@ import {
   collection,
   updateDoc,
   getDoc,
-  deleteDoc,
-  onSnapshot,
 } from "firebase/firestore";
 import { Avatar } from "react-native-paper";
-import { db, auth, firebaase } from "../../component/config/config";
+import { db, auth } from "../../component/config/config";
 
 import axios from 'axios';
 
@@ -233,7 +231,8 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       // You can use FCM or another notification method here
 
       // Optional: Update UI or provide feedback to the coach
-      console.log("Invitation sent successfully!");
+    
+      Alert.alert("Successfully ","The Invition Request has send successfully.")
     } catch (error) {
       console.error("Error sending invitation:", error);
     }
@@ -440,11 +439,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
                  
                  
                 </View>
-                     
-
-               
-
-              
+  
 
                 {player.clubName === clubName ? (
                  <TouchableOpacity onPress={() => addPlayer(player.uid)}>

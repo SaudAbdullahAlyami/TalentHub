@@ -4,31 +4,19 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
-  StatusBar,
-  FlatList,
-  RefreshControl, ImageBackground, Alert, ScrollView
+  RefreshControl,  Alert, ScrollView
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
   doc,
-  getDocs,
-  collection,
-  query,
   updateDoc,
   getDoc,
-  deleteDoc,
-  onSnapshot,
-  where,
-  arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
+
 import { db, auth, firebaase } from "../../component/config/config";
 
 export const AddingPlayersManualy = ({ route, navigation }) => {
@@ -176,6 +164,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
     });
 
     console.log("Member added to the formation array!!", index);
+    Alert.alert("Successfully ","Member added to the formation.")
   };
 
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -257,6 +246,12 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
       <View className="flex-row justify-center top-19">
 
       </View>
+      <View className="flex-row justify-start">
+          <TouchableOpacity onPress={() => navigation.goBack()}
+            className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+            <ArrowLeftIcon size="20" color="black" />
+          </TouchableOpacity>
+        </View>
 
       <View
         style={{ backgroundColor: "white", paddingBottom: 10 }}

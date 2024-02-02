@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from 'react-native-paper';
-import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db, auth, } from "../../component/config/config";
 import { Video, ResizeMode } from 'expo-av';

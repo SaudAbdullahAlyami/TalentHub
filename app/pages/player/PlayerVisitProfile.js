@@ -9,7 +9,7 @@ import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { db, auth, firebase } from "../../component/config/config";
+import { db,  } from "../../component/config/config";
 import { Video, ResizeMode } from 'expo-av';
 
 export const PlayerVisitProfile = ({ route, navigation }) => {

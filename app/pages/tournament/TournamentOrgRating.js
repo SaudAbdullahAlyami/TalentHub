@@ -1,15 +1,15 @@
 import { doc, getDoc, updateDoc, onSnapshot } from "firebase/firestore";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  Button,
+  
   FlatList,TouchableOpacity,Image,ScrollView
 } from "react-native";
-import { db, auth, firebase } from "../../component/config/config";
+import { db, auth,  } from "../../component/config/config";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 
 export const TournamentOrgRating = ({ route, navigation }) => {

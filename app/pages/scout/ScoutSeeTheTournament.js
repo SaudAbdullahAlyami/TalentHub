@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import { Avatar } from "react-native-paper";
+import { ArrowLeftIcon } from "react-native-heroicons/solid";
 
 export const ScoutSeeTheTournament = ({ route,navigation  }) => {
     const { itemId } = route.params;
@@ -72,6 +73,12 @@ export const ScoutSeeTheTournament = ({ route,navigation  }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
+      <View className="flex-row justify-start">
+          <TouchableOpacity onPress={() => navigation.goBack()}
+            className="bg-yellow-400 top-9 p-2 rounded-tr-2xl rounded-bl-2xl ml-4">
+            <ArrowLeftIcon size="20" color="black" />
+          </TouchableOpacity>
+        </View>
         <View className="flex-row justify-center">
           <Image
             source={require("../../assets/tour2.png")}

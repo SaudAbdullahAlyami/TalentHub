@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TextInput,
   TouchableOpacity,
   StatusBar,
@@ -11,7 +10,6 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 export const CreateTournament = ({ navigation }) => {
   const [city, setCity] = useState(null);

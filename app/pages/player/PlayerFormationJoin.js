@@ -3,30 +3,23 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
-  Pressable,
   TextInput,
   TouchableOpacity,
-  StatusBar,
   FlatList,
-  ScrollView,
   Alert,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Avatar } from "react-native-paper";
-import { useAuthentication } from "../../useAuthentication";
 import {
   doc,
-  onSnapshot,
+
   collection,
-  setDoc,
+ 
   getDocs,
   getDoc,
   addDoc,
 } from "firebase/firestore";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { db, auth, firebaase } from "../../component/config/config";
+import { db, auth, } from "../../component/config/config";
 
 
 export const PlayerFormationJoin = ({ navigation }) => {

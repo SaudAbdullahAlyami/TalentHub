@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ScrollView, RefreshControl, Image } from "react-native";
+import { View, Text, TouchableOpacity,  StyleSheet, ScrollView, 
+Alert} from "react-native";
 import { Searchbar } from 'react-native-paper';
 import { Avatar } from "react-native-paper";
 import { doc, collection, getDocs, addDoc, getDoc } from "firebase/firestore";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { db, auth } from "../../component/config/config";
 
 export const CoachFormationAdd = ({ navigation }) => {
@@ -65,6 +65,7 @@ export const CoachFormationAdd = ({ navigation }) => {
 
       // Optional: Update UI or provide feedback to the coach
       console.log("Invitation sent successfully!");
+      Alert.alert("Successfully ","The Invite Request has send successfully.")
     } catch (error) {
       console.error("Error sending invitation:", error);
     }

@@ -740,7 +740,7 @@ export const CoachFormation = ({ navigation }) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("CoachFormationAdd")}
             style={{
-              width: moderateScale(90),
+              width: moderateScale(150),
               height: moderateScale(32),
               borderRadius: moderateScale(20),
               backgroundColor: "#F4C611",
@@ -752,11 +752,12 @@ export const CoachFormation = ({ navigation }) => {
               marginRight: scale(30),
             }}
           >
-            <Text className="self-center  font-bold">Add player</Text>
+            <Text className="self-center  font-bold">Add Player To The Club</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.containesr}>
+        
           <FlatList
             showsHorizontalScrollIndicator={false}
             data={members}

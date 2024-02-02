@@ -9,7 +9,7 @@ import { Avatar } from 'react-native-paper';
 import { useAuthentication } from "../../useAuthentication";
 import { doc, onSnapshot,getDoc } from "firebase/firestore";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { db ,auth,firebase } from "../../component/config/config";
+import { db , } from "../../component/config/config";
 
 export const PlayerVisitCoach = ({ route,navigation  }) => {
     const { itemId } = route.params;

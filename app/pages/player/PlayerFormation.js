@@ -9,10 +9,10 @@ import {
   RefreshControl,
   ImageBackground,
   ScrollView,
-  Modal,
+  Alert
 } from "react-native";
 import { Avatar } from "react-native-paper";
-import { doc, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc, getDoc,  } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import { moderateScale, scale, verticalScale } from "../../responsiveSizes";
 export const PlayerFormation = ({ navigation }) => {
@@ -21,9 +21,7 @@ export const PlayerFormation = ({ navigation }) => {
   const [formation, setFormation] = useState([]);
   const [formationNames, setFormationNames] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [inde, setInde] = useState(null);
+
 
   useEffect(() => {
     fetchData();
@@ -83,6 +81,7 @@ export const PlayerFormation = ({ navigation }) => {
         await updateDoc(doc(db, "users", auth.currentUser.uid), {
           clubName: ""
         });
+        Alert.alert("Successfully ","You left the team successfully.")
       } else {
         console.error("User has no clubName.");
       }

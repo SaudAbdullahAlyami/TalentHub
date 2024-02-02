@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Avatar } from "react-native-paper";
 import {

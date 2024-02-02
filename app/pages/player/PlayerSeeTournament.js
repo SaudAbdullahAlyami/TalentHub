@@ -2,20 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Image,ScrollView
 } from "react-native";
 import {
-  setDoc,
   doc,
   getDoc,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-  collection,
-  deleteDoc,
+  
 } from "firebase/firestore";
 import { db, auth } from "../../component/config/config";
 import { Avatar } from "react-native-paper";

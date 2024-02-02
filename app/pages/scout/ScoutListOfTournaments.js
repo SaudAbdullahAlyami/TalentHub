@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { Avatar } from "react-native-paper";
 
-import { doc, collection, getDocs, getDoc, addDoc } from "firebase/firestore";
+import {  collection, getDocs,   } from "firebase/firestore";
 
-import { db, auth } from "../../component/config/config";
+import { db, } from "../../component/config/config";
 
 export const ScoutListOfTournaments = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -60,7 +60,7 @@ export const ScoutListOfTournaments = ({ navigation }) => {
         </Text>
 
         <Text style={styles.text2} className="mb-3 font-bold top-3 ">
-          {item.description}
+        Description:{item.description}
         </Text>
 
         <View className="self-center text-center items-center ">

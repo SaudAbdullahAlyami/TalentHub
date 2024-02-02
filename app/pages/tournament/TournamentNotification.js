@@ -3,12 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   Image,
-  Pressable,
-  TextInput,
   TouchableOpacity,
-  StatusBar,
   FlatList,
 } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -20,13 +16,9 @@ import {
   query,
   updateDoc,
   deleteDoc,
-  onSnapshot,
   where,
-  arrayUnion,
-  setDoc,
 } from "firebase/firestore";
-import { ArrowLeftIcon } from "react-native-heroicons/solid";
-import { db, auth, firebaase } from "../../component/config/config";
+import { db, auth } from "../../component/config/config";
 
 export const TournamentNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -106,14 +98,19 @@ export const TournamentNotification = ({ navigation }) => {
         });
         console.log("tournament added to team");
 
-         const players = clubDoc.data().formation;
+        const players = clubDoc.data().formation;
+
         for (let i = 0; i < players.length; i++) {
-        let uiid = players[i].uid;
-          await updateDoc(doc(db, "users", uiid), {
-          tournament: tourName
-        });
- 
- }
+          if (players[i] && players[i].uid) { // Check if players[i] is not null or undefined
+            let uiid = players[i].uid;
+            await updateDoc(doc(db, "users", uiid), {
+              tournament: tourName,
+            });
+          } else {
+            console.warn(`Invalid player data at index ${i}`);
+            // Handle the case where player data is missing or incomplete
+          }
+        }
 
         const tournamentDoc = await getDoc(doc(db, "tournament", tourName));
 

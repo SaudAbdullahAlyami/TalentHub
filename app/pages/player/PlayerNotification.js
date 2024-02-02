@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, TouchableOpacity, FlatList,StyleSheet ,Image} from "react-native";
+import { View, Text, TouchableOpacity, FlatList,StyleSheet ,Image} from "react-native";
 import { Avatar } from "react-native-paper";
 import {
   doc,
@@ -13,7 +13,7 @@ import {
   arrayUnion,
   setDoc,
 } from "firebase/firestore";
-import { db, auth, firebaase } from "../../component/config/config";
+import { db, auth } from "../../component/config/config";
 
 export const PlayerNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
