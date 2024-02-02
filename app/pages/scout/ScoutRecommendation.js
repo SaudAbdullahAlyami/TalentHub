@@ -142,175 +142,90 @@ export const ScoutRecommendation = ({ navigation }) => {
                                 </TouchableOpacity>
                                 <Text className="font-bold left-24 bottom-7 "  >{player.fullName}{"\n"}{player.position}</Text>
 
-                                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
+                                <View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Age {"\n"}{"\n"}
 
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.age}</Text>
-                                            </View>
+<View  style={styles.inputContainer}>
 
-                                        </Text>
+<Text className=" text-center  pb-2 font-bold" key={index}>Age</Text>
+<Text   style={styles.input}>{player.age}</Text>
+</View>
 
-                                    </View>
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Height</Text>
+<Text  style={styles.input}>{player.height}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Weight</Text>
+<Text  style={styles.input}>{player.weight}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Rating</Text>
+<Text  style={styles.input}>{player.rating.toFixed(0)}</Text>
+</View>
+</View>
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Height {"\n"}{"\n"}
 
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.height}</Text>
-                                            </View>
 
-                                        </Text>
 
-                                    </View>
+<View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Weight {"\n"}{"\n"}
 
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.weight}</Text>
-                                            </View>
+<View  style={styles.inputContainer}>
 
-                                        </Text>
+<Text className=" text-center  pb-2 font-bold" key={index}>Goals</Text>
+<Text   style={styles.input}>{player.goals}</Text>
+</View>
 
-                                    </View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Assists</Text>
+<Text  style={styles.input}>{player.assist}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Shots On Target</Text>
+<Text  style={styles.input}>{player.shotsOnTarget}</Text>
+</View>
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Rating {"\n"}{"\n"}
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Crosses</Text>
+<Text  style={styles.input}>{player.crosses}</Text>
+</View>
 
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.rating}</Text>
-                                            </View>
+</View>
 
-                                        </Text>
-                                        <View className="my-2"></View>
-                                    </View>
-                                    <View className="my-2"></View>
-                                </View>
+<View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
-                                <View className="my-3"></View>
-                                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
 
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Goals {"\n"}{"\n"}
+<View  style={styles.inputContainer}>
 
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.goals}</Text>
-                                            </View>
+<Text className=" text-center  pb-2 font-bold" key={index}>Saves</Text>
+<Text   style={styles.input}>{player.saves}</Text>
+</View>
 
-                                        </Text>
 
-                                    </View>
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Clearances</Text>
+<Text  style={styles.input}>{player.clearances}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Tackles</Text>
+<Text  style={styles.input}>{player.tackles}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Passes</Text>
+<Text  style={styles.input}>{player.passes}</Text>
+</View>
 
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Assists {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.assist}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}>Shots On Target{"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.shotsOnTarget}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Crosses {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.crosses}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                        <View className="my-2"></View>
-                                    </View>
-                                    <View className="my-2"></View>
-                                </View>
-
-                                <View className="my-3"></View>
-                                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}> Saves {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.saves}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}>Clearances {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.clearances}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}>Tackles {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.tackles}</Text>
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-
-                                    <View style={styles.inputContainer}>
-                                        <Text className=" text-center   pb-2 font-bold" key={index}>Passes {"\n"}{"\n"}
-
-                                            <View style={styles.bigBox}>
-                                                <Text style={styles.text}>{player.passes}</Text>
-
-
-                                            </View>
-
-                                        </Text>
-
-                                    </View>
-
-
-
-
-                                </View>
+</View>
 
 
 
@@ -330,89 +245,94 @@ export const ScoutRecommendation = ({ navigation }) => {
     );
 }; const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-
-
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+  
+  
     },
     title: {
-        fontSize: 20,
-        fontWeight: "bold",
-        marginBottom: 1,
-        marginTop: 39,
-        color: "white"
+      fontSize: 20,
+      fontWeight: "bold",
+      marginBottom: 1,
+      marginTop: 39,
+      color: "white"
     },
     playerContainer: {
-        marginBottom: 16,
+      marginBottom: 16,
     },
     inputContainer: {
-        flexDirection: "column",
-        alignItems: "center",
-
-        paddingHorizontal: 13,
-
-
+      flexDirection: "column",
+      alignItems: "center",
+  
+      paddingHorizontal: 13,
+  
+  
     },
     input: {
-
-        borderWidth: 1,
-        borderColor: 'grey',
-        height: 32,
-        padding: 30,
-        backgroundColor: "grey",
-        paddingHorizontal: 30
+  
+      borderWidth: 1,
+      borderColor: 'grey',
+         height:30,
+         width:50,
+     textAlign:"center",
+     padding:5,
+     borderRadius:15,
+     marginBottom:30
+     
+    
     }, goalscon: {
-        flexDirection: "column",
-        alignItems: "center",
-        marginBottom: 8,
-        padding: 20,
-        left: 42
-
+      flexDirection: "column",
+      alignItems: "center",
+      marginBottom: 8,
+      padding: 20,
+      left: 42
+  
     }, hi: {
-        borderBottomColor: "ddd",
-        borderBottomWidth: StyleSheet.hairlineWidth,
-
-        marginBottom: 15,
+      borderBottomColor: "ddd",
+      borderBottomWidth: StyleSheet.hairlineWidth,
+  
+      marginBottom: 15,
     }, bgcolor: {
-
-        backgroundColor: "#00B365"
+  
+      backgroundColor: "#00B365"
     }, teamco: {
-        backgroundColor: "#00B365",
-        width: "100%",
-        height: 40,
-        fontSize: 28,
-
+      backgroundColor: "#00B365",
+      width: "100%",
+      height: 40,
+      fontSize: 28,
+      
+  
     }, teampl: {
-        backgroundColor: "#00B365",
-        width: 400,
-        height: 40,
-        fontSize: 20,
-        paddingTop: 5,
-        paddingLeft: 5,
-
+      backgroundColor: "#00B365",
+      width: "100%",
+      height: 40,
+      fontSize: 20,
+      paddingTop: 5,
+      paddingLeft: 5,
+  
     }, teamco2: {
-        backgroundColor: "#FFD14E",
-        width: 400,
-        height: 40,
-        fontSize: 28,
+      backgroundColor: "#FFD14E",
+      width: "100%",
+      height: 40,
+      fontSize: 28,
     }, button1: {
-        backgroundColor: "#00b365",
-
+      backgroundColor: "#00b365",
+  
     }, bigBox: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 10,
-        padding: 10,
-        width: 50, // Adjust the width as needed
-        height: 50, // Adjust the height as needed
-        justifyContent: 'center', // Center the text vertically
-        alignItems: 'center', // Center the text horizontally
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 10,
+      padding: 10,
+      width: 50, // Adjust the width as needed
+      height: 50, // Adjust the height as needed
+      justifyContent: 'center', // Center the text vertically
+      alignItems: 'center', // Center the text horizontally
     },
     text: {
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: 'bold',
+      fontSize: 20,
+      textAlign: 'center',
+      fontWeight: 'bold',
     }, Button2: {
         fontSize: 18,
         color: "white",
@@ -424,6 +344,7 @@ export const ScoutRecommendation = ({ navigation }) => {
         margin: 15,
         textAlign: 'center'
 
-
+    
     }
-});
+  });
+  

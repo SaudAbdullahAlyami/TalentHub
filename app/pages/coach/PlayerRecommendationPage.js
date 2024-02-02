@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity, StyleSheet, ScrollView,Image, Alert
+  TouchableOpacity, StyleSheet, ScrollView,Image
 
 } from "react-native";
 import {
@@ -203,7 +203,6 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       city: clubDoc.data()?.city || "",
     });
 
-    Alert.alert("Player added to the formation")
     console.log("Member added to the formation array!!");
 
   }
@@ -233,7 +232,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
 
       // Optional: Update UI or provide feedback to the coach
     
-      Alert.alert("Successfully","The Invitation Request has been sent successfully.")
+      Alert.alert("Successfully ","The Invition Request has send successfully.")
     } catch (error) {
       console.error("Error sending invitation:", error);
     }
@@ -245,210 +244,142 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
 
 
       {recommendations.length > 0 && (
-        <View style={{ backgroundColor: "white", width: "100%" ,flex:1}}>
+        <View  >
           <ScrollView >
            
             {recommendations.map((player, index) => (
               <>
 
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("CoachFormationstack", {
-                      screen: "CoachVisitProfile",
-                      params: { itemId: player.uid },
-                    })
-                  }
-                >
-                  <View className="mb-9" style={styles.teamco} >
+<View  style={{width:"100%"}}>
 
 
-                    <Avatar.Image className="left-3 top-3" size={75} source={{ uri: player.profileImage }} />
+                            
+<View className="mb-9" style={styles.teamco} >
+ 
 
 
+<TouchableOpacity
+      onPress={() =>
+        navigation.navigate("CoachFormationstack", {
+          screen: "CoachVisitProfile",
+          params: { itemId: player.uid },
+        })
+      }
+    >
+      <View className="mb-9" style={styles.teamco} >
 
-                  </View>
 
-                </TouchableOpacity>
-                <Text className="font-bold left-24 bottom-7 "  >{player.fullName}{"\n"}{player.position}</Text>
+        <Avatar.Image className="left-3 top-3" size={75} source={{ uri: player.profileImage }} />
 
-                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
 
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Age {"\n"}{"\n"}
+      </View>
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.age}</Text>
-                      </View>
+    </TouchableOpacity>
 
-                    </Text>
+<Text className="font-bold  bottom-7"  style={{left:100}}>{player.fullName}{"\n"}{player.position}</Text> 
 
-                  </View>
+</View>
 
+<View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Height {"\n"}{"\n"}
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.height}</Text>
-                      </View>
+<View  style={styles.inputContainer}>
 
-                    </Text>
+<Text className=" text-center  pb-2 font-bold" key={index}>Age</Text>
+<Text   style={styles.input}>{player.age}</Text>
+</View>
 
-                  </View>
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Height</Text>
+<Text  style={styles.input}>{player.height}</Text>
+</View>
 
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Weight</Text>
+<Text  style={styles.input}>{player.weight}</Text>
+</View>
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Weight {"\n"}{"\n"}
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Rating</Text>
+<Text  style={styles.input}>{player.rating.toFixed(0)}</Text>
+</View>
+</View>
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.weight}</Text>
-                      </View>
 
-                    </Text>
-                   
-                  </View>
 
 
+<View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Rating {"\n"}{"\n"}
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.rating}</Text>
-                      </View>
 
-                    </Text>
-                    <View className="my-2"></View>
-                  </View>
-                      <View className="my-2"></View>
-                </View>
+<View  style={styles.inputContainer}>
 
-                <View className="my-3"></View>
-                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
+<Text className=" text-center  pb-2 font-bold" key={index}>Goals</Text>
+<Text   style={styles.input}>{player.goals}</Text>
+</View>
 
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Goals {"\n"}{"\n"}
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Assists</Text>
+<Text  style={styles.input}>{player.assist}</Text>
+</View>
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.goals}</Text>
-                      </View>
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Shots On Target</Text>
+<Text  style={styles.input}>{player.shotsOnTarget}</Text>
+</View>
 
-                    </Text>
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Crosses</Text>
+<Text  style={styles.input}>{player.crosses}</Text>
+</View>
 
-                  </View>
+</View>
 
+<View style={{flexDirection: 'row',alignSelf:"center", borderBottomColor: "ddd",borderBottomWidth: StyleSheet.hairlineWidth,marginTop:30}} >
 
 
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Assists {"\n"}{"\n"}
 
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.assist}</Text>
-                      </View>
+<View  style={styles.inputContainer}>
 
-                    </Text>
+<Text className=" text-center  pb-2 font-bold" key={index}>Saves</Text>
+<Text   style={styles.input}>{player.saves}</Text>
+</View>
 
-                  </View>
 
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}>Shots On Target{"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.shotsOnTarget}</Text>
-                      </View>
-
-                    </Text>
-
-                  </View>
-
-
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Crosses {"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.crosses}</Text>
-                      </View>
-
-                    </Text>
-
-                    <View className="my-2"></View>
-                  </View>
-                      <View className="my-2"></View>
-                </View>
-
-                <View className="my-3"></View>
-                <View style={{ flexDirection: 'row', alignSelf: "center", borderBottomColor: "ddd", borderBottomWidth: StyleSheet.hairlineWidth, }} >
-
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}> Saves {"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player. saves}</Text>
-                      </View>
-
-                    </Text>
-
-                  </View>
-
-
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}>Clearances {"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.clearances}</Text>
-                      </View>
-
-                    </Text>
-
-                  </View>
-
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}>Tackles {"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text style={styles.text}>{player.tackles}</Text>
-                      </View>
-
-                    </Text>
-
-                  </View>
-
-
-
-                  <View style={styles.inputContainer}>
-                    <Text className=" text-center   pb-2 font-bold" key={index}>Passes {"\n"}{"\n"}
-
-                      <View style={styles.bigBox}>
-                        <Text      style={styles.text}>{player.passes}</Text>
-
-                        
-                      </View>
-
-                    </Text>
-                     
-                  </View>
-
-                        
-                 
-                 
-                </View>
-  
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Clearances</Text>
+<Text  style={styles.input}>{player.clearances}</Text>
+</View>
+
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Tackles</Text>
+<Text  style={styles.input}>{player.tackles}</Text>
+</View>
+
+<View  style={styles.inputContainer}>
+<Text className=" text-center  pb-2 font-bold" key={index}>Passes</Text>
+<Text  style={styles.input}>{player.passes}</Text>
+</View>
+
+</View>
 
                 {player.clubName === clubName ? (
                  <TouchableOpacity onPress={() => addPlayer(player.uid)}>
-                 <Text className="self-center   rounded-3xl" style={styles.Button2} >Add player</Text>
+                 <Text className="self-center rounded-2xl" style={styles.Button2} >Add player</Text>
                </TouchableOpacity>
                 ) : (
-                  <Button title="Invite Player" onPress={() => invitePlayer(player.uid)} />
+                  
+                  <TouchableOpacity onPress={() => invitePlayer(player.uid)}>
+                  <Text className="self-center rounded-2xl " style={styles.Button2} >Invite player</Text>
+                </TouchableOpacity>
                 )}
+
+
+
+</View>
                
 
               </>
@@ -496,10 +427,14 @@ const styles = StyleSheet.create({
 
     borderWidth: 1,
     borderColor: 'grey',
-    height: 32,
-    padding: 30,
-    backgroundColor: "grey",
-    paddingHorizontal: 30
+       height:30,
+       width:50,
+   textAlign:"center",
+   padding:5,
+   borderRadius:15,
+   marginBottom:30
+   
+  
   }, goalscon: {
     flexDirection: "column",
     alignItems: "center",
@@ -561,8 +496,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00B365",
     width: 180,
     margin: 15,
-    textAlign: 'center'
-
-
+    textAlign: 'center',
+  
   }
 });
