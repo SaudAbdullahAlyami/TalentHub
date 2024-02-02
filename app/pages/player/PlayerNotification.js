@@ -165,12 +165,12 @@ export const PlayerNotification = ({ navigation }) => {
         });
       } else {
         // Update the invitation status to "Rejected"
-        //await updateDoc(invitationRef, { status: text });
+        await updateDoc(invitationRef, { status: text });
         // Delete the invitation
       }
 
       // Refresh the data after handling the invitation
-      //await deleteInvite(inviteId);
+      await deleteInvite(inviteId);
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);

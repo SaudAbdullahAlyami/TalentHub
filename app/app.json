@@ -4,10 +4,10 @@
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/signpic.png",
+    "icon": "./assets/Talenthub_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/signpic.png",
+      "image": "./assets/Talenthub_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

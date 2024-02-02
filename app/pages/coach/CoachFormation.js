@@ -10,6 +10,7 @@ import {
   ImageBackground,
   ScrollView,
   Modal,
+  Alert
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import { doc, updateDoc, getDoc, arrayRemove } from "firebase/firestore";
@@ -93,6 +94,7 @@ export const CoachFormation = ({ navigation }) => {
           await updateDoc(clubRef, {
             members: arrayRemove(currentMembers[indexToRemove]),
           });
+          Alert.alert("Player removed successfully ","The player removed from the club.")
           console.log("Player was deleted");
           // Update the user document to remove the clubName
           await updateDoc(doc(db, "users", playerUid), {
@@ -116,8 +118,9 @@ export const CoachFormation = ({ navigation }) => {
       >
         <TouchableOpacity onPress={() => deletePlayer(item.uid)}>
           <Image
-            source={require("../../assets/remove.png")}
+            source={require("../../assets/RPlayer.png")}
             style={{ width: moderateScale(15), height: moderateScale(15), alignSelf: "flex-end" }}
+            
           />
 
         </TouchableOpacity>
@@ -171,6 +174,7 @@ export const CoachFormation = ({ navigation }) => {
           clubDoc.data().formation[indexPos] != null
         ) {
           // LW position is already booked in the club's formation
+          Alert.alert("Position is already booked ")
           console.log(" position is already booked in the club's formation.");
           // You can also show an alert, toast, or any other UI notification.
         } else {
@@ -209,6 +213,7 @@ export const CoachFormation = ({ navigation }) => {
 
           await updateDoc(clubRef, { formation: updatedFormation });
 
+          Alert.alert("Player removed successfully ","The player removed from the formation.")
           console.log("Player is deleted from the formation");
           console.log(updatedFormation[indexPos]);
         } else {
@@ -752,7 +757,7 @@ export const CoachFormation = ({ navigation }) => {
               marginRight: scale(30),
             }}
           >
-            <Text className="self-center  font-bold">Add Player To The Club</Text>
+            <Text className="self-center  font-bold">Add new player</Text>
           </TouchableOpacity>
         </View>
 
