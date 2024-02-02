@@ -106,7 +106,6 @@ export const SignUp = ({ navigation }) => {
             uid: userCredential.user.uid,
             email: value.email,
             fullName: fullName,
-            clubName: clubName,
             description: description,
             city: city,
             role: role,

@@ -18,6 +18,7 @@ export const PlayerProfile = ({ navigation }) => {
   const [age, setAge] = useState("");
   const [role, setRole] = useState(""); //Player OR Scout or ..
   const [height, setHeight] = useState(null);
+  const [clubName, setClubName] = useState(null);
   const [weight, setWeight] = useState(null);
   const [position, setPosition] = useState(null);
   const [level, setLevel] = useState(null);
@@ -33,6 +34,7 @@ export const PlayerProfile = ({ navigation }) => {
       setAge(doc.data().age);
       setRole(doc.data().role);
       setPhoneNumber(doc.data().phoneNumber);
+      setClubName(doc.data().clubName)
       setHeight(doc.data().height);
       setWeight(doc.data().weight);
       setPosition(doc.data().position);
@@ -93,6 +95,9 @@ export const PlayerProfile = ({ navigation }) => {
 
             <Text className="text-gray-700 top-1  ml-4">Phone Number</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {phoneNumber}</Text>
+
+            <Text className="text-gray-700 top-1  ml-4">Club Name</Text>
+            <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {clubName}</Text>
 
             <Text className="text-gray-700 top-1  ml-4">Postion</Text>
             <Text className="p-4 bg-gray-100 top-1 text-gray-700  rounded-2xl " > {position}</Text>
