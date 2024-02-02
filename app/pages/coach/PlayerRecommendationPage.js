@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Button,
-  TouchableOpacity, StyleSheet, ScrollView,Image
+  TouchableOpacity, StyleSheet, ScrollView,Image,Alert
 
 } from "react-native";
 import {
@@ -202,7 +202,7 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       description: clubDoc.data()?.description || "",
       city: clubDoc.data()?.city || "",
     });
-
+    Alert.alert("Player added to the formation")
     console.log("Member added to the formation array!!");
 
   }
@@ -231,8 +231,8 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       // You can use FCM or another notification method here
 
       // Optional: Update UI or provide feedback to the coach
-    
-      Alert.alert("Successfully ","The Invition Request has send successfully.")
+     Alert.alert("Successfully","The Invitation Request has been sent successfully.")
+      
     } catch (error) {
       console.error("Error sending invitation:", error);
     }

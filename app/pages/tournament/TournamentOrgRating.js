@@ -300,7 +300,7 @@ tackels=8
     return (
 
        
-      <View  style={{width:400}}>
+      <View  style={{width:"100%",}}>
 
 
                                   
@@ -513,7 +513,7 @@ tackels=8
 
 
         
-        <View  style={{width:400}}>
+        <View  style={{width:"100%",}}>
 
 
                                   
@@ -721,7 +721,7 @@ tackels=8
     <View style={styles.container}>
 
 
-      <View  style={{backgroundColor:"#00B365",width:400}} >
+      <View  style={{backgroundColor:"#00B365",width:"100%",}} >
 
       <View className="flex-row justify-start">
         <TouchableOpacity onPress={()=> navigation.goBack()} 
@@ -845,13 +845,13 @@ const styles = StyleSheet.create({
     backgroundColor:"#00B365"
   },teamco:{
     backgroundColor:"#00B365",
-    width:400,
+    width:"100%",
    height:40,
    fontSize:28,
 
   },teampl:{
     backgroundColor:"#00B365",
-    width:400,
+    width:"100%",
    height:40,
    fontSize:20,
    paddingTop:5,
@@ -859,7 +859,7 @@ const styles = StyleSheet.create({
    
   },teamco2:{
     backgroundColor:"#FFD14E",
-    width:400,
+    width:"100%",
    height:40,
    fontSize:28,
   }, button1: {
