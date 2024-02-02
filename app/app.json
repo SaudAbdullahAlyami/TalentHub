@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "Talent Hub",
+    "slug": "Talent Hub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Talenthub_icon.png",
@@ -27,7 +27,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/coachnoti.png",
+        "foregroundImage": "./assets/Talenthub_icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -36,7 +36,7 @@
       "package": "com.talenthub.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Talenthub_icon.png"
     },
     "extra": {
       "eas": {
