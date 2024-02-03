@@ -14,6 +14,16 @@ export const ScoutRecommendation = ({ navigation }) => {
     const [age, setAge] = useState('');
     const [recommendations, setRecommendations] = useState([]);
 
+    const [assist, setAssist] = useState(null);
+    const [clearances, setClearances] = useState(null);
+    const [crosses, setCrosses] = useState(null);
+    const [goals, setGoals] = useState(null);
+    const [passes, setPasses] = useState(null);
+    const [rating, setRating] = useState(null);
+    const [saves, setSaves] = useState(null);
+    const [shotsOnTarget, setShotsOnTarget] = useState(null);
+    const [tackles, setTackles] = useState(null);
+
     const positionData = [
         { key: "GK", value: "GK" },
         { key: "CB", value: "CB" },
@@ -30,14 +40,134 @@ export const ScoutRecommendation = ({ navigation }) => {
 
     const handleGetRecommendations = async () => {
         try {
+
+          if (position === "LW") {
+            
+            setHeight(180)
+            setWeight(80)
+            setAge(23)
+            setAssist(200)
+            setClearances(3)
+            setCrosses(10)
+            setGoals(999)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(999)
+            setTackles(300)
+    
+          } else if (position === "ST") {
+            setHeight(180)
+            setWeight(80)
+            setAge(25)
+            setAssist(200)
+            setClearances(3)
+            setCrosses(10)
+            setGoals(999)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(999)
+            setTackles(300)
+    
+          } else if (position === "RW") {
+    
+            setHeight(180)
+            setWeight(80)
+            setAge(25)
+            setAssist(200)
+            setClearances(3)
+            setCrosses(10)
+            setGoals(999)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(999)
+            setTackles(300)
+    
+          } else if (position === "CM") {
+    
+            setHeight(170)
+            setWeight(70)
+            setAge(25)
+            setAssist(999)
+            setClearances(200)
+            setCrosses(999)
+            setGoals(200)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(200)
+            setTackles(500)
+          } else if (position === "LB") {    
+            setHeight(165)
+            setWeight(65)
+            setAge(24)
+            setAssist(200)
+            setClearances(600)
+            setCrosses(700)
+            setGoals(10)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(0)
+            setTackles(500)
+          } else if (position === "CB") {
+    
+            setHeight(180)
+            setWeight(80)
+            setAge(24)
+            setAssist(0)
+            setClearances(999)
+            setCrosses(0)
+            setGoals(0)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(0)
+            setTackles(999)
+          }  else if (position === "RB") {
+                
+            setHeight(165)
+            setWeight(65)
+            setAge(24)
+            setAssist(200)
+            setClearances(600)
+            setCrosses(700)
+            setGoals(10)
+            setPasses(999)
+            setRating(999)
+            setSaves(0)
+            setShotsOnTarget(0)
+            setTackles(500)
+          } else if (position === "GK") {
+            setHeight(180)
+            setWeight(80)
+            setAge(24)
+            setAssist(0)
+            setClearances(3)
+            setCrosses(0)
+            setGoals(0)
+            setPasses(600)
+            setRating(999)
+            setSaves(999)
+            setShotsOnTarget(0)
+            setTackles(0)
+          }
+    
+          if (!position) {
+            console.log('Position is required');
+            return;
+          }
+
             const data = {
                 "name": "Player3",
                 "position": position, // Use dynamic user input
                 "height": height,
                 "weight": weight,
                 "age": age,
-                "rating": 10,
-
+                "rating": 999,
+                
                 "assist": 999,
                 "clearances": 999,
                 "crosses": 999,

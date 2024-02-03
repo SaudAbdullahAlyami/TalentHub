@@ -25,8 +25,20 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
   const [position, setPosition] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [clubName, setclubName] = useState("");
-
-
+  
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [age, setAge] = useState(null);
+  const [assist, setAssist] = useState(null);
+  const [clearances, setClearances] = useState(null);
+  const [crosses, setCrosses] = useState(null);
+  const [goals, setGoals] = useState(null);
+  const [passes, setPasses] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [saves, setSaves] = useState(null);
+  const [shotsOnTarget, setShotsOnTarget] = useState(null);
+  const [tackles, setTackles] = useState(null);
+  
   useEffect(() => {
     // This effect will be called whenever `position` changes.
     handleGetRecommendations();
@@ -56,26 +68,172 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       console.log('the index', index);
       if (index === 0) {
         setPosition('LW');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(23)
+        setAssist(200)
+        setClearances(3)
+        setCrosses(10)
+        setGoals(999)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(999)
+        setTackles(300)
+
       } else if (index === 1) {
         setPosition('ST');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(25)
+        setAssist(200)
+        setClearances(3)
+        setCrosses(10)
+        setGoals(999)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(999)
+        setTackles(300)
+
       } else if (index === 2) {
         setPosition('RW');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(25)
+        setAssist(200)
+        setClearances(3)
+        setCrosses(10)
+        setGoals(999)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(999)
+        setTackles(300)
+
       } else if (index === 3) {
         setPosition('CM');
+
+        setHeight(170)
+        setWeight(70)
+        setAge(25)
+        setAssist(999)
+        setClearances(200)
+        setCrosses(999)
+        setGoals(200)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(200)
+        setTackles(500)
       } else if (index === 4) {
         setPosition('CM');
+
+        setHeight(170)
+        setWeight(70)
+        setAge(25)
+        setAssist(999)
+        setClearances(200)
+        setCrosses(999)
+        setGoals(200)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(200)
+        setTackles(500)
       } else if (index === 5) {
         setPosition('CM');
+
+        setHeight(170)
+        setWeight(70)
+        setAge(25)
+        setAssist(999)
+        setClearances(200)
+        setCrosses(999)
+        setGoals(200)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(200)
+        setTackles(500)
       } else if (index === 6) {
         setPosition('LB');
+
+        setHeight(165)
+        setWeight(65)
+        setAge(24)
+        setAssist(200)
+        setClearances(600)
+        setCrosses(700)
+        setGoals(10)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(0)
+        setTackles(500)
       } else if (index === 7) {
         setPosition('CB');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(24)
+        setAssist(0)
+        setClearances(999)
+        setCrosses(0)
+        setGoals(0)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(0)
+        setTackles(999)
       } else if (index === 8) {
         setPosition('CB');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(24)
+        setAssist(0)
+        setClearances(999)
+        setCrosses(0)
+        setGoals(0)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(0)
+        setTackles(999)
       } else if (index === 9) {
         setPosition('RB');
+
+        setHeight(165)
+        setWeight(65)
+        setAge(24)
+        setAssist(200)
+        setClearances(600)
+        setCrosses(700)
+        setGoals(10)
+        setPasses(999)
+        setRating(999)
+        setSaves(0)
+        setShotsOnTarget(0)
+        setTackles(500)
       } else if (index === 10) {
         setPosition('GK');
+
+        setHeight(180)
+        setWeight(80)
+        setAge(24)
+        setAssist(0)
+        setClearances(3)
+        setCrosses(0)
+        setGoals(0)
+        setPasses(600)
+        setRating(999)
+        setSaves(999)
+        setShotsOnTarget(0)
+        setTackles(0)
       }
 
       if (!position) {
@@ -86,18 +244,18 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
       const data = {
         fullName: 'Player3',
         position: position,
-        height: 185,
-        weight: 80,
-        age: 9,
-        assist: 22,
-        clearances: 23,
-        crosses: 22,
-        goals: 60,
-        passes: 100,
-        rating: 10,
-        saves: 0,
-        shotsOnTarget: 99,
-        tackles: 100
+        height: height,
+        weight: weight,
+        age: age,
+        assist: assist,
+        clearances: clearances,
+        crosses: crosses,
+        goals: goals,
+        passes: passes,
+        rating: rating,
+        saves: saves,
+        shotsOnTarget: shotsOnTarget,
+        tackles: tackles
       };
 
       const response = await axios.post(
