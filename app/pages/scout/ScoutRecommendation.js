@@ -214,6 +214,7 @@ export const ScoutRecommendation = ({ navigation }) => {
                         setSelected={(val) => setPosition(val)}
                         data={positionData}
                         save="value"
+                        placeholder="Select Position"
                     />
                 </View>
 

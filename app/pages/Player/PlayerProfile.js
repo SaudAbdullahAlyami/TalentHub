@@ -123,7 +123,7 @@ export const PlayerProfile = ({ navigation }) => {
               className="py-3 bg-yellow-400 top-9 rounded-xl"
             >
               <Text className="text-xl  font-bold  text-center text-gray-700">
-                Sign Out
+              Logout
               </Text>
             </TouchableOpacity>
           </View>
