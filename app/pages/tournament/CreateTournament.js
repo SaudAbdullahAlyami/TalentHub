@@ -106,7 +106,7 @@ export const CreateTournament = ({ navigation }) => {
             <Text className="text-gray-700 top-1 ml-4">Description</Text>
             <TextInput
               className="p-3 bg-gray-100 top-1 text-gray-700 rounded-2x1"
-              placeholder="vnsdivns vidsojvno"
+              placeholder="The Tournament will be in ahmo acadamy "
               placeholderTextColor="#aaaaaa"
               onChangeText={(text) => setDescription(text)}
               value={description}

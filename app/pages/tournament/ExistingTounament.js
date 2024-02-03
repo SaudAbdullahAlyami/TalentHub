@@ -292,7 +292,7 @@ export const ExistingTournament = ({ navigation }) => {
         console.log("Round2 complete? :" + isRound2Complete);
       }
     } catch (error) {
-      console.error(error);
+     
     }
   };
 
@@ -310,7 +310,7 @@ export const ExistingTournament = ({ navigation }) => {
         console.log("Round3 complete? :" + isRound3Complete);
       }
     } catch (error) {
-      console.error(error);
+    
     }
   };
 
@@ -321,7 +321,7 @@ export const ExistingTournament = ({ navigation }) => {
       console.log("Joined Round 4");
       generateMatchupsRound4(tournamentDoc.data().matchsRound4);
     } catch (error) {
-      console.error(error);
+   
     }
   };
 
@@ -469,7 +469,6 @@ export const ExistingTournament = ({ navigation }) => {
           <Text className="self-center bottom-5 rounded-3xl" style={styles.roundtitle}>Semi-finals</Text>
           {matchupsRound3.map((matchup,) => (
             <>
-
 
 
               <View style={styles.hi}>
