@@ -257,7 +257,8 @@ export const PlayerRecommendationPage = ({ route, navigation }) => {
         shotsOnTarget: shotsOnTarget,
         tackles: tackles
       };
-
+      console.log(data)
+      
       const response = await axios.post(
         'http://46.101.208.187/api/get_recommendations',
         data,

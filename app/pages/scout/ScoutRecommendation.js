@@ -9,20 +9,23 @@ import {
 export const ScoutRecommendation = ({ navigation }) => {
 
     const [position, setPosition] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState('');
-    const [age, setAge] = useState('');
+
     const [recommendations, setRecommendations] = useState([]);
 
-    const [assist, setAssist] = useState(null);
-    const [clearances, setClearances] = useState(null);
-    const [crosses, setCrosses] = useState(null);
-    const [goals, setGoals] = useState(null);
-    const [passes, setPasses] = useState(null);
-    const [rating, setRating] = useState(null);
-    const [saves, setSaves] = useState(null);
-    const [shotsOnTarget, setShotsOnTarget] = useState(null);
-    const [tackles, setTackles] = useState(null);
+    
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [age, setAge] = useState(null);
+  const [assist, setAssist] = useState(null);
+  const [clearances, setClearances] = useState(null);
+  const [crosses, setCrosses] = useState(null);
+  const [goals, setGoals] = useState(null);
+  const [passes, setPasses] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [saves, setSaves] = useState(null);
+  const [shotsOnTarget, setShotsOnTarget] = useState(null);
+  const [tackles, setTackles] = useState(null);
+
 
     const positionData = [
         { key: "GK", value: "GK" },
@@ -42,10 +45,7 @@ export const ScoutRecommendation = ({ navigation }) => {
         try {
 
           if (position === "LW") {
-            
-            setHeight(180)
-            setWeight(80)
-            setAge(23)
+           
             setAssist(200)
             setClearances(3)
             setCrosses(10)
@@ -57,9 +57,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             setTackles(300)
     
           } else if (position === "ST") {
-            setHeight(180)
-            setWeight(80)
-            setAge(25)
+            
             setAssist(200)
             setClearances(3)
             setCrosses(10)
@@ -72,9 +70,7 @@ export const ScoutRecommendation = ({ navigation }) => {
     
           } else if (position === "RW") {
     
-            setHeight(180)
-            setWeight(80)
-            setAge(25)
+            
             setAssist(200)
             setClearances(3)
             setCrosses(10)
@@ -87,9 +83,6 @@ export const ScoutRecommendation = ({ navigation }) => {
     
           } else if (position === "CM") {
     
-            setHeight(170)
-            setWeight(70)
-            setAge(25)
             setAssist(999)
             setClearances(200)
             setCrosses(999)
@@ -100,9 +93,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             setShotsOnTarget(200)
             setTackles(500)
           } else if (position === "LB") {    
-            setHeight(165)
-            setWeight(65)
-            setAge(24)
+            
             setAssist(200)
             setClearances(600)
             setCrosses(700)
@@ -114,9 +105,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             setTackles(500)
           } else if (position === "CB") {
     
-            setHeight(180)
-            setWeight(80)
-            setAge(24)
+            
             setAssist(0)
             setClearances(999)
             setCrosses(0)
@@ -128,9 +117,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             setTackles(999)
           }  else if (position === "RB") {
                 
-            setHeight(165)
-            setWeight(65)
-            setAge(24)
+            
             setAssist(200)
             setClearances(600)
             setCrosses(700)
@@ -141,9 +128,7 @@ export const ScoutRecommendation = ({ navigation }) => {
             setShotsOnTarget(0)
             setTackles(500)
           } else if (position === "GK") {
-            setHeight(180)
-            setWeight(80)
-            setAge(24)
+            
             setAssist(0)
             setClearances(3)
             setCrosses(0)
@@ -161,23 +146,23 @@ export const ScoutRecommendation = ({ navigation }) => {
           }
 
             const data = {
-                "name": "Player3",
-                "position": position, // Use dynamic user input
-                "height": height,
-                "weight": weight,
-                "age": age,
-                "rating": 999,
-                
-                "assist": 999,
-                "clearances": 999,
-                "crosses": 999,
-                "goals": 999,
-                "passes": 999,
-                "saves": 999,
-                "shotsOnTarget": 999,
-                "tackles": 999
+                fullName: 'Player3',
+                position: position,
+                height: height,
+                weight: weight,
+                age: age,
+                assist: assist,
+                clearances: clearances,
+                crosses: crosses,
+                goals: goals,
+                passes: passes,
+                rating: rating,
+                saves: saves,
+                shotsOnTarget: shotsOnTarget,
+                tackles: tackles
+             
             };
-
+            console.log(data)
             console.log(position);
             const response = await axios.post('http://46.101.208.187/api/get_recommendations', data, {
                 timeout: 5000,
