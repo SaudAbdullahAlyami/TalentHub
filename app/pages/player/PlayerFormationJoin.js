@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   button1:{
 
     position: 'absolute',
-    top: 30, // Adjust the top position as needed
+    top: 4, // Adjust the top position as needed
     right: 10, // Adjust the right position as needed
   
     padding: 10,

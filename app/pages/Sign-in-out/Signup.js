@@ -292,8 +292,8 @@ export const SignUp = ({ navigation }) => {
             /></View></>
           )}
 
-
-          <View style={styles.inputRadio}>
+             <View>
+          <View style={styles.inputRadio} className="top-3">
             <TouchableOpacity className="text-gray-700 top-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Player')}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
@@ -332,8 +332,28 @@ export const SignUp = ({ navigation }) => {
                 
               </View>
             </TouchableOpacity>
+            <TouchableOpacity className="text-gray-700 top-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Tournament Organizer')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 10,
+                    borderWidth: 2,
+                    borderColor: 'black',
+                    marginRight: 10,
+                    backgroundColor:
+                      role === 'Tournament Organizer' ? '#00b365' : 'transparent',
+                  }}
+                />
+                <Text>Organizer</Text>
 
-            <TouchableOpacity className="text-gray-700  left-40 ml-4" onPress={() => handleRadioButtonPress('Scout')}>
+                
+              </View>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity className="text-gray-700  left-40 ml-4 mb-9" onPress={() => handleRadioButtonPress('Scout')}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View
                   style={{
@@ -352,46 +372,27 @@ export const SignUp = ({ navigation }) => {
                 
               </View>
             </TouchableOpacity>
-
-            <TouchableOpacity className="text-gray-700 bottom-5 right-3 ml-4" onPress={() => handleRadioButtonPress('Tournament Organizer')}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 10,
-                    borderWidth: 2,
-                    borderColor: 'black',
-                    marginRight: 10,
-                    backgroundColor:
-                      role === 'Tournament Organizer' ? '#00b365' : 'transparent',
-                  }}
-                />
-                <Text>tournament organizer</Text>
-
-                
-              </View>
-            </TouchableOpacity>
-
+         
+            </View>
 
           </View>
 
-          {value.error && <Text className="py-3 bottom-7" style={{ color: "red", marginLeft: 30, }}>{value.error}</Text>}
+          {value.error && <Text className="py-3 bottom-7 my-9" style={{ color: "red", marginLeft: 30, }}>{value.error}</Text>}
 
 
           <TouchableOpacity onPress={() => onRegisterPress()}
-            className="py-3 bg-yellow-400 bottom-4 rounded-xl">
+            className="py-3 bg-yellow-400 bottom-4 rounded-xl ">
             <Text className="text-xl  font-bold  text-center text-gray-700" > Create account
             </Text>
           </TouchableOpacity>
 
         </View>
-        <View className="flex-row justify-center bottom-4 mt-3">
+        <View className="flex-row justify-center bottom-4 mt-3 ">
           <Text className="text-gray-500 font-semibold">
             Already have an account?
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Sign In')}>
-            <Text className="font-semibold text-yellow-500"> Log in</Text>
+            <Text className="font-semibold text-yellow-500 "> Log in</Text>
           </TouchableOpacity> 
         </View><View className="bg-white my-9"></View>
         </KeyboardAwareScrollView>
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   inputRadio: {
-    height: 70,
+    
     borderRadius: 5,
     overflow: "hidden",
     
@@ -434,6 +435,7 @@ const styles = StyleSheet.create({
    
     marginLeft: 30,
     marginRight: 30,
+   
  
   },
   button: {

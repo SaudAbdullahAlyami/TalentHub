@@ -242,7 +242,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
   };
 
   return (
-    <View className="flex-1 " style={{ backgroundColor: "#00B365" }}>
+    <View className="flex-1 " style={{ backgroundColor: "#00B365" }} >
       <View className="flex-row justify-center top-19">
 
       </View>
@@ -254,10 +254,10 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
         </View>
 
       <View
-        style={{ backgroundColor: "white", paddingBottom: 10 }}
-        className=" bg-white top-16"
+        style={{ backgroundColor: "white", paddingBottom: 10,flex:1 }}
+        
       >
-        <ScrollView
+        <ScrollView 
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }
@@ -266,7 +266,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
             renderPlayers(groupedPlayers[title], title, navigation)
           )}
 
-          <View className="bg-white my-6"></View>
+          
         </ScrollView>
       </View>
 
