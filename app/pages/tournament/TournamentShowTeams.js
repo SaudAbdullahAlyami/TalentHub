@@ -74,7 +74,7 @@ export const TournamentShowTeams = ({ navigation }) => {
               source={{ uri: item.profileImage }}
             />
           </TouchableOpacity>
-        </View> 
+        </View>
 
         <Text style={styles.text1} className="font-bold  ">
           {item.clubName}
