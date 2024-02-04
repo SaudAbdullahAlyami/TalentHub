@@ -181,7 +181,7 @@ export const TournamentNotification = ({ navigation }) => {
           Club coach:{" "}
           <Text style={{ fontWeight: "bold" }}>{item.senderName}</Text>
         </Text>
-
+ 
         <TouchableOpacity
           style={styles.button1}
           onPress={() =>
