@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  RefreshControl,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 
@@ -16,6 +17,7 @@ import { db, auth } from "../../component/config/config";
 
 export const CoachJoiningTournament = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -100,7 +102,11 @@ export const CoachJoiningTournament = ({ navigation }) => {
   };
 
   const [filteredData, setFilteredData] = useState(data);
-
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+  };
   const render = ({ item }) => {
     return (
       <View style={styles.hi}>
@@ -231,6 +237,9 @@ export const CoachJoiningTournament = ({ navigation }) => {
           data={filteredData}
           renderItem={render}
           keyExtractor={(item) => item.tournamentName}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
         />
 
         <View className="bg-white my-7"></View>

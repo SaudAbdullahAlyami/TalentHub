@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList,StyleSheet ,Image} from "react-native";
+import { View, Text, TouchableOpacity, RefreshControl, FlatList,StyleSheet ,Image,Alert} from "react-native";
 import { Avatar } from "react-native-paper";
 import {
   doc,
@@ -17,7 +17,7 @@ import { db, auth } from "../../component/config/config";
 
 export const PlayerNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
-
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -30,24 +30,39 @@ export const PlayerNotification = ({ navigation }) => {
         where("receiverUid", "==", auth.currentUser.uid)
       );
       const querySnapshot = await getDocs(q);
-
+  
+      const invitations = [];
       const playerRef = getDoc(doc(db, "users", auth.currentUser.uid));
       const haveATeam = (await playerRef).data().clubName;
-
-      const invitations = [];
       querySnapshot.forEach((doc) => {
-        const dataa = doc.data();
-
-        if (haveATeam == "") invitations.push({ ...doc.data(), id: doc.id });
+        const invitationData = { id: doc.id, ...doc.data() };
+  
+        // Check if an invitation with similar data already exists in the array
+        const existingInvitation = invitations.find(
+          (existingInvitation) => existingInvitation.senderName === invitationData.senderName
+        );
+  
+        // If it doesn't exist, push the invitation to the array
+        if (!existingInvitation) {
+          if (haveATeam == "") {
+          invitations.push(invitationData);
+          }
+        }
       });
-
+  
       setData(invitations);
     } catch (error) {
       console.error("Error fetching invitations:", error);
     }
-    loadData();
   };
 
+
+
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+  };
   const deleteInvite = async (inviteId) => {
     await deleteDoc(doc(db, "invitations", inviteId));
     console.log("Deleted Successfully");
@@ -163,10 +178,12 @@ export const PlayerNotification = ({ navigation }) => {
         await updateDoc(playerRef, {
           clubName: clubName,
         });
+        Alert.alert("Successfully Joined ","The player has accept to join the coach successfully.")
       } else {
         // Update the invitation status to "Rejected"
         await updateDoc(invitationRef, { status: text });
         // Delete the invitation
+        Alert.alert("Successfully Rejacted","The player has rejact the coach successfully.")
       }
 
       // Refresh the data after handling the invitation
@@ -235,7 +252,10 @@ export const PlayerNotification = ({ navigation }) => {
         style={{ backgroundColor: "white", paddingBottom: 10 }}
         className="flex-1 bg-white top-16"
       >
-        <FlatList data={data} renderItem={render} />
+        <FlatList data={data} renderItem={render} 
+         refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }/>
       </View>
       <View className="bg-white my-6"></View>
     </View>

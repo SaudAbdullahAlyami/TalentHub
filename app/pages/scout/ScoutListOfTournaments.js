@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
   Alert,
 } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -16,6 +17,7 @@ import { db, } from "../../component/config/config";
 
 export const ScoutListOfTournaments = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -33,7 +35,11 @@ export const ScoutListOfTournaments = ({ navigation }) => {
     });
   };
 
-
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+  };
 
   const [filteredData, setFilteredData] = useState(data);
 
@@ -169,6 +175,9 @@ export const ScoutListOfTournaments = ({ navigation }) => {
           data={filteredData}
           renderItem={render}
           keyExtractor={(item) => item.tournamentName}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
         />
 
         <View className="bg-white my-7"></View>

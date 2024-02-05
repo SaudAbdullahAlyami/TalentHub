@@ -266,7 +266,7 @@ export const AddingPlayersManualy = ({ route, navigation }) => {
             renderPlayers(groupedPlayers[title], title, navigation)
           )}
 
-          
+          <View className="bg-white my-9"></View>
         </ScrollView>
       </View>
 

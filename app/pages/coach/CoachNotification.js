@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   FlatList,
+  Alert
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -178,17 +179,18 @@ export const CoachNotification = ({ navigation }) => {
         });
       }
       
-      
+      Alert.alert("Successfully ","The player has join successfully.")
       } else {
         // Update the invitation status to "Rejected"
         await updateDoc(invitationRef, { status: text });
-
+        Alert.alert("Successfully ","The player has rejacted successfully.")
         // Delete the invitation
       }
 
       // Refresh the data after handling the invitation
       await deleteInvite(inviteId);
 
+     
       loadData();
     } catch (error) {
       console.error("Error handling invitation:", error);

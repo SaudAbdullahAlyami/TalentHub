@@ -99,6 +99,7 @@ export const CoachFormation = ({ navigation }) => {
           // Update the user document to remove the clubName
           await updateDoc(doc(db, "users", playerUid), {
             clubName: "",
+            tournament:"",
           });
           fetchData(); // Assuming fetchData is a function that fetches updated data
         } else {

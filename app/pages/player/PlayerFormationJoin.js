@@ -77,6 +77,7 @@ const invitePlayer=async(CoachUid)=>{
       status: "Pending",
       // Add any additional details you want to include in the invitation
     });
+    Alert.alert("Successfully ","The player has sent invite successfully.")
   }else{
     Alert.alert("Empty Fields", "Please fill in all required fields.");
 

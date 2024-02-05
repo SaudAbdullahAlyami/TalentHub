@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -18,6 +19,7 @@ import { db, auth, firebaase } from "../../component/config/config";
 
 export const TournamentShowTeams = ({ navigation }) => {
   const [data, setData] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -48,7 +50,11 @@ export const TournamentShowTeams = ({ navigation }) => {
       }
     );
   };
-
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
+  };
   const render = ({ item }) => {
     return (
 
@@ -109,7 +115,9 @@ export const TournamentShowTeams = ({ navigation }) => {
         <FlatList
           data={data}
           renderItem={render}
-          
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
           
         />
 

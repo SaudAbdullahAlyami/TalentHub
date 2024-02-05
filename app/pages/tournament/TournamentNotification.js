@@ -6,6 +6,8 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
+  Alert
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import {
@@ -22,7 +24,7 @@ import { db, auth } from "../../component/config/config";
 
 export const TournamentNotification = ({ navigation }) => {
   const [data, setData] = useState([]);
-
+  const [isRefreshing, setIsRefreshing] = useState(false);
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -60,6 +62,12 @@ export const TournamentNotification = ({ navigation }) => {
   const deleteInvite = async (inviteId) => {
     await deleteDoc(doc(db, "invitations", inviteId));
     console.log("Deleted Successfully");
+  };
+
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await loadData();
+    setIsRefreshing(false);
   };
 
   const handleInvite = async (
@@ -138,16 +146,21 @@ export const TournamentNotification = ({ navigation }) => {
               teamsArrayIndex: arrayIndex + 1,
             });
             console.log("New club joined in tournament");
+            Alert.alert("Successfully Joined ","The coach has accepted to join the tournament successfully.")
+
           } else {
             console.log("The team already exist");
           }
         } else {
           console.log("Tournament document does not exist");
         }
+
       } else {
         // Update the invitation status to "Rejected"
         await updateDoc(invitationRef, { status: text });
         // Delete the invitation
+        Alert.alert("Successfully Rejacted ","The coach has been rejacted successfully.")
+
       }
 
       // Refresh the data after handling the invitation
@@ -215,7 +228,11 @@ export const TournamentNotification = ({ navigation }) => {
         style={{ backgroundColor: "white", paddingBottom: 10 }}
         className="flex-1 bg-white top-16"
       >
-        <FlatList data={data} renderItem={render} />
+        <FlatList data={data} renderItem={render} 
+         refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+        />
       </View>
       <View className="bg-white my-6"></View>
     </View>
