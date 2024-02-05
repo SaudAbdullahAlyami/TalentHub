@@ -6,7 +6,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  
+  Alert,
   FlatList,TouchableOpacity,Image,ScrollView
 } from "react-native";
 import { db, auth,  } from "../../component/config/config";
@@ -493,6 +493,8 @@ tackels=8
             savePlayerData(item.uid, saves,6)
             savePlayerData(item.uid, shotsOnTarget,7)
             savePlayerData(item.uid, tackles,8)
+            Alert.alert("Player Data Updated")
+
           }}
           className="py-3 	 right-2 my-5 w-40 rounded-xl"
         >
