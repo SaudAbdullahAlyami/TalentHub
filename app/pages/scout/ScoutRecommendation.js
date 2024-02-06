@@ -47,59 +47,59 @@ export const ScoutRecommendation = ({ navigation }) => {
     setLoading(true);
 
     if (position === "LW") {
-      setAssist(200);
+      setAssist(14);
       setClearances(3);
       setCrosses(10);
-      setGoals(999);
-      setPasses(999);
-      setRating(999);
+      setGoals(100);
+      setPasses(120);
+      setRating(10);
       setSaves(0);
-      setShotsOnTarget(999);
+      setShotsOnTarget(2299);
       setTackles(300);
       setLoading(false);
     } else if (position === "ST") {
-      setAssist(200);
+      setAssist(20);
       setClearances(3);
       setCrosses(10);
-      setGoals(999);
-      setPasses(999);
-      setRating(999);
+      setGoals(10);
+      setPasses(200);
+      setRating(100);
       setSaves(0);
-      setShotsOnTarget(999);
-      setTackles(300);
+      setShotsOnTarget(50);
+      setTackles(30);
       setLoading(false);
     } else if (position === "RW") {
-      setAssist(200);
+      setAssist(2000);
       setClearances(3);
       setCrosses(10);
       setGoals(999);
-      setPasses(999);
+      setPasses(354);
       setRating(999);
       setSaves(0);
       setShotsOnTarget(999);
       setTackles(300);
       setLoading(false);
     } else if (position === "CM") {
-      setAssist(999);
-      setClearances(200);
-      setCrosses(999);
-      setGoals(200);
-      setPasses(999);
-      setRating(999);
+      setAssist(30);
+      setClearances(10);
+      setCrosses(50);
+      setGoals(300);
+      setPasses(215);
+      setRating(100);
       setSaves(0);
-      setShotsOnTarget(200);
-      setTackles(500);
+      setShotsOnTarget(300);
+      setTackles(10);
       setLoading(false);
     } else if (position === "LB") {
-      setAssist(200);
-      setClearances(600);
-      setCrosses(700);
+      setAssist(100);
+      setClearances(10);
+      setCrosses(200);
       setGoals(10);
-      setPasses(999);
-      setRating(999);
+      setPasses(180);
+      setRating(39);
       setSaves(0);
-      setShotsOnTarget(0);
-      setTackles(500);
+      setShotsOnTarget(100);
+      setTackles(9800);
       setLoading(false);
     } else if (position === "CB") {
       setAssist(0);

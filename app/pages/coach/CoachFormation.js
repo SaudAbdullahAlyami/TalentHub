@@ -801,7 +801,7 @@ const styles = StyleSheet.create({
 
   posstionLb: {
     position: "absolute",
-    bottom: verticalScale(123),
+    bottom: verticalScale(145),
     left: scale(49),
     width: moderateScale(70),
     height: moderateScale(80),
@@ -824,7 +824,7 @@ const styles = StyleSheet.create({
   },
   posstionRb: {
     position: "absolute",
-    bottom: verticalScale(123),
+    bottom: verticalScale(145),
     right: scale(50),
     width: moderateScale(70),
     height: moderateScale(80),
@@ -835,8 +835,8 @@ const styles = StyleSheet.create({
   },
   posstionCb1: {
     position: "absolute",
-    bottom: verticalScale(62),
-    left: scale(203),
+    bottom: verticalScale(70),
+    left: scale(194),
     width: moderateScale(70),
     height: moderateScale(80),
     justifyContent: "space-between",
@@ -846,8 +846,8 @@ const styles = StyleSheet.create({
   },
   posstionCb2: {
     position: "absolute",
-    bottom: verticalScale(62),
-    left: scale(101),
+    bottom: verticalScale(70),
+    left: scale(107),
     width: moderateScale(70),
     height: moderateScale(80),
     justifyContent: "space-between",
@@ -869,7 +869,7 @@ const styles = StyleSheet.create({
   },
   posstionCm2: {
     position: "absolute",
-    bottom: verticalScale(225),
+    bottom: verticalScale(235),
     height: moderateScale(80),
     color: "#263238",
     width: moderateScale(70),
@@ -880,7 +880,7 @@ const styles = StyleSheet.create({
 
   },
   posstionCm3: {
-    bottom: verticalScale(225),
+    bottom: verticalScale(235),
     position: "absolute",
     right: scale(77),
     color: "#263238",
@@ -893,7 +893,7 @@ const styles = StyleSheet.create({
   },
   posstionLw: {
     position: "absolute",
-    top: verticalScale(75),
+    top: verticalScale(55),
     left: scale(52),
     color: "#263238",
     height: moderateScale(80),
@@ -910,7 +910,7 @@ const styles = StyleSheet.create({
   },
   posstionRw: {
     position: "absolute",
-    top: verticalScale(75),
+    top: verticalScale(55),
     right: scale(62),
     height: moderateScale(80),
     color: "#263238",
@@ -921,7 +921,7 @@ const styles = StyleSheet.create({
   },
   posstionSt: {
     position: "absolute",
-    top: verticalScale(41),
+    top: verticalScale(31),
     color: "#263238",
     height: moderateScale(80),
     width: moderateScale(70),

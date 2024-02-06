@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     left: 103,
     bottom: 30,
+    width:160
   },
   text2: {
     fontSize: 16,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
   },
   button1: {
     position: "absolute",
-    top: 30, // Adjust the top position as needed
+    top: 15, // Adjust the top position as needed
     right: 10, // Adjust the right position as needed
 
     padding: 10,
